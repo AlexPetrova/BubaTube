@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BubaTube.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class BubaTubeDbContext : IdentityDbContext<User>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public BubaTubeDbContext(DbContextOptions<BubaTubeDbContext> options)
             : base(options)
         {
         }
