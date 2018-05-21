@@ -1,5 +1,3 @@
-using System;
-
 namespace BubaTube.Models
 {
     public class ErrorViewModel
