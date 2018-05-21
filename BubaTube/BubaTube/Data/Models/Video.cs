@@ -12,12 +12,15 @@ namespace BubaTube.Data.Models
         [Key]
         public int Id { get; set; }
         
+        [Required(ErrorMessage ="")]
         public string Name { get; set; } //or path?
 
+        [Required]
         public Category Category { get; set; }
 
         public double Likes { get; set; }
 
+        [Required]
         public string UserId { get; set; }
 
         public User User { get; set; }
