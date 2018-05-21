@@ -11,12 +11,15 @@ namespace BubaTube
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            Environment = env;
         }
 
         public IConfiguration Configuration { get; }
+
+        public IHostingEnvironment Environment { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -27,11 +30,20 @@ namespace BubaTube
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<BubaTubeDbContext>()
                 .AddDefaultTokenProviders();
-
-            // Add application services.
-            //services.AddTransient<IEmailSender, EmailSender>();
-
+            
             services.AddMvc();
+            services.AddMemoryCache();
+        }
+        private void RegisterAuthentication(IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<BubaTubeDbContext>()
+                .AddDefaultTokenProviders();
+        }
+
+        private void RegisterServices(IServiceCollection services)
+        {
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

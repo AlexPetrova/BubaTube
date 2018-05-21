@@ -8,5 +8,7 @@ namespace BubaTube.Data.Models
     public class User : IdentityUser
     {
         public ICollection<User> FavouriteUsers { get; set; }
+
+        public ICollection<UserVideo> UserVideo { get; set; }
     }
 }

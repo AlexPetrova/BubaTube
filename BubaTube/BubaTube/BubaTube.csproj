@@ -5,6 +5,11 @@
     <UserSecretsId>aspnet-BubaTube-0CC7B5AE-3FA5-42FE-BDA3-D4DE06DD9443</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20180521083625_InitialMigrations.cs" />
+    <Compile Remove="Data\Migrations\20180521083625_InitialMigrations.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
@@ -20,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Data\DTO\" />
+    <Folder Include="Data\Migrations\" />
     <Folder Include="Services\" />
   </ItemGroup>
 
