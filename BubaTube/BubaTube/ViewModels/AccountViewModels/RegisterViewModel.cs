@@ -5,6 +5,11 @@ namespace BubaTube.Models.AccountViewModels
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name="Username")]
+        [StringLength(120, MinimumLength = 3, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.")]
+        public string Username { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

@@ -3,33 +3,37 @@
     ViewData["Title"] = "Register";
 }
 
-<h2>@ViewData["Title"]</h2>
-
-<div class="row">
-    <div class="col-md-4">
-        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
-            <h4>Create a new account.</h4>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-default">Register</button>
-        </form>
+<div class="bee-greeting">
+    <img class="bee" src="~/images/bee.jpg" />
+    <div class="wellcome-text">
+        <h1>Wellcome on BubaTube!</h1>
     </div>
 </div>
+
+<div class="register-body col-7">
+    <h2 class="text-center">Register</h2>
+    <hr />
+    <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="input-fields">
+            <input asp-for="Username" class="input-field" placeholder="Username" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+
+            <input asp-for="Email" class="input-field" placeholder="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+
+            <input asp-for="Password" class="input-field" type="password" placeholder="Password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+
+            <input asp-for="ConfirmPassword" class="input-field" type="password" placeholder="Repeat password" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+            <button id="register-button" class="register-button" type="submit">Register</button>
+        </div>
+    </form>
+</div>
+
+
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")

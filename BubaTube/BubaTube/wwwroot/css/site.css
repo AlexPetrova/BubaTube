@@ -3,6 +3,117 @@
     padding-bottom: 20px;
 }
 
+* {
+    box-sizing: border-box;
+}
+
+/* For mobile phones: */
+[class*="col-"] {
+    width: 100%;
+}
+
+@media only screen and (min-width: 600px) {
+    /* For tablets: */
+    .col-s-1 {
+        width: 8.33%;
+    }
+
+    .col-s-2 {
+        width: 16.66%;
+    }
+
+    .col-s-3 {
+        width: 25%;
+    }
+
+    .col-s-4 {
+        width: 33.33%;
+    }
+
+    .col-s-5 {
+        width: 41.66%;
+    }
+
+    .col-s-6 {
+        width: 50%;
+    }
+
+    .col-s-7 {
+        width: 58.33%;
+    }
+
+    .col-s-8 {
+        width: 66.66%;
+    }
+
+    .col-s-9 {
+        width: 75%;
+    }
+
+    .col-s-10 {
+        width: 83.33%;
+    }
+
+    .col-s-11 {
+        width: 91.66%;
+    }
+
+    .col-s-12 {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    /* For desktop: */
+    .col-1 {
+        width: 8.33%;
+    }
+
+    .col-2 {
+        width: 16.66%;
+    }
+
+    .col-3 {
+        width: 25%;
+    }
+
+    .col-4 {
+        width: 33.33%;
+    }
+
+    .col-5 {
+        width: 41.66%;
+    }
+
+    .col-6 {
+        width: 50%;
+    }
+
+    .col-7 {
+        width: 58.33%;
+    }
+
+    .col-8 {
+        width: 66.66%;
+    }
+
+    .col-9 {
+        width: 75%;
+    }
+
+    .col-10 {
+        width: 83.33%;
+    }
+
+    .col-11 {
+        width: 91.66%;
+    }
+
+    .col-12 {
+        width: 100%;
+    }
+}
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -32,4 +143,95 @@
     .carousel-caption {
         display: none;
     }
+}
+
+.register-body {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    height: 70%;
+    border-radius: 25px;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px 8px #888888;
+    /*opacity: 0.5;*/
+}
+
+.line {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+
+.input-field {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+    margin-bottom: 3%;
+    width: 70%;
+    border: none;
+    border-bottom: 1px solid black;
+    height: 30px;
+}
+
+.input-field:focus {
+    outline: none;
+}
+
+.register-button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    left: 50%;
+    bottom: 8%;
+    transform: translate(-50%,0%);
+    background-color: rgb(135, 142, 150);
+    width: 38%;
+    height: 8%;
+    border: none;
+    border-radius: 25px;
+}
+
+.register-button:hover {
+    background-color: rgb(193, 193, 193);
+}
+
+.input-fields {
+    padding-bottom: 10%;
+    position: relative;
+}
+
+.navbar-inverse {
+    background-color: white;
+    border-color: white;
+}
+
+.navbar-inverse .navbar-nav > li > a{
+    color: black;
+}
+
+.navbar-inverse .navbar-nav > li > a:hover {
+    color: black;
+    background-color: #f0f5fb;
+}
+
+.navbar-brand {
+    color: black !important;
+}
+
+.bee {
+    width: 15%;
+}
+
+.wellcome-text {
+    display: inline-block;
+    font-style: italic;
+}
+
+.bee-greeting {
+    display: inline-block;
 }
