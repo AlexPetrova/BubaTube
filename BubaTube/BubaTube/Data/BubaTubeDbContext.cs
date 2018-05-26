@@ -1,6 +1,7 @@
 ﻿using BubaTube.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace BubaTube.Data
 {
@@ -25,12 +26,20 @@ namespace BubaTube.Data
             builder.Entity<UserVideo>()
                 .HasOne<User>(x => x.User)
                 .WithMany(x => x.UserVideo)
-                .HasForeignKey(x => x.UserId);
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<UserVideo>()
                 .HasOne<Video>(x => x.Video)
                 .WithMany(x => x.UserVideo)
-                .HasForeignKey(x => x.VideoId);
+                .HasForeignKey(x => x.VideoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            //builder.Entity<Video>()
+            //    .HasOne<User>(x => x.Author)
+            //    .WithMany(x => x.UploadedVideos)
+            //    .HasForeignKey(x => x.UserId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }

@@ -1,9 +1,6 @@
 ﻿using BubaTube.Data.Models.Enum;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BubaTube.Data.Models
 {
@@ -23,7 +20,7 @@ namespace BubaTube.Data.Models
         [Required]
         public string UserId { get; set; }
 
-        public User User { get; set; }
+        public User Author { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
 

@@ -10,6 +10,16 @@ namespace BubaTube.Models.AccountViewModels
         public string Username { get; set; }
 
         [Required]
+        [StringLength(15, ErrorMessage = "Your first name cannot be more than 15 symbols."),
+            MinLength(2, ErrorMessage = "First name cannot be less than 2 symbols")]
+        public string FirstName { get; set; }
+
+        [Required]
+        [StringLength(15, ErrorMessage = "Your last name cannot be more than 15 symbols."),
+            MinLength(2, ErrorMessage = "Your last name cannot be less than 2 symbols")]
+        public string LastName { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }

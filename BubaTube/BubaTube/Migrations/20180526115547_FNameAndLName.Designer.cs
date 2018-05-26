@@ -12,9 +12,10 @@ using System;
 namespace BubaTube.Migrations
 {
     [DbContext(typeof(BubaTubeDbContext))]
-    partial class BubaTubeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180526115547_FNameAndLName")]
+    partial class FNameAndLName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
