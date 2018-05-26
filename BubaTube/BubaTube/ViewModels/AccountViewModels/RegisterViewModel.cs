@@ -1,14 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace BubaTube.Models.AccountViewModels
 {
     public class RegisterViewModel
     {
-        [Required]
-        [Display(Name="Username")]
-        [StringLength(120, MinimumLength = 3, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.")]
-        public string Username { get; set; }
-
         [Required]
         [StringLength(15, ErrorMessage = "Your first name cannot be more than 15 symbols."),
             MinLength(2, ErrorMessage = "First name cannot be less than 2 symbols")]
@@ -34,5 +30,7 @@ namespace BubaTube.Models.AccountViewModels
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public IFormFile Avatar { get; set; }
     }
 }

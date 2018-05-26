@@ -3,38 +3,48 @@
     ViewData["Title"] = "Register";
 }
 
-<div class="bee-greeting">
-    <img class="bee" src="~/images/bee.jpg" />
-    <div class="wellcome-text">
-        <h1>Wellcome on BubaTube!</h1>
+<h2 class="text-center">Register</h2>
+<hr />
+<form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="input-fields">
+        <input asp-for="FirstName" class="input-field" placeholder="First name" />
+
+        <input asp-for="LastName" class="input-field" placeholder="Last name" />
+
+        <input asp-for="Email" class="input-field" placeholder="Email" />
+
+        <input asp-for="Password" class="input-field" type="password" placeholder="Password" />
+
+        <input asp-for="ConfirmPassword" class="input-field" type="password" placeholder="Repeat password" />
+
+        <label id="upload" class="btn btn-default">Upload Image</label>
+        <input asp-for="Avatar" id="file" style="visibility:hidden;" type="file" name="avatar">
+
+        <img id="image_upload_preview" src="http://placehold.it/100x100" alt="your image" />
+
+        @*<button id="upload-image">Upload Image</button>*@
+
+        <button id="register-button" class="register-button" type="submit">Register</button>
     </div>
-</div>
+</form>
 
-<div class="register-body col-7">
-    <h2 class="text-center">Register</h2>
-    <hr />
-    <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div class="input-fields">
-            <input asp-for="Username" class="input-field" placeholder="Username" />
-            <span asp-validation-for="Username" class="text-danger"></span>
+@*<div id="modal" class="modal">
+    <div class="modal-content">
+        <form method="post" enctype="multipart/form-data" asp-controller="UploadFiles" asp-action="Index">
+            <span class="close">&times;</span>
 
-            <input asp-for="Email" class="input-field" placeholder="Email" />
-            <span asp-validation-for="Email" class="text-danger"></span>
+            <label id="upload" class="btn btn-default">Upload Image</label>
+            <input asp-for="Avatar" id="file" style="visibility:hidden;" type="file" name="file">
 
-            <input asp-for="Password" class="input-field" type="password" placeholder="Password" />
-            <span asp-validation-for="Password" class="text-danger"></span>
+            <img id="image_upload_preview" src="http://placehold.it/100x100" alt="your image" />
 
-            <input asp-for="ConfirmPassword" class="input-field" type="password" placeholder="Repeat password" />
-            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-
-            <button id="register-button" class="register-button" type="submit">Register</button>
-        </div>
-    </form>
-</div>
-
-
+            <button class="btn btn-info" type="submit" value="Upload">Upload</button>
+        </form>
+    </div>
+</div>*@
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
+    <script src="~/js/modal-avatar.js"></script>
 }

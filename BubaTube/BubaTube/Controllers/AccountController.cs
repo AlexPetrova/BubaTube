@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.IO;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace BubaTube.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager; 
+        private readonly SignInManager<User> _signInManager;
         private readonly ILogger _logger;
 
         public AccountController(
@@ -212,7 +213,20 @@ namespace BubaTube.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Username, Email = model.Email };
+                var user = new User
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
+                };
+
+                using (var memoryStream = new MemoryStream())
+                {
+                    await model.Avatar.CopyToAsync(memoryStream);
+                    user.AvatarImage = memoryStream.ToArray();
+                }
+
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

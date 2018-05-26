@@ -11,6 +11,6 @@ namespace BubaTube.ViewModels.ProfileViewModels
 
         public string LastName { get; set; }
 
-        public string ProgilePicture { get; set; }
+        public byte[] ProgilePicture { get; set; }
     }
 }
