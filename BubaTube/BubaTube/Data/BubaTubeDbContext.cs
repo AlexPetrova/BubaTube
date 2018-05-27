@@ -18,6 +18,8 @@ namespace BubaTube.Data
 
         public DbSet<UserVideo> UserVideo { get; set; }
 
+        public DbSet<VideoCategory> CategoryVideo { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<UserVideo>()
@@ -35,11 +37,20 @@ namespace BubaTube.Data
                 .HasForeignKey(x => x.VideoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //builder.Entity<Video>()
-            //    .HasOne<User>(x => x.Author)
-            //    .WithMany(x => x.UploadedVideos)
-            //    .HasForeignKey(x => x.UserId)
-            //    .OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<VideoCategory>()
+                 .HasKey(x => new { x.CategoryId, x.VideoId });
+
+            builder.Entity<VideoCategory>()
+                .HasOne<Video>(x => x.Video)
+                .WithMany(x => x.VideoCategory)
+                .HasForeignKey(x => x.VideoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<VideoCategory>()
+                .HasOne<Category>()
+                .WithMany(x => x.VideoCategory)
+                .HasForeignKey(x => x.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }

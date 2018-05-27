@@ -4,13 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
 namespace BubaTube.Migrations
 {
     [DbContext(typeof(BubaTubeDbContext))]
-    [Migration("20180526115547_FNameAndLName")]
-    partial class FNameAndLName
+    [Migration("20180527160139_VideoCategory")]
+    partial class VideoCategory
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,6 +20,18 @@ namespace BubaTube.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("BubaTube.Data.Models.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CategoryName");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Category");
+                });
 
             modelBuilder.Entity("BubaTube.Data.Models.Comment", b =>
                 {
@@ -132,12 +146,17 @@ namespace BubaTube.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Category");
+                    b.Property<string>("Description")
+                        .HasMaxLength(500);
 
                     b.Property<double>("Likes");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Path")
                         .IsRequired();
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200);
 
                     b.Property<string>("UserId")
                         .IsRequired();
@@ -147,6 +166,23 @@ namespace BubaTube.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Videos");
+                });
+
+            modelBuilder.Entity("BubaTube.Data.Models.VideoCategory", b =>
+                {
+                    b.Property<int>("CategoryId");
+
+                    b.Property<int>("VideoId");
+
+                    b.Property<int?>("CategoryId1");
+
+                    b.HasKey("CategoryId", "VideoId");
+
+                    b.HasIndex("CategoryId1");
+
+                    b.HasIndex("VideoId");
+
+                    b.ToTable("CategoryVideo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -284,20 +320,37 @@ namespace BubaTube.Migrations
                     b.HasOne("BubaTube.Data.Models.User", "User")
                         .WithMany("UserVideo")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("BubaTube.Data.Models.Video", "Video")
                         .WithMany("UserVideo")
                         .HasForeignKey("VideoId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("BubaTube.Data.Models.Video", b =>
                 {
-                    b.HasOne("BubaTube.Data.Models.User", "User")
-                        .WithMany()
+                    b.HasOne("BubaTube.Data.Models.User", "Author")
+                        .WithMany("UploadedVideos")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BubaTube.Data.Models.VideoCategory", b =>
+                {
+                    b.HasOne("BubaTube.Data.Models.Category")
+                        .WithMany("VideoCategory")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("BubaTube.Data.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId1");
+
+                    b.HasOne("BubaTube.Data.Models.Video", "Video")
+                        .WithMany("VideoCategory")
+                        .HasForeignKey("VideoId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

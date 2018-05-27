@@ -23,26 +23,9 @@
 
         <img id="image_upload_preview" src="http://placehold.it/100x100" alt="your image" />
 
-        @*<button id="upload-image">Upload Image</button>*@
-
         <button id="register-button" class="register-button" type="submit">Register</button>
     </div>
 </form>
-
-@*<div id="modal" class="modal">
-    <div class="modal-content">
-        <form method="post" enctype="multipart/form-data" asp-controller="UploadFiles" asp-action="Index">
-            <span class="close">&times;</span>
-
-            <label id="upload" class="btn btn-default">Upload Image</label>
-            <input asp-for="Avatar" id="file" style="visibility:hidden;" type="file" name="file">
-
-            <img id="image_upload_preview" src="http://placehold.it/100x100" alt="your image" />
-
-            <button class="btn btn-info" type="submit" value="Upload">Upload</button>
-        </form>
-    </div>
-</div>*@
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
