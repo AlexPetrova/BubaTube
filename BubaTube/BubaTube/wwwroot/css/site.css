@@ -255,9 +255,29 @@
     font-weight: bold;
 }
 
-    .close:hover,
-    .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-    }
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.nav-user-home > ul > li {
+    display: inline-block;
+    margin-right: -4px;
+}
+
+.nav-user-home > ul > li > a {
+    color: black;
+    padding: 10px 15px 10px 15px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.nav-user-home > ul > li > a:hover {
+    background-color: #f0f5fb;
+}
+
+.float-right{
+    float: right;
+}

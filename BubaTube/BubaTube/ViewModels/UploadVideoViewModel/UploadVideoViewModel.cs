@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BubaTube.Data.DTO;
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 
 namespace BubaTube.ViewModels.UploadVideoViewModel
 {
@@ -6,8 +8,10 @@ namespace BubaTube.ViewModels.UploadVideoViewModel
     {
         public string Title { get; set; }
 
+        public string Description { get; set; }
+
         public IFormFile Video { get; set; }
-        
-        //category
+
+        public ICollection<CategoryDTO> Categories { get; set; }
     }
 }

@@ -221,12 +221,15 @@ namespace BubaTube.Controllers
                     LastName = model.LastName
                 };
 
-                using (var memoryStream = new MemoryStream())
+                if(model.Avatar != null)
                 {
-                    await model.Avatar.CopyToAsync(memoryStream);
-                    user.AvatarImage = memoryStream.ToArray();
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await model.Avatar.CopyToAsync(memoryStream);
+                        user.AvatarImage = memoryStream.ToArray();
+                    }
                 }
-
+                
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

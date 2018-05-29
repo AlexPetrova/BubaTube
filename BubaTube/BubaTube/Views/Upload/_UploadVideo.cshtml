@@ -3,10 +3,10 @@
     ViewData["Title"] = "_UploadVideo";
 }
 
-<h2>_UploadVideo</h2>
-
-<form method="post" enctype="multipart/form-data" asp-controller="UploadFiles" asp-action="Index">
-    <label id="upload" class="btn btn-default">Upload Video</label>
-    <input asp-for="Video" id="file" style="visibility:hidden;" type="file" name="video">
-    <button class="btn btn-info" type="submit" value="Upload">Upload</button>
-</form>
+<div id="upload-video-form">
+    <form method="post" enctype="multipart/form-data" asp-controller="UploadFiles" asp-action="Index">
+        <label id="upload" class="btn btn-default">Upload Video</label>
+        <input asp-for="Video" id="file" style="visibility:hidden;" type="file" name="video">
+        <button class="btn btn-info float-right" type="submit" value="Upload">Upload</button>
+    </form>
+</div>

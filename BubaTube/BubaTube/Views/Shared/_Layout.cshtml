@@ -35,7 +35,7 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     @if (Context.User.Identity.IsAuthenticated)
                     {
-                        <li><a asp-area="" asp-controller="Profile" asp-action="Profile">Profile</a></li>
+                        <li><a asp-area="" asp-controller="Profile" asp-action="ProfileHomePage">Profile</a></li>
                     }
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
