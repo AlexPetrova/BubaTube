@@ -17,47 +17,36 @@
     .col-s-1 {
         width: 8.33%;
     }
-
     .col-s-2 {
         width: 16.66%;
     }
-
     .col-s-3 {
         width: 25%;
     }
-
     .col-s-4 {
         width: 33.33%;
     }
-
     .col-s-5 {
         width: 41.66%;
     }
-
     .col-s-6 {
         width: 50%;
     }
-
     .col-s-7 {
         width: 58.33%;
     }
-
     .col-s-8 {
         width: 66.66%;
     }
-
     .col-s-9 {
         width: 75%;
     }
-
     .col-s-10 {
         width: 83.33%;
     }
-
     .col-s-11 {
         width: 91.66%;
     }
-
     .col-s-12 {
         width: 100%;
     }
@@ -68,47 +57,36 @@
     .col-1 {
         width: 8.33%;
     }
-
     .col-2 {
         width: 16.66%;
     }
-
     .col-3 {
         width: 25%;
     }
-
     .col-4 {
         width: 33.33%;
     }
-
     .col-5 {
         width: 41.66%;
     }
-
     .col-6 {
         width: 50%;
     }
-
     .col-7 {
         width: 58.33%;
     }
-
     .col-8 {
         width: 66.66%;
     }
-
     .col-9 {
         width: 75%;
     }
-
     .col-10 {
         width: 83.33%;
     }
-
     .col-11 {
         width: 91.66%;
     }
-
     .col-12 {
         width: 100%;
     }
@@ -196,9 +174,9 @@
     border-radius: 25px;
 }
 
-.register-button:hover {
-    background-color: rgb(193, 193, 193);
-}
+    .register-button:hover {
+        background-color: rgb(193, 193, 193);
+    }
 
 .input-fields {
     padding-bottom: 5%;
@@ -210,7 +188,7 @@
     border-color: white;
 }
 
-.navbar-inverse .navbar-nav > li > a{
+.navbar-inverse .navbar-nav > li > a {
     color: black;
 }
 
@@ -262,6 +240,7 @@
     cursor: pointer;
 }
 
+/*home page of user*/
 .nav-user-home > ul > li {
     display: inline-block;
     margin-right: -4px;
@@ -278,6 +257,47 @@
     background-color: #f0f5fb;
 }
 
-.float-right{
-    float: right;
+div#container {
+    margin-top: 5%;
 }
+
+/*video container*/
+.video-preview > img {
+    width: 20%;
+}
+
+.tag-section > ul > li{
+    display: inline-block;
+    text-decoration: none;
+    margin-right: 1%;
+}
+
+.tag-section > input {
+    display: inline-block;
+    width: 15%;
+}
+
+.close{
+    opacity: unset !important;
+}
+
+.tags > li {
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    text-align: center;
+    padding: 5px 10px 5px 10px;
+    margin: 10px;
+    margin-left: unset;
+    background-color: #f5f5f587;
+}
+
+#tag-button{
+    background: none;
+    border: none;
+}
+
+.close-tag {
+    margin-left: 5px;
+    color: #af2525;
+}
+
