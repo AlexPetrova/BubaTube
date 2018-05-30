@@ -1,5 +1,7 @@
 ﻿using BubaTube.Data;
 using BubaTube.Data.Models;
+using BubaTube.Services;
+using BubaTube.Services.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -33,6 +35,8 @@ namespace BubaTube
             
             services.AddMvc();
             services.AddMemoryCache();
+
+            services.AddTransient<IUploadVideoService, UploadVideoService>();
         }
         private void RegisterAuthentication(IServiceCollection serviceCollection)
         {
@@ -43,7 +47,6 @@ namespace BubaTube
 
         private void RegisterServices(IServiceCollection services)
         {
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

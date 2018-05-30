@@ -266,10 +266,9 @@ div#container {
     width: 20%;
 }
 
-.tag-section > ul > li{
+.tag-section ul li{
     display: inline-block;
     text-decoration: none;
-    margin-right: 1%;
 }
 
 .tag-section > input {
@@ -281,7 +280,7 @@ div#container {
     opacity: unset !important;
 }
 
-.tags > li {
+.tags li {
     border: 1px solid #ccc;
     border-radius: 15px;
     text-align: center;

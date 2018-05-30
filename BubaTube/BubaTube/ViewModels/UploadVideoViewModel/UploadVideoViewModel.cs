@@ -16,8 +16,5 @@ namespace BubaTube.ViewModels.UploadVideoViewModel
 
         [Required]
         public IFormFile Video { get; set; }
-
-        //separeta parameter
-        public ICollection<string> Categories { get; set; }
     }
 }

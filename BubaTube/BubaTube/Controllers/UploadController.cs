@@ -1,5 +1,7 @@
-﻿using BubaTube.ViewModels.UploadVideoViewModel;
+﻿using BubaTube.Services.Contracts;
+using BubaTube.ViewModels.UploadVideoViewModel;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -8,8 +10,11 @@ namespace BubaTube.Controllers
     public class UploadController : Controller
     {
         //service to process the path and map the dto to the db model
-        public UploadController()
+        private IUploadVideoService uploadVideoService;
+
+        public UploadController(IUploadVideoService uploadVideoService)
         {
+            this.uploadVideoService = uploadVideoService;
         }
 
         public IActionResult UploadVideo()
@@ -18,14 +23,25 @@ namespace BubaTube.Controllers
         }
 
         [HttpPost("UploadFiles")]
-        public async Task<IActionResult> Post(UploadVideoViewModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Post(UploadVideoViewModel model, ICollection<string> categories)
         {
-            var path = Path.GetRandomFileName();
-
-            using (var stream = new FileStream(path, FileMode.Create))
+            var path = @"\wwwroot\video";
+            
+            if (ModelState.IsValid)
             {
-                await model.Video.CopyToAsync(stream);
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    path = Path.GetRandomFileName();
+                    await model.Video.CopyToAsync(stream);
+                }
             }
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult Test(UploadVideoViewModel model, ICollection<string> categories)
+        {
             return Ok();
         }
     }
