@@ -17,7 +17,10 @@
     });
 
     //tags
-    $('#container').on('click', 'div div button', function (event) {
+    $('#container').keydown('click', 'div div input', function (event) {
+        if(event.keyCode === 13){
+            console.log('z');
+        }
         event.preventDefault();
         var tag = $('#tag-field');
 
