@@ -26,6 +26,8 @@ namespace BubaTube.Data.Models
         [Required]
         public User Author { get; set; }
 
+        public bool IsАpproved { get; set; }
+
         public ICollection<Comment> Comments { get; set; }
 
         public ICollection<UserVideo> UserVideo { get; set; }
