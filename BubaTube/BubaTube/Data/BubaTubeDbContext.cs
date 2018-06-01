@@ -16,6 +16,8 @@ namespace BubaTube.Data
 
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<Category> Category { get; set; }
+
         public DbSet<UserVideo> UserVideo { get; set; }
 
         public DbSet<VideoCategory> CategoryVideo { get; set; }

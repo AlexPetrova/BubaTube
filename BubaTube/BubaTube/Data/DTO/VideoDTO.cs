@@ -5,7 +5,7 @@ namespace BubaTube.Data.DTO
 {
     public class VideoDTO
     {
-        //maybe use it when showing search results 
+        public int Id { get; set; }
 
         [Required]
         [StringLength(200, ErrorMessage = "", MinimumLength = 5)]
