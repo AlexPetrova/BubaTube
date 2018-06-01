@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 
 namespace BubaTube
 {
@@ -32,7 +33,7 @@ namespace BubaTube
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<BubaTubeDbContext>()
                 .AddDefaultTokenProviders();
-            
+
             services.AddMvc();
             services.AddMemoryCache();
 
@@ -63,6 +64,8 @@ namespace BubaTube
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            this.SeedRolesAsync(app).Wait();
+
             app.UseStaticFiles();
 
             app.UseAuthentication();
@@ -70,9 +73,49 @@ namespace BubaTube
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                  name: "areas",
+                  template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                );
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        public async Task SeedRolesAsync(IApplicationBuilder app)
+        {
+            const string AdminRole = "Admin";
+            const string AdminUsername = "AdminUser@abv.bg";
+            const string AdminPassword = "Admin1@";
+
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var userManager = serviceScope.ServiceProvider.GetService<UserManager<User>>();
+                var roleManager = serviceScope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+
+                if (!(await roleManager.RoleExistsAsync(AdminRole)))
+                {
+                    await roleManager.CreateAsync(new IdentityRole() { Name = AdminRole });
+                }
+
+                if ((await userManager.FindByNameAsync(AdminUsername)) == null)
+                {
+                    var adminUser = new User()
+                    {
+                        Email = AdminUsername,
+                        UserName = AdminUsername
+                    };
+
+                    var result = await userManager.CreateAsync(adminUser);
+
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddPasswordAsync(adminUser, AdminPassword);
+                        await userManager.AddToRoleAsync(adminUser, AdminRole);
+                    }
+                }
+            }
         }
     }
 }
