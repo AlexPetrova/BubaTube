@@ -1,6 +1,6 @@
 ﻿$(function () {
     $('#upload-video').on('click', function (event) {
-        $('container').empty(); //not sure if this is working
+        $('container').empty();
         event.preventDefault();
 
         $.get(
@@ -17,55 +17,9 @@
     });
 
     //tags
-    $('#container').keydown('click', 'div div input', function (event) {
-        if(event.keyCode === 13){
-            console.log('z');
-        }
-        event.preventDefault();
-        var tag = $('#tag-field');
-
-        if (tag.val() !== '') {
-            $('#tags').append('<li>#' + tag.val() + '<span class="close-tag" role="button">x</span>' + '</li>');
-        }
-        else {
-            $(tag).effect('bounce', 'slow');
-        }
-
-        tag.val('');
-    });
-
-    $('#container').on('click', 'div div span', function (event) {
-        var liToRemove = $(this).closest('li');
-        liToRemove.fadeOut(300, function () { $(this).remove(); });
-    });
-
-    //$('#container').on('submit', 'div form', function (event) {
-    //    event.preventDefault();
-    //    var form = $(this).serialize();
-    //    var arrayOfTags = getTags.call(tags);
-
-    //    $.post(
-    //        '/upload/test',
-    //        { model: form, categories: arrayOfTags },
-    //        function () {
-
-    //        }
-    //    )
-
-    //    $.ajax({
-    //        type: 'POST',
-    //        url: '/upload/test',
-    //        data: { model: form, categories: arrayOfTags }
-    //    });
-    //});
-
-    $('#container').on('submit', 'div form', function (event) {
-        event.preventDefault();
-    });
-
     function getTags() {
         var collection = new Array();
-    
+
         var tags = $('#tags').each(function () {
             var htmlCollection = this.children;
             for (var i = 0; i < htmlCollection.length; i++) {
@@ -75,4 +29,45 @@
 
         return collection;
     }
+
+    $('#container').on('keydown', 'div div input', function (event) {
+        if(event.keyCode === 13){
+            event.preventDefault();
+            var tag = $('#tag-field');
+
+            if (tag.val() !== '') {
+                $('#tags').append('<li>#' + tag.val() + '<span class="close-tag" role="button">x</span>' + '</li>');
+            }
+            else {
+                $(tag).effect('bounce', 'slow');
+            }
+
+            tag.val('');
+        }
+    });
+
+    $('#container').on('click', 'div div span', function (event) {
+        var liToRemove = $(this).closest('li');
+        liToRemove.fadeOut(300, function () { $(this).remove(); });
+    });
+
+    //upload form
+    $('#container').on('submit', 'div form', function (event) {
+        event.preventDefault();
+        var data = $('#upload-files').serializeArray();
+        var tag = $('#tag-field');
+        var arrayOfTags = getTags.call(tags);
+        var file = $('#file').get(0).files[0];
+
+        data.push({ name: 'categories', value: arrayOfTags });
+        data.push({ name: 'video', value: file });
+        
+        $.post(
+            '/upload/test',
+            data,
+            function (response) {
+                $('#modal').replaceWith(response);
+            }
+        )
+    });
 });

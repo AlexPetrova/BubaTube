@@ -1,5 +1,7 @@
 ﻿using BubaTube.Services.Contracts;
 using BubaTube.ViewModels.UploadVideoViewModel;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.IO;
@@ -17,32 +19,42 @@ namespace BubaTube.Controllers
             this.uploadVideoService = uploadVideoService;
         }
 
+        [Authorize]
         public IActionResult UploadVideo()
         {
             return this.PartialView("_UploadVideo");
         }
 
-        [HttpPost("UploadFiles")]
+        [Authorize]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Post(UploadVideoViewModel model, ICollection<string> categories)
+        public async Task<IActionResult> Post(UploadVideoViewModel model, IFormFile video, ICollection<string> categories)
         {
             var path = @"\wwwroot\video";
-            
+
             if (ModelState.IsValid)
             {
                 using (var stream = new FileStream(path, FileMode.Create))
                 {
                     path = Path.GetRandomFileName();
-                    await model.Video.CopyToAsync(stream);
+                    //await model.Video.CopyToAsync(stream);
                 }
             }
             return Ok();
         }
 
         [HttpPost]
-        public IActionResult Test(UploadVideoViewModel model, ICollection<string> categories)
+        public async Task<IActionResult> Test(UploadVideoViewModel model, ICollection<string> categories)
         {
-            return Ok();
+            bool someCondition = true;
+            if (someCondition)
+            {
+                return this.PartialView("_SuccessResponse");
+            }
+            else
+            {
+                return this.PartialView("_ErrorResponse");
+            }
         }
     }
 }

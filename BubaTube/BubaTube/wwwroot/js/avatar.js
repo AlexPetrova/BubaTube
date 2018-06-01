@@ -3,21 +3,6 @@
         event.preventDefault();
 
     });
-    
-    $('#upload-image').on('click', function () {
-        $('#modal').css('display', 'block');
-    });
-
-    $('.close').on('click', function () {
-        $('#modal').css('display', 'none');
-    });
-    
-    $(window).on('click', function (event) {
-        var modal = $('#modal');
-        if (event.target == modal) {
-            $('#modal').css('display', 'none');
-        }
-    });
 
     $('#upload').on('click', function () {
         $('#file').trigger('click');

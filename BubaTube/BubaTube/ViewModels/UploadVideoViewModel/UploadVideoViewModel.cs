@@ -1,5 +1,6 @@
 ﻿using BubaTube.Data.DTO;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -15,6 +16,9 @@ namespace BubaTube.ViewModels.UploadVideoViewModel
         public string Description { get; set; }
 
         [Required]
-        public IFormFile Video { get; set; }
+        public FormFile Video { get; set; }
+
+        [Required]
+        public ICollection<string> Categories { get; set; }
     }
 }
