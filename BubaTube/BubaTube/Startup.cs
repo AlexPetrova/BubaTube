@@ -4,6 +4,7 @@ using BubaTube.Services;
 using BubaTube.Services.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -37,6 +38,8 @@ namespace BubaTube
             services.AddMvc();
             services.AddMemoryCache();
 
+            services.AddTransient<BubaTubeDbContext>();
+            services.AddTransient<IUploadVideoService, UploadVideoService>();
             services.AddTransient<IUploadVideoService, UploadVideoService>();
         }
         private void RegisterAuthentication(IServiceCollection serviceCollection)
@@ -81,6 +84,8 @@ namespace BubaTube
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //app.Run(async context => { context.Features.Get<IHttpMaxRequestBodySizeFeature>().MaxRequestBodySize = 100_000_000; });
         }
 
         public async Task SeedRolesAsync(IApplicationBuilder app)
@@ -104,7 +109,9 @@ namespace BubaTube
                     var adminUser = new User()
                     {
                         Email = AdminUsername,
-                        UserName = AdminUsername
+                        UserName = AdminUsername,
+                        FirstName = "Alexandra",
+                        LastName = "Petrova"
                     };
 
                     var result = await userManager.CreateAsync(adminUser);

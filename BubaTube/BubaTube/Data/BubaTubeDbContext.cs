@@ -20,7 +20,7 @@ namespace BubaTube.Data
 
         public DbSet<UserVideo> UserVideo { get; set; }
 
-        public DbSet<VideoCategory> CategoryVideo { get; set; }
+        public DbSet<VideoCategory> VideoCategory { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

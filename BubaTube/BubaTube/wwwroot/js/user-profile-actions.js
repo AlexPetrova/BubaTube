@@ -11,7 +11,7 @@
         )
     });
 
-    $('#container').on('click', 'div form label', function (event) {
+    $('#container').on('click', '#upload', function (event) {
         event.preventDefault();
         $('#file').trigger('click');
     });
@@ -22,16 +22,19 @@
 
         var tags = $('#tags').each(function () {
             var htmlCollection = this.children;
+
             for (var i = 0; i < htmlCollection.length; i++) {
-                collection.push(htmlCollection[i].textContent);
+                var text = htmlCollection[i].textContent.substring(1, htmlCollection[i].textContent.length - 1);
+
+                collection.push(text);
             }
         });
 
         return collection;
     }
 
-    $('#container').on('keydown', 'div div input', function (event) {
-        if(event.keyCode === 13){
+    $('#container').on('keydown', '#tag-field', function (event) {
+        if (event.keyCode === 13) {
             event.preventDefault();
             var tag = $('#tag-field');
 
@@ -46,28 +49,32 @@
         }
     });
 
-    $('#container').on('click', 'div div span', function (event) {
+    $('#container').on('click', '.close-tag', function (event) {
         var liToRemove = $(this).closest('li');
         liToRemove.fadeOut(300, function () { $(this).remove(); });
     });
 
     //upload form
-    $('#container').on('submit', 'div form', function (event) {
+    $('#container').on('submit', '#upload-files', function (event) {
         event.preventDefault();
-        var data = $('#upload-files').serializeArray();
-        var tag = $('#tag-field');
-        var arrayOfTags = getTags.call(tags);
+
+        var arrayOfTags = getTags();
         var file = $('#file').get(0).files[0];
 
-        data.push({ name: 'categories', value: arrayOfTags });
-        data.push({ name: 'video', value: file });
-        
-        $.post(
-            '/upload/test',
-            data,
-            function (response) {
-                $('#modal').replaceWith(response);
-            }
-        )
+        var data = new FormData(this);
+        data.append('video', file);
+        data.append('categories', arrayOfTags);
+
+        $.ajax({
+            url: '/upload/post',
+            type: 'POST',
+            success: function (response) {
+                // your code after succes
+            },
+            data: data,
+            cache: false,
+            contentType: false,
+            processData: false
+        });
     });
 });

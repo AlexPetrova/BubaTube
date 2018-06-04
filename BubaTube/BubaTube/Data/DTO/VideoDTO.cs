@@ -1,4 +1,5 @@
 ﻿using BubaTube.Data.Models;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BubaTube.Data.DTO
@@ -19,6 +20,9 @@ namespace BubaTube.Data.DTO
         public double Likes { get; set; }
 
         [Required]
-        public User Author { get; set; }
+        public string AuthorId { get; set; }
+
+        [Required]
+        public IEnumerable<string> Categories { get; set; }
     }
 }

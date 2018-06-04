@@ -21,9 +21,8 @@ namespace BubaTube.Data.Models
         public double Likes { get; set; }
 
         [Required]
-        public string UserId { get; set; }
-
-        [Required]
+        public string AuthorId { get; set; }
+        
         public User Author { get; set; }
 
         public bool IsАpproved { get; set; }

@@ -149,6 +149,9 @@ namespace BubaTube.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("AuthorId")
+                        .IsRequired();
+
                     b.Property<string>("Description")
                         .HasMaxLength(500);
 
@@ -163,12 +166,9 @@ namespace BubaTube.Migrations
                         .IsRequired()
                         .HasMaxLength(200);
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("Videos");
                 });
@@ -337,7 +337,7 @@ namespace BubaTube.Migrations
                 {
                     b.HasOne("BubaTube.Data.Models.User", "Author")
                         .WithMany("UploadedVideos")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
