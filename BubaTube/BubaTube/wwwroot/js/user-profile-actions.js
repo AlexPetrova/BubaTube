@@ -1,4 +1,5 @@
 ﻿$(function () {
+
     $('#upload-video').on('click', function (event) {
         $('container').empty();
         event.preventDefault();

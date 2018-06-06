@@ -42,7 +42,7 @@
             </div>
         </div>
     </nav>
-    <span><input class="search" placeholder="Search..." /></span>
+    <span><input id="search" class="search" placeholder="Search..." /></span>
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -71,7 +71,7 @@
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
-
+    <script src="~/js/search.js"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
