@@ -70,12 +70,6 @@ namespace BubaTube.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_CategoryVideo_Category_CategoryId1",
-                        column: x => x.CategoryId1,
-                        principalTable: "Category",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_CategoryVideo_Videos_VideoId",
                         column: x => x.VideoId,
                         principalTable: "Videos",

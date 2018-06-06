@@ -174,9 +174,9 @@
     border-radius: 25px;
 }
 
-    .register-button:hover {
-        background-color: rgb(193, 193, 193);
-    }
+.register-button:hover {
+    background-color: rgb(193, 193, 193);
+}
 
 .input-fields {
     padding-bottom: 5%;
@@ -261,7 +261,7 @@ div#container {
     margin-top: 5%;
 }
 
-/*video container*/
+/*upload video container*/
 .video-preview > img {
     width: 20%;
 }
@@ -300,3 +300,10 @@ div#container {
     color: #af2525;
 }
 
+.validation, #name-of-video {
+    height: 20px;
+}
+
+#file {
+    height: 0;
+}

@@ -1,7 +1,4 @@
-﻿using BubaTube.Data.DTO;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
 namespace BubaTube.ViewModels.UploadVideoViewModel

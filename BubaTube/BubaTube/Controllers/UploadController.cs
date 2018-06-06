@@ -8,18 +8,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BubaTube.Controllers
 {
     public class UploadController : Controller
     {
-        //service to process the path and map the dto to the db model
         private IUploadVideoService uploadVideoService;
         private IHostingEnvironment environment;
         private UserManager<User> userManager;

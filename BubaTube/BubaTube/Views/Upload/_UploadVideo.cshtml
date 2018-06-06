@@ -11,19 +11,29 @@
 
         <label id="upload" class="btn btn-default">Upload Video</label>
         <input id="file" style="visibility:hidden;" type="file" name="Video">
-        <hr />
-        <div class="form-group col-8">
-            <input class="form-control col-6" type="text" name="Title" placeholder="Title of video" />
-            <br />
-            <textarea class="form-control" name="Description" placeholder="Description"></textarea>
-        </div>
-        <br />
-        <div class="tag-section">
-            <i>Tags:</i>
-            <input id="tag-field" class="form-control" type="text" placeholder="#Tag" />
+        <div id="name-of-video"></div>
+        <div id="file-validation" class="validation text-danger"></div>
 
+        <hr />
+
+        <div class="form-group col-8">
+            <input id="title" class="form-control col-6" type="text" name="Title" placeholder="Title of video" />
+            <div id="title-validation" class="validation text-danger"></div>
+            <br />
+            <textarea id="description" class="form-control" name="Description" placeholder="Description"></textarea>
+            <div id="description-validation" class="validation text-danger"></div>
+        </div>
+
+        <br />
+
+        <div id="tag-section" class="tag-section">
+            <i>Tags:</i>
+            <input id="tag-field" class="form-control" type="text" placholder="#Tag" />
             <ul id="tags" class="tags"></ul>
         </div>
+        <div id="tag-section-validation" class="validation text-danger"></div>
+
+        <br />
 
         <button class="btn btn-info" type="submit" value="Upload">Upload</button>
     </form>

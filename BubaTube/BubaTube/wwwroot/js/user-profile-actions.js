@@ -16,6 +16,11 @@
         $('#file').trigger('click');
     });
 
+    $('#container').on('change', '#file', function () {
+        var filename = $('input[type=file]').val().split('\\').pop();
+        $('#name-of-video').html(filename);
+    });
+
     //tags
     function getTags() {
         var collection = new Array();
@@ -55,8 +60,32 @@
     });
 
     //upload form
+    function validateForm() {
+        var video = $('#file');
+        
+        var titleField = $('#title').val();
+        if (titleField.length < 5 || titleField.length > 200) {
+            var msg ='The title of the video cannot be more than 200 and less than 5 symbols.';
+            $('#title-validation').html(msg);
+        }
+
+        var descriptionField = $('#description').val();
+        if (descriptionField.length === 0) {
+            var msg = 'Put description in there.';
+            $('#description-validation').html(msg);
+        }
+
+        var tagsCount = $('#tags').children().length;
+        if (tagsCount === 0) {
+            var msg = 'No tags ? :(';
+            $('#tag-section-validation').html(msg);
+        }
+    }
+
     $('#container').on('submit', '#upload-files', function (event) {
         event.preventDefault();
+
+        validateForm();
 
         var arrayOfTags = getTags();
         var file = $('#file').get(0).files[0];

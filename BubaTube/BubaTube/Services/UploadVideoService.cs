@@ -18,6 +18,8 @@ namespace BubaTube.Services
 
         public void SaveToDatabase(VideoDTO dto)
         {
+            //TODO: check if the categories are already in the database 
+
             var categories = dto.Categories
                 .Select(x => new Category()
                 {
