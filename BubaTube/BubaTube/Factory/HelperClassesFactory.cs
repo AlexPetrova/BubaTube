@@ -9,5 +9,10 @@ namespace BubaTube.Factory
         {
             return new JSONObject(new StringBuilder());
         }
+
+        public static JSONBuilder CreateJSONBuilderInstance()
+        {
+            return new JSONBuilder(new StringBuilder());
+        }
     }
 }

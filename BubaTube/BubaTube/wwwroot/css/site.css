@@ -123,16 +123,26 @@
     }
 }
 
-.register-body {
+.upload-avatar {
+    width: 25%;
+    margin: 0 auto;
+} 
+
+.upload-avatar-btn {
+    position: absolute;
+    left: 5%;
+}
+
+.register-form {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: auto;
+    margin-top: 5%;
     height: 70%;
     border-radius: 25px;
     border: 1px solid;
     padding: 10px;
-    box-shadow: 5px 10px 8px #888888;
+    box-shadow: 2px 10px 8px #888888;
     /*opacity: 0.5;*/
 }
 
@@ -155,21 +165,24 @@
     height: 30px;
 }
 
+.input-fields {
+    padding-bottom: 5%;
+    position: relative;
+}
+
 .input-field:focus {
     outline: none;
 }
 
 .register-button {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    position: absolute;
-    left: 50%;
-    bottom: 8%;
-    transform: translate(-50%,0%);
+    margin-left: 30%;
+    margin-right: 30%;
+    left: 25%;
+    bottom: 5%;
     background-color: rgb(135, 142, 150);
-    width: 38%;
-    height: 8%;
+    width: 40%;
+    height: 15%;
     border: none;
     border-radius: 25px;
 }
@@ -178,10 +191,6 @@
     background-color: rgb(193, 193, 193);
 }
 
-.input-fields {
-    padding-bottom: 5%;
-    position: relative;
-}
 
 .navbar-inverse {
     background-color: white;

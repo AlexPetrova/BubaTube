@@ -6,8 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\Migrations\20180521083625_InitialMigrations.cs" />
-    <Compile Remove="Data\Migrations\20180521083625_InitialMigrations.Designer.cs" />
     <Compile Remove="Migrations\20180527155450_VideoCategory.cs" />
     <Compile Remove="Migrations\20180527155450_VideoCategory.Designer.cs" />
   </ItemGroup>
@@ -30,7 +28,6 @@
     <Folder Include="Areas\Admin \Data\" />
     <Folder Include="Areas\Admin \Models\" />
     <Folder Include="Areas\Admin \Views\" />
-    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 </Project>

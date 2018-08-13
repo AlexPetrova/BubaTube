@@ -12,10 +12,15 @@ namespace BubaTube.Controllers
             this.searchService = searchService;
         }
 
+        public IActionResult Search()
+        {
+            return this.View();
+        }
+
         public IActionResult Search(string input)
         {
             //json
-            return this.Ok();
+            return this.View();
         }
     }
 }
