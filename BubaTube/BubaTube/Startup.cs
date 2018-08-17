@@ -2,6 +2,7 @@
 using BubaTube.Data.Models;
 using BubaTube.Factory;
 using BubaTube.Factory.Contracts;
+using BubaTube.Helpers.Constants;
 using BubaTube.Services;
 using BubaTube.Services.Contracts;
 using Microsoft.AspNetCore.Builder;
@@ -43,6 +44,8 @@ namespace BubaTube
             services.AddTransient<IUploadVideoService, UploadVideoService>();
             services.AddTransient<IUploadVideoService, UploadVideoService>();
             services.AddTransient<IJSONHelperFactory, JSONHelperFactory>();
+            services.AddTransient<ISearchService, SearchService>();
+            services.AddSingleton<IConfiguration>(Configuration);
         }
         private void RegisterAuthentication(IServiceCollection serviceCollection)
         {
@@ -69,7 +72,7 @@ namespace BubaTube
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            this.SeedRolesAsync(app).Wait();
+            //this.SeedRolesAsync(app).Wait();
 
             app.UseStaticFiles();
 

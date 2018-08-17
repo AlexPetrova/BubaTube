@@ -27,8 +27,6 @@ namespace BubaTube.Data.Models
 
         public bool IsАpproved { get; set; }
 
-        public IEnumerable<string> Tags { get; set; }
-
         public ICollection<Comment> Comments { get; set; }
 
         public ICollection<UserVideo> UserVideo { get; set; }

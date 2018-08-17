@@ -8,6 +8,8 @@
   <ItemGroup>
     <Compile Remove="Migrations\20180527155450_VideoCategory.cs" />
     <Compile Remove="Migrations\20180527155450_VideoCategory.Designer.cs" />
+    <Compile Remove="Migrations\20180817175707_TableTags.cs" />
+    <Compile Remove="Migrations\20180817175707_TableTags.Designer.cs" />
   </ItemGroup>
 
 
