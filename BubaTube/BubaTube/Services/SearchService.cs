@@ -1,6 +1,7 @@
 ﻿using BubaTube.Data;
 using BubaTube.Data.DTO;
 using BubaTube.Factory;
+using BubaTube.Factory.Contracts;
 using BubaTube.Helpers.JSON;
 using BubaTube.Services.Contracts;
 using System;
@@ -12,11 +13,12 @@ namespace BubaTube.Services
     public class SearchService : ISearchService
     {
         private BubaTubeDbContext context;
-        private JSONBuilder json;
+        private IJSONHelperFactory factory;
 
-        public SearchService(BubaTubeDbContext context)
+        public SearchService(BubaTubeDbContext context, IJSONHelperFactory factory)
         {
             this.context = context;
+            this.factory = factory;
         }
 
         public string GetSearchResultsJSON(string input)
@@ -60,10 +62,10 @@ namespace BubaTube.Services
             var searchedValues = input.
                 Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            this.json = HelperClassesFactory.CreateJSONBuilderInstance();
+            var jsonBuilder = this.factory.CreateJSONBuilderInstance();
 
-            this.json.AddJSONArray("Videos", this.GetVideosJSONObjects(searchedValues));
-            this.json.AddJSONArray("Comments", this.GetCommentsJSONObjects(searchedValues));
+            jsonBuilder.AddJSONArray("Videos", this.GetVideosJSONObjects(searchedValues));
+            jsonBuilder.AddJSONArray("Comments", this.GetCommentsJSONObjects(searchedValues));
         }
 
         private IEnumerable<JSONObject> GetCommentsJSONObjects(string[] searchedValues)
@@ -74,17 +76,16 @@ namespace BubaTube.Services
 
             foreach (var comment in comments)
             {
-
                 if (searchedValues.Contains(comment.Content))
                 {
-                    var json = HelperClassesFactory.CreateJSONObjectInstance();
+                    var jsonObject = this.factory.CreateJSONObjectInstance();
 
-                    json.AddProperty("IdInDB", comment.Id.ToString());
-                    json.AddProperty("AuthorIDInDB", comment.UserId.ToString());
-                    json.AddProperty("Content", comment.Content);
-                    json.AddProperty("Likes", comment.Likes.ToString());
+                    jsonObject.AddProperty("IdInDB", comment.Id.ToString());
+                    jsonObject.AddProperty("AuthorIDInDB", comment.UserId.ToString());
+                    jsonObject.AddProperty("Content", comment.Content);
+                    jsonObject.AddProperty("Likes", comment.Likes.ToString());
 
-                    commentJSONObjects.Add(json);
+                    commentJSONObjects.Add(jsonObject);
                 }
             }
 
@@ -93,7 +94,7 @@ namespace BubaTube.Services
 
         private IEnumerable<JSONObject> GetVideosJSONObjects(string[] searchedValues)
         {
-            var videoJSONObjects = new List<JSONObject>();
+            var videosJSONObjects = new List<JSONObject>();
 
             var videos = this.context.Videos.ToList();
 
@@ -101,24 +102,24 @@ namespace BubaTube.Services
             {
                 if (video.Tags.Intersect(searchedValues).Any())
                 {
-                    var json = HelperClassesFactory.CreateJSONObjectInstance();
+                    var jsonObject = this.factory.CreateJSONObjectInstance();
 
-                    json.AddProperty("IDInDB", video.Id.ToString());
-                    json.AddProperty("AuthorIDInDB", video.AuthorId.ToString());
-                    json.AddProperty("Likes", video.Likes.ToString());
-                    json.AddProperty("Title", video.Title.ToString());
-                    json.AddProperty("Tags", string.Join(',', video.Tags));
+                    jsonObject.AddProperty("IDInDB", video.Id.ToString());
+                    jsonObject.AddProperty("AuthorIDInDB", video.AuthorId.ToString());
+                    jsonObject.AddProperty("Likes", video.Likes.ToString());
+                    jsonObject.AddProperty("Title", video.Title.ToString());
+                    jsonObject.AddProperty("Tags", string.Join(',', video.Tags));
 
-                    videoJSONObjects.Add(json);
+                    videosJSONObjects.Add(jsonObject);
                 }
             }
 
-            return videoJSONObjects;
+            return videosJSONObjects;
         }
 
         private IEnumerable<JSONObject> GetUsersJSONObjects(string[] searchedValues)
         {
-
+            throw new NotImplementedException();
         }
     }
 }
