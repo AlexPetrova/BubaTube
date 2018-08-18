@@ -73,29 +73,20 @@ namespace BubaTube.Services
 
             var jsonBuilder = this.factory.CreateJSONBuilderInstance();
 
-            jsonBuilder.AddJSONArray("Videos", await Task.Run(() =>  this.GetVideosJSONObjects(searchedValues)));
-            jsonBuilder.AddJSONArray("Comments", await Task.Run(() => this.GetCommentsJSONObjects(searchedValues)));
-            jsonBuilder.AddJSONArray("Users", await Task.Run(() => this.GetUsersJSONObjects(searchedValues)));
+            jsonBuilder.AddJSONArray("Videos", 
+                await Task.Run(() => this.ReadTable(searchedValues, Constants.VideosQuery, this.ReadRowInVideos)));
+            jsonBuilder.AddJSONArray("Comments", 
+                await Task.Run(() => this.ReadTable(searchedValues, Constants.CommentsQuery, this.ReadRowInComments)));
+            jsonBuilder.AddJSONArray("Users", 
+                await Task.Run(() => this.ReadTable(searchedValues, Constants.UsersQuery, this.ReadRowUsers)));
 
             return jsonBuilder.ToString();
         }
 
-        private IEnumerable<JSONObject> GetCommentsJSONObjects(string[] searchedValues)
-        {
-            return this.ReadTable(searchedValues, Constants.CommentsQuery, Constants.CommentsTable);
-        }
-
-        private IEnumerable<JSONObject> GetVideosJSONObjects(string[] searchedValues)
-        {
-            return this.ReadTable(searchedValues, Constants.VideosQuery, Constants.VideosTable);
-        }
-
-        private IEnumerable<JSONObject> GetUsersJSONObjects(string[] searchedValues)
-        {
-            return this.ReadTable(searchedValues, Constants.UsersQery, Constants.UsersTable);
-        }
-
-        private IEnumerable<JSONObject> ReadTable(string[] searchedValues, string query, string table)
+        private IEnumerable<JSONObject> ReadTable(
+            string[] searchedValues, 
+            string query, 
+            Func<IDataReader, string[], JSONObject> readerMethod)
         {
             var commentJSONObjects = new List<JSONObject>();
 
@@ -109,20 +100,8 @@ namespace BubaTube.Services
 
                 while (reader.Read())
                 {
-                    JSONObject currentRow = this.factory.CreateJSONObjectInstance();
+                    var currentRow = readerMethod(reader, searchedValues);
 
-                    if (table == Constants.VideosTable)
-                    {
-                        currentRow = this.ReadRowInVideos(reader, searchedValues);
-                    }
-                    else if (table == Constants.CommentsTable)
-                    {
-                        currentRow = this.ReadRowInComments(reader, searchedValues);
-                    }
-                    else if (table == Constants.UsersTable)
-                    {
-                        currentRow = this.ReadRowUsers(reader, searchedValues);
-                    }
                     commentJSONObjects.Add(currentRow);
                 }
 
@@ -132,17 +111,17 @@ namespace BubaTube.Services
             return commentJSONObjects;
         }
 
-        private JSONObject ReadRowUsers(IDataRecord reader, string[] searchedValues)
+        private JSONObject ReadRowUsers(IDataReader reader, string[] searchedValues)
         {
             throw new NotImplementedException();
         }
 
-        private JSONObject ReadRowInComments(IDataRecord record, string[] searchedValues)
+        private JSONObject ReadRowInComments(IDataReader reader, string[] searchedValues)
         {
-            var commentId = record[0].ToString();
-            var commentAuthorId = record[1].ToString();
-            var commentContent = record[2].ToString();
-            var commentLikes = record[3].ToString();
+            var commentId = reader[0].ToString();
+            var commentAuthorId = reader[1].ToString();
+            var commentContent = reader[2].ToString();
+            var commentLikes = reader[3].ToString();
 
             var splitedCommenendContent = commentContent
                    .Split(this.splitChars, StringSplitOptions.RemoveEmptyEntries);
