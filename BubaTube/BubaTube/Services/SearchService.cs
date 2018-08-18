@@ -23,7 +23,7 @@ namespace BubaTube.Services
         private IConfiguration configuration;
 
         public SearchService(BubaTubeDbContext context,
-            IJSONHelperFactory factory, IConfiguration configuration, )
+            IJSONHelperFactory factory, IConfiguration configuration)
         {
             this.context = context;
             this.factory = factory;
@@ -73,24 +73,24 @@ namespace BubaTube.Services
 
             var jsonBuilder = this.factory.CreateJSONBuilderInstance();
 
-            jsonBuilder.AddJSONArray("Videos", await this.GetVideosJSONObjects(searchedValues));
-            jsonBuilder.AddJSONArray("Comments", await this.GetCommentsJSONObjects(searchedValues));
-            jsonBuilder.AddJSONArray("Users", await this.GetUsersJSONObjects(searchedValues));
+            jsonBuilder.AddJSONArray("Videos", await Task.Run(() =>  this.GetVideosJSONObjects(searchedValues)));
+            jsonBuilder.AddJSONArray("Comments", await Task.Run(() => this.GetCommentsJSONObjects(searchedValues)));
+            jsonBuilder.AddJSONArray("Users", await Task.Run(() => this.GetUsersJSONObjects(searchedValues)));
 
             return jsonBuilder.ToString();
         }
 
-        private async Task<IEnumerable<JSONObject>> GetCommentsJSONObjects(string[] searchedValues)
+        private IEnumerable<JSONObject> GetCommentsJSONObjects(string[] searchedValues)
         {
             return this.ReadTable(searchedValues, Constants.CommentsQuery, Constants.CommentsTable);
         }
 
-        private async Task<IEnumerable<JSONObject>> GetVideosJSONObjects(string[] searchedValues)
+        private IEnumerable<JSONObject> GetVideosJSONObjects(string[] searchedValues)
         {
             return this.ReadTable(searchedValues, Constants.VideosQuery, Constants.VideosTable);
         }
 
-        private async Task<IEnumerable<JSONObject>> GetUsersJSONObjects(string[] searchedValues)
+        private IEnumerable<JSONObject> GetUsersJSONObjects(string[] searchedValues)
         {
             return this.ReadTable(searchedValues, Constants.UsersQery, Constants.UsersTable);
         }

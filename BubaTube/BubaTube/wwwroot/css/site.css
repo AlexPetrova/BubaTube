@@ -124,13 +124,22 @@
 }
 
 .upload-avatar {
-    width: 25%;
-    margin: 0 auto;
-} 
+    width: 100%;
+    position: relative;
+    height: 100px;
+    margin-bottom: 10px;
+}
 
 .upload-avatar-btn {
+    margin-top: 33px;
+}
+
+.upload-avatar-placeholder {
     position: absolute;
-    left: 5%;
+    right: 0;
+    top: 0;
+    width: 100px;
+    height: 100px;
 }
 
 .register-form {
@@ -155,12 +164,10 @@
 
 .input-field {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
     margin-top: 5%;
     margin-bottom: 3%;
-    width: 70%;
     border: none;
+    width: 100%;
     border-bottom: 1px solid black;
     height: 30px;
 }
@@ -168,6 +175,8 @@
 .input-fields {
     padding-bottom: 5%;
     position: relative;
+    margin: 0 auto;
+    width: 70%;
 }
 
 .input-field:focus {
@@ -176,15 +185,12 @@
 
 .register-button {
     display: block;
-    margin-left: 30%;
-    margin-right: 30%;
-    left: 25%;
-    bottom: 5%;
+    margin: 0 auto;
+    padding: 6px 30px;
+    color: white;
     background-color: rgb(135, 142, 150);
-    width: 40%;
-    height: 15%;
     border: none;
-    border-radius: 25px;
+    border-radius: 10px;
 }
 
 .register-button:hover {
@@ -317,6 +323,10 @@ div#container {
     height: 0;
 }
 
+.search-container {
+    margin-bottom: 10px;
+}
+
 .search {
     width: 130px;
     height: 35px;
@@ -325,7 +335,6 @@ div#container {
     border-radius: 4px;
     font-size: 16px;
     background-color: white;
-    background-image: url("../images/searchIcon.png");
     background-position: 10px 10px;
     background-repeat: no-repeat;
     padding: 12px 20px 12px 40px;

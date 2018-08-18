@@ -14,6 +14,7 @@
 
             reader.onload = function (e) {
                 $('#image_upload_preview').attr('src', e.target.result);
+                $('#image_upload_preview').removeClass('hidden');
             }
 
             reader.readAsDataURL(input.files[0]);

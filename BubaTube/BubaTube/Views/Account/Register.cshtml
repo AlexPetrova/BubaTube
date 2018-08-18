@@ -10,20 +10,15 @@
         <div asp-validation-summary="All" class="text-danger"></div>
         <div class="input-fields">
             <input asp-for="FirstName" class="input-field" placeholder="First name" />
-
             <input asp-for="LastName" class="input-field" placeholder="Last name" />
-
             <input asp-for="Email" class="input-field" placeholder="Email" />
-
             <input asp-for="Password" class="input-field" type="password" placeholder="Password" />
-
             <input asp-for="ConfirmPassword" class="input-field" type="password" placeholder="Repeat password" />
 
-            <div class="upload-avatar">
-                <label id="upload" class="upload-avatar-btn btn btn-default">Upload Image</label>
-                <input asp-for="Avatar" id="file" style="visibility:hidden;" type="file" name="avatar">
-
-                <img id="image_upload_preview" src="http://placehold.it/100x100" alt="your image" />
+            <div class="upload-avatar text-center">
+                <div id="upload" class="upload-avatar-btn btn btn-default">Upload Image</div>
+                    <input asp-for="Avatar" id="file" class="hidden" type="file" name="avatar">
+                <img id="image_upload_preview" class="upload-avatar-placeholder hidden" />
             </div>
 
             <button id="register-button" class="register-button" type="submit">Register</button>
