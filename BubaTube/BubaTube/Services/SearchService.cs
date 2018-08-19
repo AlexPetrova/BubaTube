@@ -22,8 +22,10 @@ namespace BubaTube.Services
         private IJSONHelperFactory factory;
         private IConfiguration configuration;
 
-        public SearchService(BubaTubeDbContext context,
-            IJSONHelperFactory factory, IConfiguration configuration)
+        public SearchService(
+            BubaTubeDbContext context,
+            IJSONHelperFactory factory, 
+            IConfiguration configuration)
         {
             this.context = context;
             this.factory = factory;
@@ -69,16 +71,18 @@ namespace BubaTube.Services
         private async Task<string> BuildJSON(string input)
         {
             var searchedValues = input.
-                Split(this.splitChars, StringSplitOptions.RemoveEmptyEntries);
+                Split(this.splitChars, StringSplitOptions.RemoveEmptyEntries).
+                Select(x => x.ToLower()).
+                ToArray();
 
             var jsonBuilder = this.factory.CreateJSONBuilderInstance();
 
             jsonBuilder.AddJSONArray("Videos", 
-                await Task.Run(() => this.ReadTable(searchedValues, Constants.VideosQuery, this.ReadRowInVideos)));
+                await Task.Run(() => this.ReadTable(searchedValues, Constants.VideosQuery, this.ReadRow)));
             jsonBuilder.AddJSONArray("Comments", 
-                await Task.Run(() => this.ReadTable(searchedValues, Constants.CommentsQuery, this.ReadRowInComments)));
+                await Task.Run(() => this.ReadTable(searchedValues, Constants.CommentsQuery, this.ReadRow)));
             jsonBuilder.AddJSONArray("Users", 
-                await Task.Run(() => this.ReadTable(searchedValues, Constants.UsersQuery, this.ReadRowUsers)));
+                await Task.Run(() => this.ReadTable(searchedValues, Constants.UsersQuery, this.ReadRow)));
 
             return jsonBuilder.ToString();
         }
@@ -111,60 +115,29 @@ namespace BubaTube.Services
             return commentJSONObjects;
         }
 
-        private JSONObject ReadRowUsers(IDataReader reader, string[] searchedValues)
+        private JSONObject ReadRow(IDataReader reader, string[] searchedValues)
         {
-            throw new NotImplementedException();
-        }
-
-        private JSONObject ReadRowInComments(IDataReader reader, string[] searchedValues)
-        {
-            var commentId = reader[0].ToString();
-            var commentAuthorId = reader[1].ToString();
-            var commentContent = reader[2].ToString();
-            var commentLikes = reader[3].ToString();
-
-            var splitedCommenendContent = commentContent
-                   .Split(this.splitChars, StringSplitOptions.RemoveEmptyEntries);
-
             var jsonObject = this.factory.CreateJSONObjectInstance();
 
-            if (splitedCommenendContent.Intersect(searchedValues).Any())
+            var rowValues = new Dictionary<string, string>();
+
+            for (int i = 0; i < reader.FieldCount; i++)
             {
-                jsonObject.AddProperty("IdInDB", commentId);
-                jsonObject.AddProperty("AuthorIDInDB", commentAuthorId);
-                jsonObject.AddProperty("Content", commentContent);
-                jsonObject.AddProperty("Likes", commentLikes);
+                var colName = reader.GetName(i);
+                var value = reader[i].ToString();
+                rowValues.Add(colName, value);
             }
 
-            return jsonObject;
-        }
+            var values = rowValues.
+                Select(x => x.Value.ToLower()).
+                ToArray();
 
-        private JSONObject ReadRowInVideos(IDataReader reader, string[] searchedValues)
-        {
-            var videoId = reader[0].ToString();
-            var videoTitle = reader[1].ToString();
-            var videoDescription = reader[2].ToString();
-            var videoPath = reader[3].ToString();
-            var videoLikes = reader[4].ToString();
-            var videoAuthorId = reader[5].ToString();
-
-            //second call to the DB??
-            var tags = this.context.Videos
-                .FirstOrDefault(x => x.Id == int.Parse(videoId))
-                .VideoCategory.Select(x => x.Category.CategoryName)
-                .ToArray();
-
-            var jsonObject = this.factory.CreateJSONObjectInstance();
-
-            if (tags.Intersect(searchedValues).Any())
+            if (searchedValues.Intersect(values).Any())
             {
-                jsonObject.AddProperty("IDInDB", videoId);
-                jsonObject.AddProperty("Title", videoTitle);
-                jsonObject.AddProperty("Description", videoDescription);
-                jsonObject.AddProperty("Path", videoPath);
-                jsonObject.AddProperty("Likes", videoLikes);
-                jsonObject.AddProperty("AuthorId", videoAuthorId);
-                jsonObject.AddProperty("Tags", string.Join(',', tags));
+                foreach (var val in rowValues)
+                {
+                    jsonObject.AddProperty(val.Key, val.Value);
+                }
             }
 
             return jsonObject;

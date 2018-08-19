@@ -20,11 +20,14 @@ namespace BubaTube.Controllers
         private IHostingEnvironment environment;
         private UserManager<User> userManager;
 
-        public UploadController(IUploadVideoService uploadVideoService, IHostingEnvironment environment, UserManager<User> userManager)
+        public UploadController(IUploadVideoService uploadVideoService, 
+            IHostingEnvironment environment, 
+            UserManager<User> userManager)
         {
             this.uploadVideoService = uploadVideoService;
             this.environment = environment;
             this.userManager = userManager;
+           
         }
 
         [Authorize]
