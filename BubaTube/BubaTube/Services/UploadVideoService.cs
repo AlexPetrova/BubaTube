@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BubaTube.Services
 {
@@ -58,11 +59,11 @@ namespace BubaTube.Services
             this.context.SaveChanges();
         }
 
-        public void SaveVideoToRootFolder(IFormFile video, string path)
+        public async Task SaveVideoToRootFolder(IFormFile video, string path)
         {
-            using (var fileStream = new FileStream(path,FileMode.Create))
+            using (var fileStream = new FileStream(path, FileMode.Create))
             {
-                video.CopyToAsync(fileStream);
+                await video.CopyToAsync(fileStream);
             }
         }
     }

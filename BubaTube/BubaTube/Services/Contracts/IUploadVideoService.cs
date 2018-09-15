@@ -1,5 +1,6 @@
 ﻿using BubaTube.Data.DTO;
 using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 namespace BubaTube.Services.Contracts
 {
@@ -7,6 +8,6 @@ namespace BubaTube.Services.Contracts
     {
         void SaveToDatabase(VideoDTO video);
 
-        void SaveVideoToRootFolder(IFormFile video, string path);
+        Task SaveVideoToRootFolder(IFormFile video, string path);
     }
 }
