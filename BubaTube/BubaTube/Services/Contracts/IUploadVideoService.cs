@@ -8,6 +8,6 @@ namespace BubaTube.Services.Contracts
     {
         void SaveToDatabase(VideoDTO video);
 
-        Task SaveVideoToRootFolder(IFormFile video, string path);
+        Task SaveToRootFolder(IFormFile video, string path);
     }
 }
