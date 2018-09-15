@@ -64,10 +64,19 @@
     function validateForm() {
         var valid = true; 
 
+        var fileField = $('#file').val();
+        if (!fileField) {
+            var msg = 'No file attached.';
+            $('#file-validation').html(msg);
+
+            valid = false;
+        }
+
         var titleField = $('#title').val();
         if (titleField.length < 5 || titleField.length > 200) {
             var msg ='The title of the video cannot be more than 200 and less than 5 symbols.';
             $('#title-validation').html(msg);
+
             valid = false;
         }
 
@@ -75,6 +84,7 @@
         if (descriptionField.length === 0) {
             var msg = 'Put description in there.';
             $('#description-validation').html(msg);
+
             valid = false;
         }
 
@@ -82,6 +92,7 @@
         if (tagsCount === 0) {
             var msg = 'No tags ? :(';
             $('#tag-section-validation').html(msg);
+
             valid = false;
         }
 
@@ -124,5 +135,17 @@
             contentType: false,
             processData: false
         });
+
+        clearAllFields();
     });
+
+    function clearAllFields() {
+        $('#upload-files')[0].reset();
+        $('#name-of-video').html('');
+        $('#tags').html('');
+        $('#tag-section-validation').html('');
+        $('#description-validation').html('');
+        $('#title-validation').html('');
+        $('#file-validation').html('');
+    }
 });
