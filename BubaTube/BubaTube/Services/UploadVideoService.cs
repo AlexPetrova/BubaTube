@@ -4,6 +4,7 @@ using BubaTube.Data.Models;
 using BubaTube.Factory.Contracts;
 using BubaTube.Services.Contracts;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,19 +25,9 @@ namespace BubaTube.Services
 
         public void SaveToDatabase(VideoDTO dto)
         {
-            //TODO: check if the categories are already in the database 
+            this.SaveCategories(dto);
 
-            var categories = dto.Categories
-                .Select(x => new Category()
-                {
-                    CategoryName = x,
-                    VideoCategory = new List<VideoCategory>()
-                })
-                .ToList();
-
-            this.context.Category.AddRange(categories);
-
-            this.context.SaveChanges();
+            var categorieIDs = this.TakeCategoryIds(dto.Categories);
 
             var model = new Video()
             {
@@ -47,11 +38,11 @@ namespace BubaTube.Services
                 VideoCategory = new List<VideoCategory>()
             };
 
-            foreach (var category in categories)
+            foreach (var id in categorieIDs)
             {
                 model.VideoCategory.Add(new VideoCategory()
                 {
-                    CategoryId = category.Id
+                    CategoryId = id
                 });
             }
 
@@ -59,13 +50,50 @@ namespace BubaTube.Services
 
             this.context.SaveChanges();
         }
-
+        
         public async Task SaveToRootFolder(IFormFile video, string path)
         {
             using (var fileStream = this.fileStreamFactory.CreateFileStreamInstance(path, FileMode.Create))
             {
                 await video.CopyToAsync(fileStream);
             }
+        }
+
+        private IEnumerable<Category> FilterCategories(IEnumerable<string> categories)
+        {
+            var categoryNamesSavedInDB = this.context.Category
+                .Select(x => x.CategoryName)
+                .ToList();
+
+            var different = categories.Except(categoryNamesSavedInDB);
+
+            var filtered = different.
+                Select(x => new Category()
+                {
+                    CategoryName = x,
+                    VideoCategory = new List<VideoCategory>()
+                })
+                .ToList();
+
+            return filtered;
+        }
+
+        private void SaveCategories(VideoDTO dto)
+        {
+            var categories = this.FilterCategories(dto.Categories);
+
+            this.context.Category.AddRange(categories);
+
+            this.context.SaveChanges();
+        }
+
+        private IEnumerable<int> TakeCategoryIds(IEnumerable<string> categories)
+        {
+            var result = this.context.Category
+                .TakeWhile(x => categories.Contains(x.CategoryName))
+                .Select(x => x.Id);
+
+            return result;
         }
     }
 }

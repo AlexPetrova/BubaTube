@@ -42,17 +42,15 @@ namespace BubaTube.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [RequestSizeLimit(100000000)]
         public async Task<IActionResult> Post(UploadVideoViewModel model)
         {
-            //not binding the js array 
-            var str = model.Categories[0];
-            model.Categories = str.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToArray();
-            
-            var path = this.uploadVideoHelper.GeneratePath(this.environment.WebRootPath);
-
             if (ModelState.IsValid)
             {
+                var str = model.Categories[0];
+                model.Categories = str.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToArray();
+
+                var path = this.uploadVideoHelper.GeneratePath(this.environment.WebRootPath);
+
                 try
                 {
                     await this.uploadVideoService.SaveToRootFolder(model.Video, path);
@@ -61,21 +59,20 @@ namespace BubaTube.Controllers
                 {
                     return this.StatusCode(500);
                 }
+
+                var dto = new VideoDTO()
+                {
+                    Title = model.Title,
+                    Description = model.Description,
+                    Path = path,
+                    AuthorId = this.userManager.GetUserId(HttpContext.User),
+                    Categories = model.Categories
+                };
+
+                this.uploadVideoService.SaveToDatabase(dto);
             }
-
-            var dto = new VideoDTO()
-            {
-                Title = model.Title,
-                Description = model.Description,
-                Path = path,
-                AuthorId = this.userManager.GetUserId(HttpContext.User),
-                Categories = model.Categories
-            };
-
-            this.uploadVideoService.SaveToDatabase(dto);
-
+            
             return Ok();
         }
-
     }
 }
