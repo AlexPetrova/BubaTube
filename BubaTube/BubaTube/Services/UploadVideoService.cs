@@ -2,7 +2,11 @@
 using BubaTube.Data.DTO;
 using BubaTube.Data.Models;
 using BubaTube.Services.Contracts;
+using BubaTube.ViewModels.UploadVideoViewModel;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace BubaTube.Services
@@ -53,6 +57,13 @@ namespace BubaTube.Services
 
             this.context.SaveChanges();
         }
-        
+
+        public void SaveVideoToRootFolder(IFormFile video, string path)
+        {
+            using (var fileStream = new FileStream(path,FileMode.Create))
+            {
+                video.CopyToAsync(fileStream);
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BubaTube.Data.DTO;
 using BubaTube.Data.Models;
+using BubaTube.Helpers.Contracts;
 using BubaTube.Services.Contracts;
 using BubaTube.ViewModels.UploadVideoViewModel;
 using Microsoft.AspNetCore.Authorization;
@@ -19,15 +20,17 @@ namespace BubaTube.Controllers
         private IUploadVideoService uploadVideoService;
         private IHostingEnvironment environment;
         private UserManager<User> userManager;
+        private IUploadVideoHelper uploadVideoHelper;
 
         public UploadController(IUploadVideoService uploadVideoService, 
             IHostingEnvironment environment, 
-            UserManager<User> userManager)
+            UserManager<User> userManager,
+            IUploadVideoHelper uploadVideoHelper)
         {
             this.uploadVideoService = uploadVideoService;
             this.environment = environment;
             this.userManager = userManager;
-           
+            this.uploadVideoHelper = uploadVideoHelper;
         }
 
         [Authorize]
@@ -45,16 +48,14 @@ namespace BubaTube.Controllers
             //not binding the js array 
             var str = model.Categories[0];
             model.Categories = str.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToArray();
-
-            var folder = Path.Combine(this.environment.WebRootPath, "video");
-            var nameOfVideo = Guid.NewGuid();
-            var path = Path.Combine(folder, nameOfVideo.ToString() + ".mp4");
+            
+            var path = this.uploadVideoHelper.GeneratePath(this.environment.WebRootPath);
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    await model.Video.CopyToAsync(new FileStream(path, FileMode.Create));
+                    this.uploadVideoService.SaveVideoToRootFolder(model.Video, path);
                 }
                 catch
                 {
