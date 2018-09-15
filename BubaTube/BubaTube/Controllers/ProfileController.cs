@@ -26,7 +26,6 @@ namespace BubaTube.Controllers
         {
             var user = await this.userManager.GetUserAsync(HttpContext.User);
             
-
             return PartialView("_Owner");
         }
     }

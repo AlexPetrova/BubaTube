@@ -9,7 +9,7 @@
             function (data) {
                 $('#container').html(data);
             }
-        )
+        );
     });
 
     $('#container').on('click', '#upload', function (event) {
@@ -62,31 +62,38 @@
 
     //upload form
     function validateForm() {
-        var video = $('#file');
-        
+        var valid = true; 
+
         var titleField = $('#title').val();
         if (titleField.length < 5 || titleField.length > 200) {
             var msg ='The title of the video cannot be more than 200 and less than 5 symbols.';
             $('#title-validation').html(msg);
+            valid = false;
         }
 
         var descriptionField = $('#description').val();
         if (descriptionField.length === 0) {
             var msg = 'Put description in there.';
             $('#description-validation').html(msg);
+            valid = false;
         }
 
         var tagsCount = $('#tags').children().length;
         if (tagsCount === 0) {
             var msg = 'No tags ? :(';
             $('#tag-section-validation').html(msg);
+            valid = false;
         }
+
+        return valid;
     }
 
     $('#container').on('submit', '#upload-files', function (event) {
         event.preventDefault();
 
-        validateForm();
+        if (!validateForm()) {
+            return;
+        }
 
         var arrayOfTags = getTags();
         var file = $('#file').get(0).files[0];
@@ -99,7 +106,18 @@
             url: '/upload/post',
             type: 'POST',
             success: function (response) {
-                // your code after succes
+                $.get(
+                    '/upload/successResponse',
+                    function (data) {
+                        $('#success-response').html(data);
+                    });
+            },
+            error: function (response) {
+                $.get(
+                    '/upload/errorResponse',
+                    function (data) {
+                        $('#error-response').html(data);
+                    });
             },
             data: data,
             cache: false,

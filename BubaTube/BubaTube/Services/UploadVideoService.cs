@@ -4,7 +4,6 @@ using BubaTube.Data.Models;
 using BubaTube.Factory.Contracts;
 using BubaTube.Services.Contracts;
 using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -90,6 +89,7 @@ namespace BubaTube.Services
         private IEnumerable<int> TakeCategoryIds(IEnumerable<string> categories)
         {
             var result = this.context.Category
+                .ToList()
                 .TakeWhile(x => categories.Contains(x.CategoryName))
                 .Select(x => x.Id);
 

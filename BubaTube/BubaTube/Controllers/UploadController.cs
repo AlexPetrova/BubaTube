@@ -74,5 +74,17 @@ namespace BubaTube.Controllers
             
             return Ok();
         }
+
+        [Authorize]
+        public IActionResult ErrorResponse()
+        {
+            return this.PartialView("_ErrorResponse");
+        }
+
+        [Authorize]
+        public IActionResult SuccessResponse()
+        {
+            return this.PartialView("_SuccessResponse");
+        }
     }
 }
