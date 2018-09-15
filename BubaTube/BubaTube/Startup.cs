@@ -2,6 +2,8 @@
 using BubaTube.Data.Models;
 using BubaTube.Factory;
 using BubaTube.Factory.Contracts;
+using BubaTube.Helpers;
+using BubaTube.Helpers.Contracts;
 using BubaTube.Services;
 using BubaTube.Services.Contracts;
 using Microsoft.AspNetCore.Builder;
@@ -43,7 +45,9 @@ namespace BubaTube
             services.AddTransient<IUploadVideoService, UploadVideoService>();
             services.AddTransient<IUploadVideoService, UploadVideoService>();
             services.AddTransient<IJSONHelperFactory, JSONHelperFactory>();
+            services.AddTransient<IFileStreamFactory, FileStreamFactory>();
             services.AddTransient<ISearchService, SearchService>();
+            services.AddTransient<IUploadVideoHelper, UploadVideoHelper>();
             services.AddSingleton<IConfiguration>(Configuration);
         }
         private void RegisterAuthentication(IServiceCollection serviceCollection)
