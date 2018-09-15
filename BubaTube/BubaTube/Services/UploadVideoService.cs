@@ -1,6 +1,7 @@
 ﻿using BubaTube.Data;
 using BubaTube.Data.DTO;
 using BubaTube.Data.Models;
+using BubaTube.Factory.Contracts;
 using BubaTube.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
@@ -13,10 +14,12 @@ namespace BubaTube.Services
     public class UploadVideoService : IUploadVideoService
     {
         private BubaTubeDbContext context;
+        private IFileStreamFactory fileStreamFactory;
 
-        public UploadVideoService(BubaTubeDbContext context)
+        public UploadVideoService(BubaTubeDbContext context, IFileStreamFactory fileStreamFactory)
         {
             this.context = context;
+            this.fileStreamFactory = fileStreamFactory;
         }
 
         public void SaveToDatabase(VideoDTO dto)
@@ -59,7 +62,7 @@ namespace BubaTube.Services
 
         public async Task SaveToRootFolder(IFormFile video, string path)
         {
-            using (var fileStream = new FileStream(path, FileMode.Create))
+            using (var fileStream = this.fileStreamFactory.CreateFileStreamInstance(path, FileMode.Create))
             {
                 await video.CopyToAsync(fileStream);
             }

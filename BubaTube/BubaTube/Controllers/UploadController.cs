@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,19 +17,20 @@ namespace BubaTube.Controllers
     public class UploadController : Controller
     {
         private IUploadVideoService uploadVideoService;
+        private IUploadVideoHelper uploadVideoHelper;
         private IHostingEnvironment environment;
         private UserManager<User> userManager;
-        private IUploadVideoHelper uploadVideoHelper;
 
-        public UploadController(IUploadVideoService uploadVideoService, 
+        public UploadController
+            (IUploadVideoService uploadVideoService,
+            IUploadVideoHelper uploadVideoHelper,
             IHostingEnvironment environment, 
-            UserManager<User> userManager,
-            IUploadVideoHelper uploadVideoHelper)
+            UserManager<User> userManager)
         {
             this.uploadVideoService = uploadVideoService;
+            this.uploadVideoHelper = uploadVideoHelper;
             this.environment = environment;
             this.userManager = userManager;
-            this.uploadVideoHelper = uploadVideoHelper;
         }
 
         [Authorize]
