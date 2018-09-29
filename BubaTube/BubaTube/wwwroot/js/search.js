@@ -1,15 +1,26 @@
-﻿(function () {
-
-    $('#search').on('click', function () {
-        $.post(
-            '/search/search'
-        )
-    });
-
-    $('#search').on('keydown', function (event) {
+﻿$(function () {
+    $('#search').on('keyup', function (event) {
         if (event.keyCode === 13) {
-            var value = $('#search').val();
+            var data = $('#search').val();
+            var response = searchHelper.search(data);
         }
     });
-
 })
+
+var searchHelper = (function () {
+    var searchObj = {};
+
+    searchObj.search = function (data) {
+        $.post(
+            '/search/search',
+            'data=' + data,
+            function (response, status) {
+                if (status == 200) {
+                    return response;
+                }
+            }
+        );
+    };
+
+    return searchObj;
+})();

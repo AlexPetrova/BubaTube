@@ -1,5 +1,6 @@
 ﻿using BubaTube.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace BubaTube.Controllers
 {
@@ -12,15 +13,11 @@ namespace BubaTube.Controllers
             this.searchService = searchService;
         }
 
-        public IActionResult Search()
+        [HttpPost]
+        public async Task<string> Search(string data)
         {
-            return this.View();
-        }
-
-        public IActionResult Search(string input)
-        {
-            //json
-            return this.View();
+            var result = await this.searchService.GetSearchResultsJSON(data);
+            return result;
         }
     }
 }
