@@ -9,7 +9,7 @@ namespace BubaTube.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(200, ErrorMessage = "", MinimumLength = 5)]
+        [StringLength(200, ErrorMessage = "The title of video cannot be less than 5 or more tha 200 symbols.", MinimumLength = 5)]
         public string Title { get; set; }
 
         [StringLength(500)]
