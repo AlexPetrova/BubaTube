@@ -24,8 +24,6 @@ namespace BubaTube.Services
 
         public void SaveToDatabase(VideoDTO dto)
         {
-            this.SaveCategories(dto);
-
             var categorieIDs = this.TakeCategoryIds(dto.Categories);
 
             var model = new Video()
@@ -56,34 +54,6 @@ namespace BubaTube.Services
             {
                 await video.CopyToAsync(fileStream);
             }
-        }
-
-        private IEnumerable<Category> FilterCategories(IEnumerable<string> categories)
-        {
-            var categoryNamesSavedInDB = this.context.Category
-                .Select(x => x.CategoryName)
-                .ToList();
-
-            var different = categories.Except(categoryNamesSavedInDB);
-
-            var filtered = different.
-                Select(x => new Category()
-                {
-                    CategoryName = x,
-                    VideoCategory = new List<VideoCategory>()
-                })
-                .ToList();
-
-            return filtered;
-        }
-
-        private void SaveCategories(VideoDTO dto)
-        {
-            var categories = this.FilterCategories(dto.Categories);
-
-            this.context.Category.AddRange(categories);
-
-            this.context.SaveChanges();
         }
 
         private IEnumerable<int> TakeCategoryIds(IEnumerable<string> categories)

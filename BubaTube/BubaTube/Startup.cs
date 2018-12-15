@@ -44,6 +44,7 @@ namespace BubaTube
             services.AddTransient<BubaTubeDbContext>();
             services.AddTransient<IUploadVideoService, UploadVideoService>();
             services.AddTransient<IUploadVideoService, UploadVideoService>();
+            services.AddTransient<ICategorySaverService, CategorySaverService>();
             services.AddTransient<IJSONHelperFactory, JSONHelperFactory>();
             services.AddTransient<IFileStreamFactory, FileStreamFactory>();
             services.AddTransient<ISearchService, SearchService>();

@@ -17,17 +17,20 @@ namespace BubaTube.Controllers
     public class UploadController : Controller
     {
         private IUploadVideoService uploadVideoService;
+        private ICategorySaverService categorySaverService;
         private IUploadVideoHelper uploadVideoHelper;
         private IHostingEnvironment environment;
         private UserManager<User> userManager;
 
         public UploadController
             (IUploadVideoService uploadVideoService,
+            ICategorySaverService categorySaverService,
             IUploadVideoHelper uploadVideoHelper,
             IHostingEnvironment environment, 
             UserManager<User> userManager)
         {
             this.uploadVideoService = uploadVideoService;
+            this.categorySaverService = categorySaverService;
             this.uploadVideoHelper = uploadVideoHelper;
             this.environment = environment;
             this.userManager = userManager;
@@ -69,6 +72,7 @@ namespace BubaTube.Controllers
                     Categories = model.Categories
                 };
 
+                this.categorySaverService.SaveToDatabase(dto.Categories);
                 this.uploadVideoService.SaveToDatabase(dto);
             }
             
