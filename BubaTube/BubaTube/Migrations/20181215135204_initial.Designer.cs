@@ -11,8 +11,8 @@ using System;
 namespace BubaTube.Migrations
 {
     [DbContext(typeof(BubaTubeDbContext))]
-    [Migration("20180604124000_nameOfColInVideoTable")]
-    partial class nameOfColInVideoTable
+    [Migration("20181215135204_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -180,15 +180,11 @@ namespace BubaTube.Migrations
 
                     b.Property<int>("VideoId");
 
-                    b.Property<int?>("CategoryId1");
-
                     b.HasKey("CategoryId", "VideoId");
-
-                    b.HasIndex("CategoryId1");
 
                     b.HasIndex("VideoId");
 
-                    b.ToTable("CategoryVideo");
+                    b.ToTable("VideoCategory");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -344,14 +340,10 @@ namespace BubaTube.Migrations
 
             modelBuilder.Entity("BubaTube.Data.Models.VideoCategory", b =>
                 {
-                    b.HasOne("BubaTube.Data.Models.Category")
+                    b.HasOne("BubaTube.Data.Models.Category", "Category")
                         .WithMany("VideoCategory")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("BubaTube.Data.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId1");
 
                     b.HasOne("BubaTube.Data.Models.Video", "Video")
                         .WithMany("VideoCategory")

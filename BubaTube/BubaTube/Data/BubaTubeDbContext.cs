@@ -42,13 +42,13 @@ namespace BubaTube.Data
                  .HasKey(x => new { x.CategoryId, x.VideoId });
 
             builder.Entity<VideoCategory>()
-                .HasOne<Video>(x => x.Video)
+                .HasOne(x => x.Video)
                 .WithMany(x => x.VideoCategory)
                 .HasForeignKey(x => x.VideoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<VideoCategory>()
-                .HasOne<Category>()
+                .HasOne(x => x.Category)
                 .WithMany(x => x.VideoCategory)
                 .HasForeignKey(x => x.CategoryId)
                 .OnDelete(DeleteBehavior.Restrict);
