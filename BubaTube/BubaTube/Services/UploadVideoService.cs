@@ -22,7 +22,7 @@ namespace BubaTube.Services
             this.fileStreamFactory = fileStreamFactory;
         }
 
-        public void SaveToDatabase(VideoDTO dto)
+        public Video SaveToDatabase(VideoDTO dto)
         {
             var categorieIDs = this.TakeCategoryIds(dto.Categories);
 
@@ -46,6 +46,8 @@ namespace BubaTube.Services
             this.context.Videos.Add(model);
 
             this.context.SaveChanges();
+
+            return model;
         }
         
         public async Task SaveToRootFolder(IFormFile video, string path)
@@ -56,12 +58,12 @@ namespace BubaTube.Services
             }
         }
 
-        private IEnumerable<int> TakeCategoryIds(IEnumerable<string> categories)
+        public IEnumerable<int> TakeCategoryIds(IEnumerable<string> categories)
         {
             var result = this.context.Category
-                .ToList()
-                .TakeWhile(x => categories.Contains(x.CategoryName))
-                .Select(x => x.Id);
+                .Where(x => categories.Contains(x.CategoryName) && x.IsАpproved == true)
+                .Select(x => x.Id)
+                .ToList();
 
             return result;
         }
