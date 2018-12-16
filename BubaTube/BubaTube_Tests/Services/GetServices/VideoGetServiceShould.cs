@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace BubaTube_Tests.Services
+namespace BubaTube_Tests.Services.WriteServices
 {
-    public class UploadVideoServiceShould
+    public class VideoGetServiceShould
     {
         [Fact]
         public void SaveToDatabase()
