@@ -1,9 +1,9 @@
 ﻿using BubaTube.Data;
 using BubaTube.Data.DTO;
-using BubaTube.Data.Models;
 using BubaTube.Factory.Contracts;
 using BubaTube.Services.Contracts.Get;
 using BubaTube.Services.WriteServices;
+using BubaTube_Tests.MockData;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using Xunit;
 
 namespace BubaTube_Tests.Services.WriteServices
 {
-    public class VideoGetServiceShould
+    public class VideoWriteServiceShould
     {
         [Fact]
         public void SaveToDatabase()
@@ -24,7 +24,7 @@ namespace BubaTube_Tests.Services.WriteServices
             using (var context = new BubaTubeDbContext(options))
             {
                 var uploadService = new VideoWriteService(
-                    context, 
+                    context,
                     fileStreamFactory.Object,
                     categoryGetService.Object);
 
@@ -47,7 +47,7 @@ namespace BubaTube_Tests.Services.WriteServices
             using (var context = new BubaTubeDbContext(options))
             {
                 var uploadVideoService = new VideoWriteService(
-                    context, 
+                    context,
                     fileStreamFactory.Object,
                     categoryGetService.Object);
 
@@ -81,7 +81,7 @@ namespace BubaTube_Tests.Services.WriteServices
                 model.Categories = categories;
 
                 var uploadVideoService = new VideoWriteService(
-                    context, 
+                    context,
                     fileStreamFactory.Object,
                     categoryGetService.Object);
 
@@ -98,16 +98,22 @@ namespace BubaTube_Tests.Services.WriteServices
             var options = this.GetOptions("SaveToDatabaseAddsCorrectlyListOfCategoriesPerModel");
             var fileStreamFactory = new Mock<IFileStreamFactory>();
             var categoryGetService = new Mock<ICategoryGetService>();
-            var categories = new List<string>() { "Test1" };
+            var categories = new List<string>();
 
-            categoryGetService
-                .Setup(mock => mock.TakeCategoryIds(categories))
-                .Returns(new List<int>() { 2 });
+
 
             using (var context = new BubaTubeDbContext(options))
             {
-                context.Category.AddRange(this.GetListOfCategoryModels());
+                var categoryMockDataProvider = new CategoryMockData();
+                context.Category.AddRange(categoryMockDataProvider.GetListOfCategoryModels());
                 context.SaveChanges();
+
+                var categoryFromDb = context.Category
+                     .First(x => x.IsАpproved == true);
+                categoryGetService
+                   .Setup(mock => mock.TakeCategoryIds(categories))
+                   .Returns(new List<int>() { categoryFromDb.Id });
+
                 var model = this.GetVideoDto();
                 model.Categories = categories;
 
@@ -117,8 +123,9 @@ namespace BubaTube_Tests.Services.WriteServices
                     categoryGetService.Object);
 
                 var savedVideo = uploadVideoService.SaveToDatabase(model);
-                
-                Assert.Equal("Test1", savedVideo.VideoCategory.First().Category.CategoryName);
+
+
+                Assert.Equal(categoryFromDb.CategoryName, savedVideo.VideoCategory.First().Category.CategoryName);
                 Assert.Same(savedVideo, savedVideo.VideoCategory.First().Video);
             }
         }
@@ -138,38 +145,6 @@ namespace BubaTube_Tests.Services.WriteServices
                 Description = "test",
                 Likes = 1,
                 Path = @"\Folder\Name.mp4"
-            };
-        }
-
-        private IEnumerable<Category> GetListOfCategoryModels()
-        {
-            return new List<Category>()
-            {
-                new Category()
-                {
-                    CategoryName = "Test0",
-                    IsАpproved = false
-                },
-                new Category()
-                {
-                    CategoryName = "Test1",
-                    IsАpproved = true
-                },
-                new Category()
-                {
-                    CategoryName = "Test2",
-                    IsАpproved = true
-                },
-                new Category()
-                {
-                    CategoryName = "Test3",
-                    IsАpproved = true
-                },
-                new Category()
-                {
-                    CategoryName = "Test4",
-                    IsАpproved = false
-                },
             };
         }
     }
