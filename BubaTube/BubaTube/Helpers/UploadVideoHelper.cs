@@ -6,7 +6,7 @@ namespace BubaTube.Helpers
 {
     public class UploadVideoHelper : IUploadVideoHelper
     {
-        public string GeneratePath(string environmetWebRootFolder)
+        public string GeneratePath(string environmetWebRootFolder, string fileExtension = null)
         {
             var folder = Path.Combine(environmetWebRootFolder, "video");
             var nameOfVideo = Guid.NewGuid();
