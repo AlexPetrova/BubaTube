@@ -69,13 +69,17 @@ namespace BubaTube_Tests.Services
             var options = this.GetOptions("SaveToDatabaseAddsCorrectlyListOfCategoriesPerModel");
             var fileStreamFactory = new Mock<IFileStreamFactory>();
             var categoryGetService = new Mock<ICategoryGetService>();
+            var categories = new List<string>() { "Test1" };
+
+            categoryGetService
+                .Setup(mock => mock.TakeCategoryIds(categories))
+                .Returns(new List<int>() { 2 });
 
             using (var context = new BubaTubeDbContext(options))
             {
-                context.Category.AddRange(this.GetListOfCategoryModels());
-                context.SaveChanges();
                 var model = this.GetVideoDto();
-                model.Categories = new List<string>() { "Test2" };
+                model.Categories = categories;
+
                 var uploadVideoService = new VideoWriteService(
                     context, 
                     fileStreamFactory.Object,
@@ -84,10 +88,40 @@ namespace BubaTube_Tests.Services
                 var savedVideo = uploadVideoService.SaveToDatabase(model);
 
                 Assert.Equal(1, savedVideo.VideoCategory.Count);
-                Assert.Equal("Test2", savedVideo.VideoCategory.First().Category.CategoryName);
+                Assert.Equal(2, savedVideo.VideoCategory.First().CategoryId);
             }
         }
 
+        [Fact]
+        public void SaveToDatabaseCreatesNavigationPropertyBetweenVideoAndCategory()
+        {
+            var options = this.GetOptions("SaveToDatabaseAddsCorrectlyListOfCategoriesPerModel");
+            var fileStreamFactory = new Mock<IFileStreamFactory>();
+            var categoryGetService = new Mock<ICategoryGetService>();
+            var categories = new List<string>() { "Test1" };
+
+            categoryGetService
+                .Setup(mock => mock.TakeCategoryIds(categories))
+                .Returns(new List<int>() { 2 });
+
+            using (var context = new BubaTubeDbContext(options))
+            {
+                context.Category.AddRange(this.GetListOfCategoryModels());
+                context.SaveChanges();
+                var model = this.GetVideoDto();
+                model.Categories = categories;
+
+                var uploadVideoService = new VideoWriteService(
+                    context,
+                    fileStreamFactory.Object,
+                    categoryGetService.Object);
+
+                var savedVideo = uploadVideoService.SaveToDatabase(model);
+                
+                Assert.Equal("Test1", savedVideo.VideoCategory.First().Category.CategoryName);
+                Assert.Same(savedVideo, savedVideo.VideoCategory.First().Video);
+            }
+        }
         private DbContextOptions<BubaTubeDbContext> GetOptions(string name)
         {
             return new DbContextOptionsBuilder<BubaTubeDbContext>()
