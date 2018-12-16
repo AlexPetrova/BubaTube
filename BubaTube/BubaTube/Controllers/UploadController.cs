@@ -2,6 +2,7 @@
 using BubaTube.Data.Models;
 using BubaTube.Helpers.Contracts;
 using BubaTube.Services.Contracts;
+using BubaTube.Services.Contracts.Write;
 using BubaTube.ViewModels.UploadVideoViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -16,20 +17,20 @@ namespace BubaTube.Controllers
 {
     public class UploadController : Controller
     {
-        private IUploadVideoService uploadVideoService;
-        private ICategorySaverService categorySaverService;
+        private IVideoWriteService videoWriteService;
+        private ICategoryWriteService categorySaverService;
         private IUploadVideoHelper uploadVideoHelper;
         private IHostingEnvironment environment;
         private UserManager<User> userManager;
 
         public UploadController
-            (IUploadVideoService uploadVideoService,
-            ICategorySaverService categorySaverService,
+            (IVideoWriteService videoWriteService,
+            ICategoryWriteService categorySaverService,
             IUploadVideoHelper uploadVideoHelper,
             IHostingEnvironment environment, 
             UserManager<User> userManager)
         {
-            this.uploadVideoService = uploadVideoService;
+            this.videoWriteService = videoWriteService;
             this.categorySaverService = categorySaverService;
             this.uploadVideoHelper = uploadVideoHelper;
             this.environment = environment;
@@ -56,7 +57,7 @@ namespace BubaTube.Controllers
 
                 try
                 {
-                    await this.uploadVideoService.SaveToRootFolder(model.Video, path);
+                    await this.videoWriteService.SaveToRootFolder(model.Video, path);
                 }
                 catch
                 {
@@ -73,7 +74,7 @@ namespace BubaTube.Controllers
                 };
 
                 this.categorySaverService.SaveToDatabase(dto.Categories);
-                this.uploadVideoService.SaveToDatabase(dto);
+                this.videoWriteService.SaveToDatabase(dto);
             }
             
             return Ok();

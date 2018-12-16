@@ -3,9 +3,9 @@ using BubaTube.Data.Models;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace BubaTube.Services.Contracts
+namespace BubaTube.Services.Contracts.Write
 {
-    public interface IUploadVideoService
+    public interface IVideoWriteService
     {
         Video SaveToDatabase(VideoDTO video);
 

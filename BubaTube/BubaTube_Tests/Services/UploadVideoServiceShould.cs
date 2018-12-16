@@ -2,7 +2,8 @@
 using BubaTube.Data.DTO;
 using BubaTube.Data.Models;
 using BubaTube.Factory.Contracts;
-using BubaTube.Services;
+using BubaTube.Services.Contracts.Get;
+using BubaTube.Services.WriteServices;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using System.Collections.Generic;
@@ -18,10 +19,15 @@ namespace BubaTube_Tests.Services
         {
             var options = this.GetOptions("SaveVideo");
             var fileStreamFactory = new Mock<IFileStreamFactory>();
+            var categoryGetService = new Mock<ICategoryGetService>();
 
             using (var context = new BubaTubeDbContext(options))
             {
-                var uploadService = new UploadVideoService(context, fileStreamFactory.Object);
+                var uploadService = new VideoWriteService(
+                    context, 
+                    fileStreamFactory.Object,
+                    categoryGetService.Object);
+
                 var model = this.GetVideoDto();
 
                 var video = uploadService.SaveToDatabase(model);
@@ -36,10 +42,15 @@ namespace BubaTube_Tests.Services
         {
             var options = this.GetOptions("SaveToDatabaseCorrectData");
             var fileStreamFactory = new Mock<IFileStreamFactory>();
+            var categoryGetService = new Mock<ICategoryGetService>();
 
             using (var context = new BubaTubeDbContext(options))
             {
-                var uploadVideoService = new UploadVideoService(context, fileStreamFactory.Object);
+                var uploadVideoService = new VideoWriteService(
+                    context, 
+                    fileStreamFactory.Object,
+                    categoryGetService.Object);
+
                 var model = this.GetVideoDto();
 
                 uploadVideoService.SaveToDatabase(model);
@@ -57,6 +68,7 @@ namespace BubaTube_Tests.Services
         {
             var options = this.GetOptions("SaveToDatabaseAddsCorrectlyListOfCategoriesPerModel");
             var fileStreamFactory = new Mock<IFileStreamFactory>();
+            var categoryGetService = new Mock<ICategoryGetService>();
 
             using (var context = new BubaTubeDbContext(options))
             {
@@ -64,7 +76,10 @@ namespace BubaTube_Tests.Services
                 context.SaveChanges();
                 var model = this.GetVideoDto();
                 model.Categories = new List<string>() { "Test2" };
-                var uploadVideoService = new UploadVideoService(context, fileStreamFactory.Object);
+                var uploadVideoService = new VideoWriteService(
+                    context, 
+                    fileStreamFactory.Object,
+                    categoryGetService.Object);
 
                 var savedVideo = uploadVideoService.SaveToDatabase(model);
 

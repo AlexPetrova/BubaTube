@@ -2,29 +2,35 @@
 using BubaTube.Data.DTO;
 using BubaTube.Data.Models;
 using BubaTube.Factory.Contracts;
-using BubaTube.Services.Contracts;
+using BubaTube.Services.Contracts.Get;
+using BubaTube.Services.Contracts.Write;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BubaTube.Services
+namespace BubaTube.Services.WriteServices
 {
-    public class UploadVideoService : IUploadVideoService
+    public class VideoWriteService : IVideoWriteService
     {
         private BubaTubeDbContext context;
         private IFileStreamFactory fileStreamFactory;
+        private ICategoryGetService categoryGetService;
 
-        public UploadVideoService(BubaTubeDbContext context, IFileStreamFactory fileStreamFactory)
+        public VideoWriteService(
+            BubaTubeDbContext context, 
+            IFileStreamFactory fileStreamFactory,
+            ICategoryGetService categoryGetService)
         {
             this.context = context;
             this.fileStreamFactory = fileStreamFactory;
+            this.categoryGetService = categoryGetService;
         }
 
         public Video SaveToDatabase(VideoDTO dto)
         {
-            var categorieIDs = this.TakeCategoryIds(dto.Categories);
+            var categorieIDs = this.categoryGetService.TakeCategoryIds(dto.Categories);
 
             var model = new Video()
             {
@@ -56,16 +62,6 @@ namespace BubaTube.Services
             {
                 await video.CopyToAsync(fileStream);
             }
-        }
-
-        public IEnumerable<int> TakeCategoryIds(IEnumerable<string> categories)
-        {
-            var result = this.context.Category
-                .Where(x => categories.Contains(x.CategoryName) && x.IsАpproved == true)
-                .Select(x => x.Id)
-                .ToList();
-
-            return result;
         }
     }
 }

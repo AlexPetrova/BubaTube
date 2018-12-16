@@ -6,6 +6,10 @@ using BubaTube.Helpers;
 using BubaTube.Helpers.Contracts;
 using BubaTube.Services;
 using BubaTube.Services.Contracts;
+using BubaTube.Services.Contracts.Get;
+using BubaTube.Services.Contracts.Write;
+using BubaTube.Services.GetServices;
+using BubaTube.Services.WriteServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -40,11 +44,10 @@ namespace BubaTube
 
             services.AddMvc();
             services.AddMemoryCache();
-
-            services.AddTransient<BubaTubeDbContext>();
-            services.AddTransient<IUploadVideoService, UploadVideoService>();
-            services.AddTransient<IUploadVideoService, UploadVideoService>();
-            services.AddTransient<ICategorySaverService, CategorySaverService>();
+            
+            services.AddTransient<IVideoWriteService, VideoWriteService>();
+            services.AddTransient<ICategoryWriteService, CategoryWriteService>();
+            services.AddTransient<ICategoryGetService, CategoryGetService>();
             services.AddTransient<IJSONHelperFactory, JSONHelperFactory>();
             services.AddTransient<IFileStreamFactory, FileStreamFactory>();
             services.AddTransient<ISearchService, SearchService>();

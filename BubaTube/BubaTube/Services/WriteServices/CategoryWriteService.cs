@@ -4,13 +4,13 @@ using BubaTube.Services.Contracts;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BubaTube.Services
+namespace BubaTube.Services.WriteServices
 {
-    public class CategorySaverService : ICategorySaverService
+    public class CategoryWriteService : ICategoryWriteService
     {
         private BubaTubeDbContext context;
 
-        public CategorySaverService(BubaTubeDbContext context)
+        public CategoryWriteService(BubaTubeDbContext context)
         {
             this.context = context;
         }
