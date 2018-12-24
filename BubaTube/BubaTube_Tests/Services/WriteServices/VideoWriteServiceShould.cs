@@ -123,8 +123,7 @@ namespace BubaTube_Tests.Services.WriteServices
                     categoryGetService.Object);
 
                 var savedVideo = uploadVideoService.SaveToDatabase(model);
-
-
+                
                 Assert.Equal(categoryFromDb.CategoryName, savedVideo.VideoCategory.First().Category.CategoryName);
                 Assert.Same(savedVideo, savedVideo.VideoCategory.First().Video);
             }
