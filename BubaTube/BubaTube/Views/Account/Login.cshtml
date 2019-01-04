@@ -5,6 +5,9 @@
 @model LoginViewModel
 @inject SignInManager<User> SignInManager
 
+@section AddToHead {
+    <link rel="stylesheet" href="~/css/bubble.css" />
+}
 @{
     ViewData["Title"] = "Log in";
 }
@@ -50,7 +53,7 @@
             <a asp-action="Register" class="txtlink text-center" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
         </p>
     </div>
-    <img src="~/images/bee2.jpg"/>
+    <img src="~/images/bee2.jpg" />
 </div>
 
 
