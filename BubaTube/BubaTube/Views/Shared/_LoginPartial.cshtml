@@ -20,7 +20,18 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
-        <li><a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
+        <li id="register-button"><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></li>
+        <li id="login-button"><a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></li>
     </ul>
 }
+
+<script type="text/javascript">
+    window.addEventListener('load', function () {
+        var body = document.getElementsByTagName('body')[0];
+        body.classList.add('background-gray');
+    });
+    window.addEventListener('unload', function () { 
+        var body = document.getElementsByTagName('body')[0];
+        body.classList.remove('background-gray');
+    });
+</script>

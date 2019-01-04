@@ -3,25 +3,45 @@
     ViewData["Title"] = "Register";
 }
 
-<div class="register-form col-6">
+<div class="submit-form col-6">
     <h2 class="text-center">Register</h2>
     <hr />
+
     <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" enctype="multipart/form-data">
         <div asp-validation-summary="All" class="text-danger"></div>
+
         <div class="input-fields">
-            <input asp-for="FirstName" class="input-field" placeholder="First name" />
-            <input asp-for="LastName" class="input-field" placeholder="Last name" />
-            <input asp-for="Email" class="input-field" placeholder="Email" />
-            <input asp-for="Password" class="input-field" type="password" placeholder="Password" />
-            <input asp-for="ConfirmPassword" class="input-field" type="password" placeholder="Repeat password" />
+            <div class="input-field-wrapper">
+                <input asp-for="FirstName" class="input-field" placeholder="First name" />
+                <span asp-validation-for="FirstName" class="text-danger error-msg"></span>
+            </div>
+            <div class="input-field-wrapper">
+                <input asp-for="LastName" class="input-field" placeholder="Last name" />
+                <span asp-validation-for="LastName" class="text-danger error-msg"></span>
+            </div>
+
+            <div class="input-field-wrapper">
+                <input asp-for="Email" class="input-field" placeholder="Email" />
+                <span asp-validation-for="Email" class="text-danger error-msg"></span>
+            </div>
+
+            <div class="input-field-wrapper">
+                <input asp-for="Password" class="input-field" type="password" placeholder="Password" />
+                <span asp-validation-for="Password" class="text-danger error-msg"></span>
+            </div>
+
+            <div class="input-field-wrapper">
+                <input asp-for="ConfirmPassword" class="input-field" type="password" placeholder="Repeat password" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger error-msg"></span>
+            </div>
 
             <div class="upload-avatar text-center">
                 <div id="upload" class="upload-avatar-btn btn btn-default">Upload Image</div>
-                    <input asp-for="Avatar" id="file" class="hidden" type="file" name="avatar">
+                <input asp-for="Avatar" id="file" class="hidden" type="file" name="avatar">
                 <img id="image_upload_preview" class="upload-avatar-placeholder hidden" />
             </div>
 
-            <button id="register-button" class="register-button" type="submit">Register</button>
+            <button id="register-button" class="submit-button" type="submit">Register</button>
         </div>
     </form>
 </div>
