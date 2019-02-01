@@ -11,52 +11,66 @@
 @{
     ViewData["Title"] = "Log in";
 }
+    <div class="text-center">
+        <div class="submit-form login-element-alignment">
+            <h2>Log in</h2>
+            <h5>Use a local account to log in.</h5>
+            <hr />
 
-<div class="submit-form col-6">
-    <h2 class="text-center">Log in</h2>
-    <h5 class="text-center">Use a local account to log in.</h5>
-    <hr />
+            <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
 
-    <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
-        <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="input-fields">
 
-        <div class="input-fields">
+                    <div class="input-field-wrapper">
+                        <input asp-for="Email" class="input-field" placeholder="Email" />
+                        <span asp-validation-for="Email" class="text-danger error-msg"></span>
+                    </div>
 
-            <div class="input-field-wrapper">
-                <input asp-for="Email" class="input-field" placeholder="Email" />
-                <span asp-validation-for="Email" class="text-danger error-msg"></span>
-            </div>
-
-            <div class="input-field-wrapper">
-                <input asp-for="Password" class="input-field" placeholder="Password" />
-                <span asp-validation-for="Password" class="text-danger error-msg"></span>
-            </div>
-            <div class="checkbox">
-                <label asp-for="RememberMe">
-                    <input asp-for="RememberMe" />
-                    @Html.DisplayNameFor(m => m.RememberMe)
-                </label>
-            </div>
+                    <div class="input-field-wrapper">
+                        <input asp-for="Password" class="input-field" placeholder="Password" />
+                        <span asp-validation-for="Password" class="text-danger error-msg"></span>
+                    </div>
+                    <div class="checkbox">
+                        <label asp-for="RememberMe">
+                            <input asp-for="RememberMe" />
+                            @Html.DisplayNameFor(m => m.RememberMe)
+                        </label>
+                    </div>
+                    <button class="submit-button" type="submit">Log in</button>
+                </div>
+            </form>
         </div>
 
-        <button class="submit-button" type="submit">Log in</button>
-    </form>
-</div>
+        <div class="login-element-alignment mobile-bee-fixer">
 
-<div class="talk-bubble tri-right round btm-left">
-    <div class="talktext">
-        <p class="text-center">Are you stucked?</p>
-        <p>
-            <a asp-action="ForgotPassword" class="txtlink text-center">Forgot your password?</a>
-        </p>
-        <p>
-            <a asp-action="Register" class="txtlink text-center" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
-        </p>
+        </div>
+
+        <div class="login-element-alignment" style="margin-left: 1%; width: 22%">
+            <img src="~/images/bee2.jpg" style="width: 100%" />
+        </div>
+
+        <div class="talk-bubble tri-right round btm-left login-element-alignment">
+            <div class="talktext">
+                <p class="text-center">Are you stucked?</p>
+                <p>
+                    <a asp-action="ForgotPassword" class="txtlink text-center">Forgot your password?</a>
+                </p>
+                <p>
+                    <a asp-action="Register" class="txtlink text-center" asp-route-returnurl="@ViewData["ReturnUrl"]">Register as a new user?</a>
+                </p>
+            </div>
+        </div>
     </div>
-    <img src="~/images/bee2.jpg" />
-</div>
 
 
 @section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
+    @(await Html.PartialAsync("_ValidationScriptsPartial"))
+
+    <script type="text/javascript">
+        window.addEventListener('load', function () {
+            var body = document.getElementsByTagName('body')[0];
+            body.classList.add('background-gray');
+        });
+    </script>
 }
+

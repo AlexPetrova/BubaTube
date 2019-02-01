@@ -13,8 +13,9 @@
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link rel="styleseet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
+    @RenderSection("AddToHead", false)
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -47,11 +48,11 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - BubaTube</p>
-        </footer>
     </div>
+    <hr />
+    <footer>
+        <p>&copy; 2018 - BubaTube</p>
+    </footer>
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

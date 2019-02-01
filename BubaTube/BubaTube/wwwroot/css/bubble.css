@@ -1,9 +1,9 @@
 ﻿.talk-bubble {
-    margin: 40px;
-    display: inline-block;
     position: relative;
-    height: auto;
     background-color: lightyellow;
+    box-shadow: 1px 1px black;
+    right: 55px;
+    bottom: 65px;
 }
 
 .border {
@@ -41,6 +41,19 @@
     bottom: auto;
     border: 22px solid;
     border-color: lightyellow transparent transparent transparent;
+}
+
+.tri-right:before {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 0;
+    right: auto;
+    top: 69px;
+    bottom: auto;
+    border: 22px solid;
+    border-color: transparent transparent transparent black;
 }
 
 /* Right triangle, left side slightly down */
@@ -239,4 +252,11 @@
     /* remove webkit p margins */
     -webkit-margin-before: 0em;
     -webkit-margin-after: 0em;
+}
+
+@media screen and (max-width: 768px) {
+    .talk-bubble {
+        right: 35px;
+        bottom: 70px;
+    }
 }
