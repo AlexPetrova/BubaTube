@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
 using System;
 using System.IO;
 using System.Security.Claims;
@@ -13,7 +14,7 @@ using System.Threading.Tasks;
 namespace BubaTube.Controllers
 {
     [Authorize]
-    [Route("[controller]/[action]")]
+    [Route("[controller]/[action]/{id?}")]
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -437,6 +438,21 @@ namespace BubaTube.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Avatar(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            //TODO 
+            return File(user.AvatarImage, "image/jpeg", DateTime.Now.AddDays(-2), 
+                new EntityTagHeaderValue($@"""{user.Id}"""));
         }
 
         #region Helpers
