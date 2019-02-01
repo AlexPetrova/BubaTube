@@ -12,32 +12,34 @@
             <img src="~/images/defaulVideoImg.png" />
         </div>
 
-        <label id="upload" class="btn btn-default">Upload Video</label>
-        <input id="file" style="visibility:hidden;" type="file" name="Video">
-        <div id="name-of-video"></div>
-        <div id="file-validation" class="validation text-danger"></div>
+        <div class="text-center upload-video-info">
+            <button id="upload" class="btn btn-default upload-video-btn">Upload Video</button>
+            <input id="file" style="visibility:hidden;" type="file" name="Video">
+            <div id="name-of-video"></div>
+            <div id="file-validation" class="validation text-danger"></div>
 
-        <hr />
+            <hr />
 
-        <div class="form-group col-8">
-            <input id="title" class="form-control col-6" type="text" name="Title" placeholder="Title of video" />
-            <div id="title-validation" class="validation text-danger"></div>
+            <div class="form-group">
+                <input id="title" class="form-control" type="text" name="Title" placeholder="Title of video" />
+                <div id="title-validation" class="validation text-danger"></div>
+                <br />
+                <textarea id="description" class="form-control" name="Description" placeholder="Description"></textarea>
+                <div id="description-validation" class="validation text-danger"></div>
+            </div>
+
             <br />
-            <textarea id="description" class="form-control" name="Description" placeholder="Description"></textarea>
-            <div id="description-validation" class="validation text-danger"></div>
+
+            <div id="tag-section" class="tag-section">
+                <i>Tags:</i>
+                <input id="tag-field" class="form-control" type="text" placholder="#Tag" />
+                <ul id="tags" class="tags"></ul>
+            </div>
+            <div id="tag-section-validation" class="validation text-danger"></div>
+
+            <br />
+
+            <button class="btn btn-info" type="submit" value="Upload">Submit Video</button>
         </div>
-
-        <br />
-
-        <div id="tag-section" class="tag-section">
-            <i>Tags:</i>
-            <input id="tag-field" class="form-control" type="text" placholder="#Tag" />
-            <ul id="tags" class="tags"></ul>
-        </div>
-        <div id="tag-section-validation" class="validation text-danger"></div>
-
-        <br />
-
-        <button class="btn btn-info" type="submit" value="Upload">Upload</button>
     </form>
 </div>

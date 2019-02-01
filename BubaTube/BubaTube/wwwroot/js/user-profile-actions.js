@@ -1,8 +1,8 @@
 ﻿$(function () {
 
+    //navigation
     $('#upload-video').on('click', function (event) {
         $('container').empty();
-        event.preventDefault();
 
         $.get(
             '/upload/uploadVideo',

@@ -1,4 +1,10 @@
-﻿body {
+﻿/*Bootstrap overrides*/
+#logoutForm > ul > li > a {
+    padding: 9px;
+}
+/*Bootstrap overrides*/
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -261,6 +267,10 @@
     background-color: #f0f5fb;
 }
 
+.nav-user-home > ul > li > a:focus {
+    border-bottom: 1px solid blue;
+}
+
 .user-avatar {
     width: 34px;
     height: 34px;
@@ -276,6 +286,20 @@ div#container {
     width: 20%;
 }
 
+.upload-video-info {
+    max-width: 70%;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.upload-video-info .tag-section {
+    text-align: left;
+}
+
+.upload-video-btn {
+    position: relative;
+    top: 45px;
+}
 .tag-section ul li {
     display: inline-block;
     text-decoration: none;
@@ -290,12 +314,17 @@ div#container {
     opacity: unset !important;
 }
 
+.tags {
+    height: 85px;
+    overflow-y: scroll;
+}
+
 .tags li {
     border: 1px solid #ccc;
     border-radius: 15px;
     text-align: center;
     padding: 5px 10px 5px 10px;
-    margin: 10px;
+    margin: 5px;
     margin-left: unset;
     background-color: #f5f5f5;
 }
@@ -369,10 +398,22 @@ div#container {
     height: 100px;
     display: none;
 }
-/*Bootstrap overrides*/
-#logoutForm > ul > li > a {
-    padding: 9px;
+
+::-webkit-scrollbar {
+    width: 0px; /* remove scrollbar space */
+    background: transparent; /* optional: just make scrollbar invisible */
 }
+
+/*.container {
+    -ms-overflow-style: none;
+    // IE 10+ overflow: -moz-scrollbars-none;
+    // Firefox
+}
+
+.container::-webkit-scrollbar {
+    display: none;
+    // Safari and Chrome
+}*/
 
 @media screen and (max-width: 768px) {
     .submit-form {
