@@ -43,6 +43,8 @@ namespace BubaTube
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+            services.AddRouting(
+                options => options.LowercaseUrls = true);
             services.AddMemoryCache();
             
             services.AddTransient<IVideoWriteService, VideoWriteService>();
