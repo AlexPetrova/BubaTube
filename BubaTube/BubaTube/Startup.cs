@@ -50,7 +50,6 @@ namespace BubaTube
             services.AddTransient<IVideoWriteService, VideoWriteService>();
             services.AddTransient<ICategoryWriteService, CategoryWriteService>();
             services.AddTransient<ICategoryGetService, CategoryGetService>();
-            services.AddTransient<IJSONHelperFactory, JSONHelperFactory>();
             services.AddTransient<IFileStreamFactory, FileStreamFactory>();
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<IUploadVideoHelper, UploadVideoHelper>();

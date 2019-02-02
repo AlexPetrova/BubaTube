@@ -1,14 +1,10 @@
 ﻿using BubaTube.Data;
 using BubaTube.Data.DTO;
-using BubaTube.Factory.Contracts;
-using BubaTube.Helpers.Constants;
-using BubaTube.Helpers.JSON;
 using BubaTube.Services.Contracts;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,130 +13,120 @@ namespace BubaTube.Services
     public class SearchService : ISearchService
     {
         private readonly char[] splitChars = new char[] { ' ', '.', ',', '!', '?', '(', ')' };
+        private const int MaxCountOfSearchedWords = 5;
 
         private BubaTubeDbContext context;
-        private IJSONHelperFactory factory;
         private IConfiguration configuration;
 
         public SearchService(
             BubaTubeDbContext context,
-            IJSONHelperFactory factory, 
             IConfiguration configuration)
         {
             this.context = context;
-            this.factory = factory;
             this.configuration = configuration;
         }
 
         public async Task<string> GetSearchResultsJSON(string input)
         {
-            var result = await this.BuildJSON(input);
+            var searchedValues = this.FormatSerachedInput(input);
+            var result = await this.BuildJSON(searchedValues);
+
             return result;
         }
 
-        public IEnumerable<VideoDTO> SearchResultForVideos(string input)
+        public (IEnumerable<VideoDTO>, IEnumerable<CommentDTO>, IEnumerable<UserDTO>) GetQuickSearchResults(string input)
+        {
+            var serachedValues = this.FormatSerachedInput(input);
+
+            var videos = this.SearchResultForVideos(serachedValues);
+            var comments = this.SerachResultForComments(serachedValues);
+            var users = this.SerachResultForUsers(serachedValues);
+
+            return (videos, comments, users);
+        }
+
+        public IEnumerable<VideoDTO> SearchResultForVideos(IDictionary<string,string> input)
         {
             var result = this.context.Videos
-                .TakeWhile(x => x.Title.Contains(input))
-                .Select(x => new VideoDTO() { Title = x.Title, Likes = x.Likes })
+                .Where(x => input.ContainsKey(x.Title.ToLower()))
+                .Select(x =>
+                    new VideoDTO()
+                    {
+                        Title = x.Title,
+                        Likes = x.Likes
+                    })
                 .Take(5);
 
             return result;
         }
-
-        public IEnumerable<CommentDTO> SerachResultForComments(string input)
+        
+        public IEnumerable<CommentDTO> SerachResultForComments(IDictionary<string, string> input)
         {
             var result = this.context.Comments
-                .TakeWhile(x => x.Content.Contains(input))
-                .Select(x => new CommentDTO() { Content = x.Content, Likes = x.Likes, UserId = x.UserId })
+                .Where(x => input.ContainsKey(x.User.FirstName.ToLower())
+                    || input.ContainsKey(x.User.LastName.ToLower()))
+                .Select(x =>
+                    new CommentDTO()
+                    {
+                        Content = x.Content,
+                        Likes = x.Likes,
+                        UserId = x.UserId
+                    })
                 .Take(5);
 
             return result;
         }
 
-        public IEnumerable<UserDTO> SerachResultForUsers(string input)
+        public IEnumerable<UserDTO> SerachResultForUsers(IDictionary<string, string> input)
         {
             var result = this.context.Users
-                .TakeWhile(x => x.FirstName.Contains(input) || x.LastName.Contains(input) || x.Email.Contains(input))
-                .Select(x => new UserDTO() { FirstName = x.FirstName, LastName = x.LastName, Email = x.Email, AvatarImage = x.AvatarImage })
+                .Where(x =>
+                    input.ContainsKey(x.FirstName.ToLower())
+                    || input.ContainsKey(x.LastName.ToLower())
+                    || input.ContainsKey(x.Email.ToLower()))
+                .Select(x =>
+                    new UserDTO()
+                    {
+                        FirstName =
+                        x.FirstName,
+                        LastName =
+                        x.LastName,
+                        Email = x.Email,
+                        AvatarImage = x.AvatarImage
+                    })
                 .Take(5);
 
             return result;
         }
 
-        private async Task<string> BuildJSON(string input)
+        private Task<string> BuildJSON(IDictionary<string, string> input)
         {
-            var searchedValues = input.
+            var videos = this.context.Videos.
+                Where(x => input.ContainsKey(x.Title.ToLower()));
+
+            var users = this.context.Users.
+                Where(x =>
+                    input.ContainsKey(x.FirstName.ToLower())
+                    || input.ContainsKey(x.LastName.ToLower())
+                    || input.ContainsKey(x.Email.ToLower()));
+
+            var videosToJson = JsonConvert.SerializeObject(videos.ToList());
+            var usersToJson = JsonConvert.SerializeObject(users.ToList());
+
+            var result = videosToJson + usersToJson;
+            return Task.FromResult(result);
+        }
+        
+        private Dictionary<string, string> FormatSerachedInput(string input)
+        {
+            var formated = input.
                 Split(this.splitChars, StringSplitOptions.RemoveEmptyEntries).
                 Select(x => x.ToLower()).
-                ToArray();
+                Distinct().
+                Take(MaxCountOfSearchedWords).
+                ToDictionary(k => k, v => v);
 
-            var jsonBuilder = this.factory.CreateJSONBuilderInstance();
-
-            jsonBuilder.AddJSONArray("Videos", 
-                await Task.Run(() => this.ReadTable(searchedValues, Constants.VideosQuery, this.ReadRow)));
-            jsonBuilder.AddJSONArray("Comments", 
-                await Task.Run(() => this.ReadTable(searchedValues, Constants.CommentsQuery, this.ReadRow)));
-            jsonBuilder.AddJSONArray("Users", 
-                await Task.Run(() => this.ReadTable(searchedValues, Constants.UsersQuery, this.ReadRow)));
-
-            return jsonBuilder.ToString();
-        }
-
-        private IEnumerable<JSONObject> ReadTable(
-            string[] searchedValues, 
-            string query, 
-            Func<IDataReader, string[], JSONObject> readerMethod)
-        {
-            var commentJSONObjects = new List<JSONObject>();
-
-            var connectionString = this.configuration.GetConnectionString("DefaultConnection");
-            using (var connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-
-                var sqlCommand = new SqlCommand(query, connection);
-                var reader = sqlCommand.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    var currentRow = readerMethod(reader, searchedValues);
-
-                    commentJSONObjects.Add(currentRow);
-                }
-
-                connection.Close();
-            }
-
-            return commentJSONObjects;
-        }
-
-        private JSONObject ReadRow(IDataReader reader, string[] searchedValues)
-        {
-            var jsonObject = this.factory.CreateJSONObjectInstance();
-
-            var rowValues = new Dictionary<string, string>();
-
-            for (int i = 0; i < reader.FieldCount; i++)
-            {
-                var colName = reader.GetName(i);
-                var value = reader[i].ToString();
-                rowValues.Add(colName, value);
-            }
-
-            var values = rowValues.
-                Select(x => x.Value.ToLower()).
-                ToArray();
-
-            if (searchedValues.Intersect(values).Any())
-            {
-                foreach (var val in rowValues)
-                {
-                    jsonObject.AddProperty(val.Key, val.Value);
-                }
-            }
-
-            return jsonObject;
+            return formated;
         }
     }
 }

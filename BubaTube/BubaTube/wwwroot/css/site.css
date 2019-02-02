@@ -298,7 +298,7 @@ div#container {
 
 .upload-video-btn {
     position: relative;
-    top: 45px;
+    bottom: 105px;
 }
 .tag-section ul li {
     display: inline-block;

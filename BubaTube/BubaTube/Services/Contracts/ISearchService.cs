@@ -6,11 +6,13 @@ namespace BubaTube.Services.Contracts
 {
     public interface ISearchService
     {
-        IEnumerable<VideoDTO> SearchResultForVideos(string input);
+        (IEnumerable<VideoDTO>, IEnumerable<CommentDTO>, IEnumerable<UserDTO>) GetQuickSearchResults(string input);
 
-        IEnumerable<UserDTO> SerachResultForUsers(string input);
+        IEnumerable<VideoDTO> SearchResultForVideos(IDictionary<string, string> input);
 
-        IEnumerable<CommentDTO> SerachResultForComments(string input);
+        IEnumerable<UserDTO> SerachResultForUsers(IDictionary<string, string> input);
+
+        IEnumerable<CommentDTO> SerachResultForComments(IDictionary<string, string> input);
 
         Task<string> GetSearchResultsJSON(string input);
     }
