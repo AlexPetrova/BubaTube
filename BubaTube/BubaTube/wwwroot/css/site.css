@@ -350,6 +350,7 @@ div#container {
 .search-container {
     margin-top: 5px;
     margin-bottom: 10px;
+    text-align: right;
 }
 
 .search {
@@ -366,11 +367,18 @@ div#container {
     margin-right: 2%;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
-    float: right;
 }
 
 .search:focus {
     width: 20%;
+}
+
+.searchResultsBox {
+    background-color: #dbe1e5;
+    height: 100px;
+    position: absolute;
+    z-index: 1;
+    right: 14px;
 }
 
 .txtlink {

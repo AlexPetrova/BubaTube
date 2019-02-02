@@ -1,16 +1,18 @@
 ﻿$(function () {
+
     $('#search').on('keyup', function (event) {
         if (event.keyCode === 13) {
             var data = $('#search').val();
             var response = searchHelper.search(data);
+            searchHelper.buildSearchResultsBox(response);
         }
     });
 })
 
 var searchHelper = (function () {
-    var searchObj = {};
+    var searchHelper = {};
 
-    searchObj.search = function (data) {
+    searchHelper.search = function (data) {
         $.post(
             '/search/search',
             'data=' + data,
@@ -22,5 +24,14 @@ var searchHelper = (function () {
         );
     };
 
-    return searchObj;
+    searchHelper.buildSearchResultsBox = function (data) {
+        //TODO add the results in the partialView
+        $.get(
+            '/search/searchresultsbox',
+            function (result) {
+                $('#search-container').append(result);
+            });
+    }
+
+    return searchHelper;
 })();

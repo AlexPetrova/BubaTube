@@ -19,5 +19,10 @@ namespace BubaTube.Controllers
             var result = await this.searchService.GetSearchResultsJSON(data);
             return result;
         }
+
+        public IActionResult SearchResultsBox()
+        {
+            return PartialView("_SearchResultsBox");
+        }
     }
 }
