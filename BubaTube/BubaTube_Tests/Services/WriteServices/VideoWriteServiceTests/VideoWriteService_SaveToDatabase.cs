@@ -10,14 +10,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace BubaTube_Tests.Services.WriteServices
+namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
 {
-    public class VideoWriteServiceShould
+    public class VideoWriteService_SaveToDatabase
     {
         [Fact]
-        public void SaveToDatabase()
+        public void SavesPassedData()
         {
-            var options = this.GetOptions("SaveVideo");
+            var options = this.GetOptions("SaveToDatabaseTest");
             var fileStreamFactory = new Mock<IFileStreamFactory>();
             var categoryGetService = new Mock<ICategoryGetService>();
 
@@ -31,31 +31,10 @@ namespace BubaTube_Tests.Services.WriteServices
                 var model = this.GetVideoDto();
 
                 var video = uploadService.SaveToDatabase(model);
+                var savedModelInDb = context.Videos.First();
 
                 Assert.Equal(1, context.Videos.Count());
                 Assert.True(context.Videos.Any(x => x.Id == video.Id));
-            }
-        }
-
-        [Fact]
-        public void SaveToDatabaseCorrectData()
-        {
-            var options = this.GetOptions("SaveToDatabaseCorrectData");
-            var fileStreamFactory = new Mock<IFileStreamFactory>();
-            var categoryGetService = new Mock<ICategoryGetService>();
-
-            using (var context = new BubaTubeDbContext(options))
-            {
-                var uploadVideoService = new VideoWriteService(
-                    context,
-                    fileStreamFactory.Object,
-                    categoryGetService.Object);
-
-                var model = this.GetVideoDto();
-
-                uploadVideoService.SaveToDatabase(model);
-                var savedModelInDb = context.Videos.First();
-
                 Assert.Equal(model.Title, savedModelInDb.Title);
                 Assert.Equal(model.AuthorId, savedModelInDb.AuthorId);
                 Assert.Equal(model.Description, savedModelInDb.Description);
@@ -64,9 +43,9 @@ namespace BubaTube_Tests.Services.WriteServices
         }
 
         [Fact]
-        public void SaveToDatabaseAddsCorrectlyListOfCategoriesPerModel()
+        public void AddsCorrectlyListOfCategoriesPerModel()
         {
-            var options = this.GetOptions("SaveToDatabaseAddsCorrectlyListOfCategoriesPerModel");
+            var options = this.GetOptions("SaveToDatabaseTest");
             var fileStreamFactory = new Mock<IFileStreamFactory>();
             var categoryGetService = new Mock<ICategoryGetService>();
             var categories = new List<string>() { "Test1" };
@@ -93,14 +72,12 @@ namespace BubaTube_Tests.Services.WriteServices
         }
 
         [Fact]
-        public void SaveToDatabaseCreatesNavigationPropertyBetweenVideoAndCategory()
+        public void CreatesNavigationPropertyBetweenVideoAndCategory()
         {
-            var options = this.GetOptions("SaveToDatabaseAddsCorrectlyListOfCategoriesPerModel");
+            var options = this.GetOptions("SaveToDatabaseTest");
             var fileStreamFactory = new Mock<IFileStreamFactory>();
             var categoryGetService = new Mock<ICategoryGetService>();
             var categories = new List<string>();
-
-
 
             using (var context = new BubaTubeDbContext(options))
             {

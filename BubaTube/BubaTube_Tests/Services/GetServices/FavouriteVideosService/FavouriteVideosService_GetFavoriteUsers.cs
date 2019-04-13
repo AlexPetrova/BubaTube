@@ -3,18 +3,15 @@ using BubaTube.Data.DTO;
 using BubaTube.Data.Models;
 using BubaTube.Services.GetServices;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace BubaTube_Tests.Services.GetServices
 {
-    public class FavouriteVideosServiceShould
+    public class FavouriteVideosService_GetFavoriteUsers
     {
         [Fact]
-        public void SouldReturnListOfVideosWhenPassedValidUser()
+        public void ReturnsListOfVideosWhenPassedValidUser()
         {
             var options = this.GetOptions("SouldReturnListOfVideosWhenPassedValidUser");
             using (var context = new BubaTubeDbContext(options))
@@ -45,14 +42,15 @@ namespace BubaTube_Tests.Services.GetServices
                     Id = user.Id
                 };
 
-                var result = favoutiteVideoService.GetFavoriteUsers(userDto);
+                var result = favoutiteVideoService.GetFavouriteVideos(userDto);
 
                 Assert.NotEmpty(result);
                 Assert.Single(result);
             }
         }
+
         [Fact]
-        public void SouldReturnValidDataWhenPassedValidUser()
+        public void ReturnsValidDataWhenPassedValidUser()
         {
             var options = this.GetOptions("SouldReturnValidDataWhenPassedValidUser");
             using (var context = new BubaTubeDbContext(options))
@@ -83,11 +81,12 @@ namespace BubaTube_Tests.Services.GetServices
                     Id = user.Id
                 };
 
-                var result = favoutiteVideoService.GetFavoriteUsers(userDto);
+                var result = favoutiteVideoService.GetFavouriteVideos(userDto);
 
                 Assert.Equal(video.Title, result.First().Title);
             }
         }
+
         private DbContextOptions<BubaTubeDbContext> GetOptions(string name)
         {
             return new DbContextOptionsBuilder<BubaTubeDbContext>()

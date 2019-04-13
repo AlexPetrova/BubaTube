@@ -6,14 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace BubaTube_Tests.Services.GetServices
+namespace BubaTube_Tests.Services.GetServices.CategoryGetServiceTests
 {
-    public class CategoryGetServiceShould
+    public class CategoryGetService_TakeCategoryIds
     {
         [Fact]
-        public void TakeCategoryIdsReturnsListOfIdsWhenPassedStringsArePresentInDB()
+        public void ReturnsListOfIdsWhenPassedCategoriesArePresentInDB()
         {
-            var options = this.GetOptions("TakeCategoryIdsSavedInDB");
+            var options = this.GetOptions("TakeCategoryIdsTest");
             var searchedCategories = new List<string>() { "Test1", "Test2", "TestTest" };
 
             using (var context = new BubaTubeDbContext(options))
@@ -39,9 +39,9 @@ namespace BubaTube_Tests.Services.GetServices
         }
 
         [Fact]
-        public void TakeCategoryIdsReturnsEmptyListWhenPassedStringsThatAreNotPresentInDB()
+        public void ReturnsEmptyListWhenPassedSCategoriesAreNotPresentInDB()
         {
-            var options = this.GetOptions("TakeCategoryIdsSavedInDB");
+            var options = this.GetOptions("TakeCategoryIdsTest");
             var searchedCategories = new List<string>() { "TestTest1", "TestTest2", "TestTest" };
 
             using (var context = new BubaTubeDbContext(options))
@@ -58,9 +58,9 @@ namespace BubaTube_Tests.Services.GetServices
         }
 
         [Fact]
-        public void TakeCategoryIdsReturnsEmptyListWhenPassedStringsCategoryIsNotApproved()
+        public void ReturnsEmptyListWhenPassedCategoryIsNotApproved()
         {
-            var options = this.GetOptions("TakeCategoryIdsSavedInDB");
+            var options = this.GetOptions("TakeCategoryIdsTest");
             var searchedCategories = new List<string>() { "Test0" };
 
             using (var context = new BubaTubeDbContext(options))
