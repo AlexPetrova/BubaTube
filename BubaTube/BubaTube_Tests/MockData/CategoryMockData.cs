@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace BubaTube_Tests.MockData
 {
-    internal class CategoryMockData
+    internal static class CategoryMockData
     {
-        internal IEnumerable<Category> GetListOfCategoryModels()
+        internal static IEnumerable<Category> GetListOfCategoryModels()
         {
             return new List<Category>()
             {

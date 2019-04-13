@@ -81,8 +81,7 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
 
             using (var context = new BubaTubeDbContext(options))
             {
-                var categoryMockDataProvider = new CategoryMockData();
-                context.Category.AddRange(categoryMockDataProvider.GetListOfCategoryModels());
+                context.Category.AddRange(CategoryMockData.GetListOfCategoryModels());
                 context.SaveChanges();
 
                 var categoryFromDb = context.Category
