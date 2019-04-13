@@ -6,14 +6,14 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Xunit;
 
-namespace BubaTube_Tests.Services.GetServices
+namespace BubaTube_Tests.Services.GetServices.FavouriteVideosGetServiceTest
 {
-    public class FavouriteVideosService_GetFavoriteUsers
+    public class FavouriteVideosService_GetFavoriteVideos
     {
         [Fact]
-        public void ReturnsListOfVideosWhenPassedValidUser()
+        public void ReturnsListOfFavouriteVideosOfUser()
         {
-            var options = this.GetOptions("SouldReturnListOfVideosWhenPassedValidUser");
+            var options = this.GetOptions("GetFavouriteVideosTest");
             using (var context = new BubaTubeDbContext(options))
             {
                 context.Users.Add(new User()
@@ -36,7 +36,7 @@ namespace BubaTube_Tests.Services.GetServices
                     VideoId = video.Id
                 });
 
-                var favoutiteVideoService = new FavouriteVideosGetService();
+                var favoutiteVideoService = new FavouriteVideosGetService(context);
                 var userDto = new UserSearchDTO()
                 {
                     Id = user.Id
@@ -46,43 +46,6 @@ namespace BubaTube_Tests.Services.GetServices
 
                 Assert.NotEmpty(result);
                 Assert.Single(result);
-            }
-        }
-
-        [Fact]
-        public void ReturnsValidDataWhenPassedValidUser()
-        {
-            var options = this.GetOptions("SouldReturnValidDataWhenPassedValidUser");
-            using (var context = new BubaTubeDbContext(options))
-            {
-                context.Users.Add(new User()
-                {
-                    UserName = "testUser"
-                });
-                context.Videos.Add(new Video()
-                {
-                    Title = "TestVideo",
-                    Path = "c://",
-                    AuthorId = "123"
-                });
-                context.SaveChanges();
-
-                var user = context.Users.First();
-                var video = context.Videos.First();
-                context.UserVideo.Add(new UserVideo()
-                {
-                    UserId = user.Id,
-                    VideoId = video.Id
-                });
-
-                var favoutiteVideoService = new FavouriteVideosGetService();
-                var userDto = new UserSearchDTO()
-                {
-                    Id = user.Id
-                };
-
-                var result = favoutiteVideoService.GetFavouriteVideos(userDto);
-
                 Assert.Equal(video.Title, result.First().Title);
             }
         }
