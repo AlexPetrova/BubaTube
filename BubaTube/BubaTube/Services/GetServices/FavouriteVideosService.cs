@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace BubaTube.Services.GetServices
 {
-    public class FavouriteVideosService : IFavouriteVideosService
+    public class FavouriteVideosGetService : IFavouriteVideosGetService
     {
         public IEnumerable<VideoDTO> GetFavouriteVideos(UserSearchDTO user)
         {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BubaTube.Services.Contracts.Get
 {
-    public interface IFavouriteVideosService
+    public interface IFavouriteVideosGetService
     {
         IEnumerable<VideoDTO> GetFavouriteVideos(UserSearchDTO user);
     }
