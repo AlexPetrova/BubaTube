@@ -1,7 +1,5 @@
 ﻿using BubaTube.Data.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BubaTube_Tests.MockData
 {
@@ -38,6 +36,5 @@ namespace BubaTube_Tests.MockData
                 },
             };
         }
-
     }
 }

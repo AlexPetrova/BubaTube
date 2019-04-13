@@ -7,7 +7,6 @@ using BubaTube.Services.Contracts.Write;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BubaTube.Services.WriteServices
