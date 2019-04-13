@@ -35,6 +35,7 @@ namespace BubaTube_Tests.Services.GetServices.FavouriteVideosGetServiceTest
                     UserId = user.Id,
                     VideoId = video.Id
                 });
+                context.SaveChanges();
 
                 var favoutiteVideoService = new FavouriteVideosGetService(context);
                 var userDto = new UserSearchDTO()
