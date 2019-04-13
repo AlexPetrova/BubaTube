@@ -1,7 +1,6 @@
 ﻿using BubaTube.Data;
 using BubaTube.Services.GetServices;
 using BubaTube_Tests.MockData;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -13,7 +12,7 @@ namespace BubaTube_Tests.Services.GetServices.CategoryGetServiceTests
         [Fact]
         public void ReturnsListOfIdsWhenPassedCategoriesArePresentInDB()
         {
-            var options = this.GetOptions("TakeCategoryIdsTest");
+            var options = DbContextMock.GetOptions("TakeCategoryIdsTest");
             var searchedCategories = new List<string>() { "Test1", "Test2", "TestTest" };
 
             using (var context = new BubaTubeDbContext(options))
@@ -40,7 +39,7 @@ namespace BubaTube_Tests.Services.GetServices.CategoryGetServiceTests
         [Fact]
         public void ReturnsEmptyListWhenPassedSCategoriesAreNotPresentInDB()
         {
-            var options = this.GetOptions("TakeCategoryIdsTest");
+            var options = DbContextMock.GetOptions("TakeCategoryIdsTest");
             var searchedCategories = new List<string>() { "TestTest1", "TestTest2", "TestTest" };
 
             using (var context = new BubaTubeDbContext(options))
@@ -58,7 +57,7 @@ namespace BubaTube_Tests.Services.GetServices.CategoryGetServiceTests
         [Fact]
         public void ReturnsEmptyListWhenPassedCategoryIsNotApproved()
         {
-            var options = this.GetOptions("TakeCategoryIdsTest");
+            var options = DbContextMock.GetOptions("TakeCategoryIdsTest");
             var searchedCategories = new List<string>() { "Test0" };
 
             using (var context = new BubaTubeDbContext(options))
@@ -71,13 +70,6 @@ namespace BubaTube_Tests.Services.GetServices.CategoryGetServiceTests
 
                 Assert.Empty(result);
             }
-        }
-
-        private DbContextOptions<BubaTubeDbContext> GetOptions(string name)
-        {
-            return new DbContextOptionsBuilder<BubaTubeDbContext>()
-                .UseInMemoryDatabase(databaseName: name)
-                .Options;
         }
     }
 }

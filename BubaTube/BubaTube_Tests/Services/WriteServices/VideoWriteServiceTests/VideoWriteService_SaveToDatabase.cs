@@ -4,7 +4,6 @@ using BubaTube.Factory.Contracts;
 using BubaTube.Services.Contracts.Get;
 using BubaTube.Services.WriteServices;
 using BubaTube_Tests.MockData;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +16,7 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
         [Fact]
         public void SavesPassedData()
         {
-            var options = this.GetOptions("SaveToDatabaseTest");
+            var options = DbContextMock.GetOptions("SaveToDatabaseTest");
             var fileStreamFactory = new Mock<IFileStreamFactory>();
             var categoryGetService = new Mock<ICategoryGetService>();
 
@@ -45,7 +44,7 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
         [Fact]
         public void AddsCorrectlyListOfCategoriesPerModel()
         {
-            var options = this.GetOptions("SaveToDatabaseTest");
+            var options = DbContextMock.GetOptions("SaveToDatabaseTest");
             var fileStreamFactory = new Mock<IFileStreamFactory>();
             var categoryGetService = new Mock<ICategoryGetService>();
             var categories = new List<string>() { "Test1" };
@@ -74,7 +73,7 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
         [Fact]
         public void CreatesNavigationPropertyBetweenVideoAndCategory()
         {
-            var options = this.GetOptions("SaveToDatabaseTest");
+            var options = DbContextMock.GetOptions("SaveToDatabaseTest");
             var fileStreamFactory = new Mock<IFileStreamFactory>();
             var categoryGetService = new Mock<ICategoryGetService>();
             var categories = new List<string>();
@@ -103,12 +102,6 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
                 Assert.Equal(categoryFromDb.CategoryName, savedVideo.VideoCategory.First().Category.CategoryName);
                 Assert.Same(savedVideo, savedVideo.VideoCategory.First().Video);
             }
-        }
-        private DbContextOptions<BubaTubeDbContext> GetOptions(string name)
-        {
-            return new DbContextOptionsBuilder<BubaTubeDbContext>()
-                .UseInMemoryDatabase(databaseName: name)
-                .Options;
         }
 
         private VideoDTO GetVideoDto()

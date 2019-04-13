@@ -2,7 +2,7 @@
 using BubaTube.Data.DTO;
 using BubaTube.Data.Models;
 using BubaTube.Services.GetServices;
-using Microsoft.EntityFrameworkCore;
+using BubaTube_Tests.MockData;
 using System.Linq;
 using Xunit;
 
@@ -13,7 +13,7 @@ namespace BubaTube_Tests.Services.GetServices.FavouriteVideosGetServiceTest
         [Fact]
         public void ReturnsListOfFavouriteVideosOfUser()
         {
-            var options = this.GetOptions("GetFavouriteVideosTest");
+            var options = DbContextMock.GetOptions("GetFavouriteVideosTest");
             using (var context = new BubaTubeDbContext(options))
             {
                 context.Users.Add(new User()
@@ -54,7 +54,7 @@ namespace BubaTube_Tests.Services.GetServices.FavouriteVideosGetServiceTest
         [Fact]
         public void ReturnsEmptyListIfNoFavouriteVideosSaved()
         {
-            var options = this.GetOptions("GetFavouriteVideosTest");
+            var options = DbContextMock.GetOptions("GetFavouriteVideosTest");
             using (var context = new BubaTubeDbContext(options))
             {
                 context.Users.Add(new User()
@@ -75,13 +75,6 @@ namespace BubaTube_Tests.Services.GetServices.FavouriteVideosGetServiceTest
 
                 Assert.Empty(result);
             }
-        }
-
-        private DbContextOptions<BubaTubeDbContext> GetOptions(string name)
-        {
-            return new DbContextOptionsBuilder<BubaTubeDbContext>()
-                .UseInMemoryDatabase(databaseName: name)
-                .Options;
         }
     }
 }
