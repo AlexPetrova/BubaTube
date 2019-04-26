@@ -1,5 +1,5 @@
 ﻿using BubaTube.Data.Models;
-using System;
+using BubaTube_Tests.Helpers;
 using System.Collections.Generic;
 
 namespace BubaTube_Tests.MockData
@@ -14,11 +14,11 @@ namespace BubaTube_Tests.MockData
             {
                 var video = new Video()
                 {
-                    Id = Helpers.Random.Number(),
-                    Title = Helpers.Random.String(5),
-                    Description = Helpers.Random.String(10),
-                    Path = Helpers.Random.String(10),
-                    AuthorId = Helpers.Random.String(10)
+                    Id = Random.Number(),
+                    Title = Random.String(5),
+                    Description = Random.String(10),
+                    Path = Random.String(10),
+                    AuthorId = Random.String(10)
                 };
 
                 videos.Add(video);
