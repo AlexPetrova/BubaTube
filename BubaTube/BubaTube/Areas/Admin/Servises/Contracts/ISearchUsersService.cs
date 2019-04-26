@@ -9,7 +9,7 @@ namespace BubaTube.Areas.Admin.Servises.Contracts
     {
         IEnumerable<UserDTO> ByLastActivity(int months);
 
-        IEnumerable<UserDTO> RegisteredAfter(DateTime fromDate);
+        IEnumerable<UserDTO> RegisteredAfter(DateTime date);
 
         IEnumerable<UserDTO> RegisterdInPeriod(DateTime fromDate, DateTime toDate);
 

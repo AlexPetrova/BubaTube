@@ -2,6 +2,7 @@
 using BubaTube.Data;
 using BubaTube.Data.DTO;
 using BubaTube.Data.Models;
+using BubaTube.Helpers.Map;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -48,15 +49,7 @@ namespace BubaTube.Areas.Admin.Servises
             var startingTime = DateTime.Now.AddMonths(months * -1);
             var result = this.context.Users
                 .Where(x => x.LastLogin >= startingTime)
-                .Select(x => new UserDTO()
-                {
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
-                    Email = x.Email,
-                    LastLogin = x.LastLogin,
-                    RegisteredOn = x.RegisteredOn,
-                    AvatarImage = x.AvatarImage
-                })
+                .Select(Map.User())
                 .ToList();
 
             return result;
@@ -89,12 +82,18 @@ namespace BubaTube.Areas.Admin.Servises
 
         public IEnumerable<UserDTO> RegisterdInPeriod(DateTime fromDate, DateTime toDate)
         {
-            throw new NotImplementedException();
+            return this.context.Users
+                .Where(x => x.RegisteredOn > fromDate && x.RegisteredOn < toDate)
+                .Select(Map.User())
+                .ToList();
         }
 
-        public IEnumerable<UserDTO> RegisteredAfter(DateTime fromDate)
+        public IEnumerable<UserDTO> RegisteredAfter(DateTime date)
         {
-            throw new NotImplementedException();
+            return this.context.Users
+                   .Where(x => x.RegisteredOn > date)
+                   .Select(Map.User())
+                   .ToList();
         }
     }
 }
