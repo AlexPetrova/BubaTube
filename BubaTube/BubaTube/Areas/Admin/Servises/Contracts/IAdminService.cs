@@ -1,7 +1,7 @@
 ﻿using BubaTube.Data.DTO;
 using System.Collections.Generic;
 
-namespace BubaTube.Areas.Admin.Servisec.Contracts
+namespace BubaTube.Areas.Admin.Servises.Contracts
 {
     public interface IAdminService
     {

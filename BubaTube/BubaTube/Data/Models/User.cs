@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -17,6 +18,8 @@ namespace BubaTube.Data.Models
         public string LastName { get; set; }
 
         public byte[] AvatarImage { get; set; }
+
+        public DateTime DateOfRegistering { get; set; }
 
         public ICollection<User> FavouriteUsers { get; set; }
 
