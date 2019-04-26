@@ -1,4 +1,6 @@
-﻿using BubaTube.Data;
+﻿using BubaTube.Areas.Admin.Servises;
+using BubaTube.Areas.Admin.Servises.Contracts;
+using BubaTube.Data;
 using BubaTube.Data.Models;
 using BubaTube.Factory;
 using BubaTube.Factory.Contracts;
@@ -54,6 +56,7 @@ namespace BubaTube
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<IUploadVideoHelper, UploadVideoHelper>();
             services.AddTransient<IUserManagementWriteService, UserManagementWriteService>();
+            services.AddTransient<IControlUsersService, ControlUsersSevice>();
             services.AddSingleton<IConfiguration>(Configuration);
         }
         private void RegisterAuthentication(IServiceCollection serviceCollection)
