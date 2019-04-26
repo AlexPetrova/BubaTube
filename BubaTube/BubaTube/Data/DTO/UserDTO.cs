@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace BubaTube.Data.DTO
 {
@@ -17,5 +18,9 @@ namespace BubaTube.Data.DTO
         public string Email { get; set; }
 
         public byte[] AvatarImage { get; set; }
+
+        public DateTime RegisteredOn { get; set; }
+
+        public DateTime LastLogin { get; set; }
     }
 }
