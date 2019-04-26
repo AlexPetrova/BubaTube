@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BubaTube.Areas.Admin.Servisec.Contracts;
+using BubaTube.Areas.Admin.Servises.Contracts;
 using BubaTube.Data;
 using BubaTube.Data.DTO;
 
-namespace BubaTube.Areas.Admin.Servisec
+namespace BubaTube.Areas.Admin.Servises
 {
-    public class AdminService :IAdminService
+    public class AdminService : IAdminService
     {
         private BubaTubeDbContext context;
 
