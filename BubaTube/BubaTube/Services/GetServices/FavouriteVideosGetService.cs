@@ -29,7 +29,7 @@ namespace BubaTube.Services.GetServices
                     Description = x.Description,
                     Path = x.Path,
                     Likes = x.Likes,
-                    AuthorId = x.AuthorId,
+                    AuthorUserName = x.AuthorId,
                     Categories = x.VideoCategory.Select(c => c.Category.CategoryName)
                 });
 

@@ -69,7 +69,7 @@ namespace BubaTube.Controllers
                     Title = model.Title,
                     Description = model.Description,
                     Path = path,
-                    AuthorId = this.userManager.GetUserId(HttpContext.User),
+                    AuthorUserName = this.userManager.GetUserId(HttpContext.User),
                     Categories = model.Categories
                 };
 

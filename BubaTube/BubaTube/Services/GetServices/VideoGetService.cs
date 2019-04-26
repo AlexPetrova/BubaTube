@@ -29,7 +29,7 @@ namespace BubaTube.Services.GetServices
                         Title = x.Title,
                         Path = x.Path,
                         Likes = x.Likes,
-                        AuthorId = x.AuthorId
+                        AuthorUserName = x.AuthorId
                     });
 
             return resentVideos.ToList();

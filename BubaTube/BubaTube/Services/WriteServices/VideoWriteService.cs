@@ -36,7 +36,7 @@ namespace BubaTube.Services.WriteServices
                 Title = dto.Title,
                 Description = dto.Description,
                 Path = dto.Path,
-                AuthorId = dto.AuthorId,
+                AuthorId = dto.AuthorUserName,
                 VideoCategory = new List<VideoCategory>()
             };
 

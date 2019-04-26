@@ -59,7 +59,7 @@ namespace BubaTube.Areas.Admin.Servisec
                     Title = x.Title,
                     Description = x.Description,
                     Likes = x.Likes,
-                    //AuthorId = x.Author,
+                    AuthorUserName = x.Author.UserName,
                     Path = x.Path
                 })
                 .ToList();

@@ -35,7 +35,7 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
                 Assert.Equal(1, context.Videos.Count());
                 Assert.True(context.Videos.Any(x => x.Id == video.Id));
                 Assert.Equal(model.Title, savedModelInDb.Title);
-                Assert.Equal(model.AuthorId, savedModelInDb.AuthorId);
+                Assert.Equal(model.AuthorUserName, savedModelInDb.AuthorId);
                 Assert.Equal(model.Description, savedModelInDb.Description);
                 Assert.Equal(model.Path, savedModelInDb.Path);
             }
@@ -109,7 +109,7 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
             return new VideoDTO
             {
                 Title = "testVideo",
-                AuthorId = "1234",
+                AuthorUserName = "1234",
                 Description = "test",
                 Likes = 1,
                 Path = @"\Folder\Name.mp4"
