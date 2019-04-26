@@ -21,6 +21,8 @@ namespace BubaTube.Data
 
         public DbSet<VideoCategory> VideoCategory { get; set; }
 
+        public DbSet<BlackList> BlackList { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<UserVideo>()
