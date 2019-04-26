@@ -64,8 +64,7 @@ namespace BubaTube.Controllers
                 
                 if (result.Succeeded)
                 {
-                    var user = await this._userManager.FindByEmailAsync(model.Email);
-                    var saveDateOfLogin = await this.userManagementService.SaveLoginDate(user.Id);
+                    await this.SaveLoginTime(model.Email);
                     _logger.LogInformation("User logged in.");
                     return RedirectToLocal(returnUrl);
                 }
@@ -484,6 +483,16 @@ namespace BubaTube.Controllers
             else
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+        }
+
+        private async Task SaveLoginTime(string email)
+        {
+            var user = await this._userManager.FindByEmailAsync(email);
+            var saveDateOfLoginSuccess = await this.userManagementService.SaveLoginDate(user.Id);
+            if (!saveDateOfLoginSuccess)
+            {
+                _logger.LogInformation("Save of date of login failed");
             }
         }
 
