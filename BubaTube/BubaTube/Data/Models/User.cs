@@ -19,7 +19,7 @@ namespace BubaTube.Data.Models
 
         public byte[] AvatarImage { get; set; }
 
-        public DateTime DateOfRegistering { get; set; }
+        public DateTime RegisteredOn { get; set; }
 
         public DateTime LastLogin { get; set; }
 
