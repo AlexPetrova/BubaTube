@@ -53,6 +53,7 @@ namespace BubaTube
             services.AddTransient<IFileStreamFactory, FileStreamFactory>();
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<IUploadVideoHelper, UploadVideoHelper>();
+            services.AddTransient<IUserManagementWriteService, UserManagementWriteService>();
             services.AddSingleton<IConfiguration>(Configuration);
         }
         private void RegisterAuthentication(IServiceCollection serviceCollection)

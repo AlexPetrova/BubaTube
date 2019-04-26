@@ -1,5 +1,7 @@
 ﻿using BubaTube.Data.Models;
 using BubaTube.Models.AccountViewModels;
+using BubaTube.Services.Contracts.Write;
+using BubaTube.Services.WriteServices;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -20,15 +22,18 @@ namespace BubaTube.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger _logger;
+        private readonly IUserManagementWriteService userManagementService;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            IUserManagementWriteService userManagementService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            this.userManagementService = userManagementService;
         }
 
         [TempData]
@@ -56,8 +61,11 @@ namespace BubaTube.Controllers
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                
                 if (result.Succeeded)
                 {
+                    var user = await this._userManager.FindByEmailAsync(model.Email);
+                    var saveDateOfLogin = await this.userManagementService.SaveLoginDate(user.Id);
                     _logger.LogInformation("User logged in.");
                     return RedirectToLocal(returnUrl);
                 }
@@ -219,7 +227,9 @@ namespace BubaTube.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                     FirstName = model.FirstName,
-                    LastName = model.LastName
+                    LastName = model.LastName,
+                    RegisteredOn = DateTime.Now,
+                    LastLogin = DateTime.Now
                 };
 
                 if(model.Avatar != null)
