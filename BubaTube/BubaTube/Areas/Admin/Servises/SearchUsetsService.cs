@@ -5,6 +5,7 @@ using BubaTube.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BubaTube.Areas.Admin.Servises
@@ -26,7 +27,7 @@ namespace BubaTube.Areas.Admin.Servises
         {
             var result = await this.userManager.FindByEmailAsync(email);
 
-            if(result == null)
+            if (result == null)
             {
                 return new UserDTO();
             }
@@ -44,7 +45,21 @@ namespace BubaTube.Areas.Admin.Servises
 
         public IEnumerable<UserDTO> ByLastActivity(int months)
         {
-            throw new NotImplementedException();
+            var startingTime = DateTime.Now.AddMonths(months * -1);
+            var result = this.context.Users
+                .Where(x => x.LastLogin >= startingTime)
+                .Select(x => new UserDTO()
+                {
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    Email = x.Email,
+                    LastLogin = x.LastLogin,
+                    RegisteredOn = x.RegisteredOn,
+                    AvatarImage = x.AvatarImage
+                })
+                .ToList();
+
+            return result;
         }
 
         public IEnumerable<UserDTO> ByNames(string firstName, string lastName)
