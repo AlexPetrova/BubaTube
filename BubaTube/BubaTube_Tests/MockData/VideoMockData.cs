@@ -1,7 +1,6 @@
 ﻿using BubaTube.Data.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace BubaTube_Tests.MockData
 {
@@ -15,11 +14,11 @@ namespace BubaTube_Tests.MockData
             {
                 var video = new Video()
                 {
-                    Id = random.Next(),
-                    Title = RandomString(5),
-                    Description = RandomString(10),
-                    Path = RandomString(10),
-                    AuthorId = RandomString(10)
+                    Id = Helpers.Random.Number(),
+                    Title = Helpers.Random.String(5),
+                    Description = Helpers.Random.String(10),
+                    Path = Helpers.Random.String(10),
+                    AuthorId = Helpers.Random.String(10)
                 };
 
                 videos.Add(video);
