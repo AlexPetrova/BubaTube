@@ -21,6 +21,8 @@ namespace BubaTube.Data.Models
 
         public DateTime DateOfRegistering { get; set; }
 
+        public DateTime LastLogin { get; set; }
+
         public ICollection<User> FavouriteUsers { get; set; }
 
         public ICollection<UserVideo> UserVideo { get; set; }
