@@ -56,7 +56,7 @@ namespace BubaTube
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<IUploadVideoHelper, UploadVideoHelper>();
             services.AddTransient<IUserManagementWriteService, UserManagementWriteService>();
-            services.AddTransient<IControlUsersService, ControlUsersSevice>();
+            services.AddTransient<IManageUsersService, ManageUsersSevice>();
             services.AddSingleton<IConfiguration>(Configuration);
         }
         private void RegisterAuthentication(IServiceCollection serviceCollection)
@@ -65,11 +65,7 @@ namespace BubaTube
                 .AddEntityFrameworkStores<BubaTubeDbContext>()
                 .AddDefaultTokenProviders();
         }
-
-        private void RegisterServices(IServiceCollection services)
-        {
-        }
-
+        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -99,7 +95,8 @@ namespace BubaTube
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}"
+                );
             });
 
             //app.Run(async context => { context.Features.Get<IHttpMaxRequestBodySizeFeature>().MaxRequestBodySize = 100_000_000; });

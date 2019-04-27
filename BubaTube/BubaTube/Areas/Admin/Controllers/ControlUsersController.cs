@@ -1,17 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
+using BubaTube.Areas.Admin.Servises.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System.Threading.Tasks;
 
 namespace BubaTube.Areas.Admin.Controllers
 {
     public class ControlUsersController : Controller
     {
-        // GET: /<controller>/
-        public IActionResult Index()
+        private IManageUsersService controlUsersService;
+
+        public ControlUsersController(
+            IManageUsersService controlUsersService)
+        {
+            this.controlUsersService = controlUsersService;
+        }
+
+        [Area("Admin")]
+        [Authorize(Roles = "Admin")]
+        [Route("[controller]/[action]")]
+        public IActionResult ManageUsers()
         {
             return View();
         }
