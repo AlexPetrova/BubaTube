@@ -464,8 +464,6 @@ namespace BubaTube.Controllers
                 new EntityTagHeaderValue($@"""{user.Id}"""));
         }
 
-        #region Helpers
-
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
@@ -495,7 +493,5 @@ namespace BubaTube.Controllers
                 _logger.LogInformation("Save of date of login failed");
             }
         }
-
-        #endregion
     }
 }
