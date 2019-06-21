@@ -46,7 +46,7 @@ namespace BubaTube.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Post(UploadVideoViewModel model)
+        public async Task<IActionResult> Post(UploadVideoViewModel   model)
         {
             int result = 0;
             if (ModelState.IsValid)
