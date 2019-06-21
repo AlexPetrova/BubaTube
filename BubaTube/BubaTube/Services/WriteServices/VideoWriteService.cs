@@ -27,7 +27,7 @@ namespace BubaTube.Services.WriteServices
             this.categoryGetService = categoryGetService;
         }
 
-        public Video SaveToDatabase(VideoDTO dto)
+        public Video Save(VideoDTO dto)
         {
             var categorieIDs = this.categoryGetService.TakeCategoryIds(dto.Categories);
 

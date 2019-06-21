@@ -74,7 +74,7 @@ namespace BubaTube.Controllers
                 };
 
                 this.categorySaverService.SaveToDatabase(dto.Categories);
-                this.videoWriteService.SaveToDatabase(dto);
+                this.videoWriteService.Save(dto);
             }
             
             return Ok();

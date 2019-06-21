@@ -7,7 +7,7 @@ namespace BubaTube.Services.Contracts.Write
 {
     public interface IVideoWriteService
     {
-        Video SaveToDatabase(VideoDTO video);
+        Video Save(VideoDTO video);
 
         Task SaveToRootFolder(IFormFile video, string path);
     }
