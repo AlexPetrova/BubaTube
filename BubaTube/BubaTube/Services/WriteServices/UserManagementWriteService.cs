@@ -18,9 +18,9 @@ namespace BubaTube.Services.WriteServices
 
         public async Task<int> SaveLoginDate(string userID)
         {
-            var user = this.context.Users
-                .FirstOrDefault(x => x.Id == userID);
-            user.LastLogin = DateTime.Now;
+            this.context.Users
+                .FirstOrDefault(x => x.Id == userID)
+                .LastLogin = DateTime.Now;
             var result = await context.SaveChangesAsync();
 
             return result;

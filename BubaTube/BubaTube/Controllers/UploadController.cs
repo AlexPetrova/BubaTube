@@ -48,22 +48,12 @@ namespace BubaTube.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Post(UploadVideoViewModel model)
         {
+            int result = 0;
             if (ModelState.IsValid)
             {
                 var str = model.Categories[0];
                 model.Categories = str.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToArray();
-
                 var path = this.uploadVideoHelper.GeneratePath(this.environment.WebRootPath);
-
-                try
-                {
-                    await this.videoWriteService.Save(model.Video, path);
-                }
-                catch
-                {
-                    return this.StatusCode(500);
-                }
-
                 var dto = new VideoDTO()
                 {
                     Title = model.Title,
@@ -74,10 +64,10 @@ namespace BubaTube.Controllers
                 };
 
                 this.categorySaverService.SaveToDatabase(dto.Categories);
-                this.videoWriteService.Save(dto);
+                result = await this.videoWriteService.Save(dto, model.Video, path);
+                
             }
-            
-            return Ok();
+            return result == 0 ? Ok() : this.StatusCode(500);
         }
 
         [Authorize]

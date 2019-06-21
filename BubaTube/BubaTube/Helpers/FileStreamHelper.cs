@@ -17,6 +17,7 @@ namespace BubaTube.Helpers
 
         public async Task SaveFile(IFormFile video, string path)
         {
+            //TODO handle exception and log it
             using (var fileStream = this.fileStreamFactory.CreateFileStreamInstance(
                 path, FileMode.Create))
             {
