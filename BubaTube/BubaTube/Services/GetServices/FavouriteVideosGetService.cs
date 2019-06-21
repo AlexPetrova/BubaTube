@@ -1,5 +1,6 @@
 ﻿using BubaTube.Data;
 using BubaTube.Data.DTO;
+using BubaTube.Helpers.Map;
 using BubaTube.Services.Contracts.Get;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,21 +20,10 @@ namespace BubaTube.Services.GetServices
         {
             var videos = this.context.UserVideo
                 .Where(x => x.UserId == user.Id)
-                .Select(x => x.Video);
+                .Select(x => x.Video)
+                .Select(Map.Video());
 
-            var dtos = videos
-                .Select(x => new VideoDTO()
-                {
-                    Id = x.Id,
-                    Title = x.Title,
-                    Description = x.Description,
-                    Path = x.Path,
-                    Likes = x.Likes,
-                    AuthorUserName = x.AuthorId,
-                    Categories = x.VideoCategory.Select(c => c.Category.CategoryName)
-                });
-
-            return dtos;
+            return videos;
         }
     }
 }

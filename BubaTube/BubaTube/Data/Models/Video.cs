@@ -20,6 +20,9 @@ namespace BubaTube.Data.Models
         
         public double Likes { get; set; }
 
+        //TODO add views property and add migration
+        //public double Views { get; set; }
+
         [Required]
         public string AuthorId { get; set; }
         

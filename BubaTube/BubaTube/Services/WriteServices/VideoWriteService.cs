@@ -2,10 +2,10 @@
 using BubaTube.Data.DTO;
 using BubaTube.Data.Models;
 using BubaTube.Factory.Contracts;
+using BubaTube.Helpers.Map;
 using BubaTube.Services.Contracts.Get;
 using BubaTube.Services.Contracts.Write;
 using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -31,14 +31,7 @@ namespace BubaTube.Services.WriteServices
         {
             var categorieIDs = this.categoryGetService.TakeCategoryIds(dto.Categories);
 
-            var model = new Video()
-            {
-                Title = dto.Title,
-                Description = dto.Description,
-                Path = dto.Path,
-                AuthorId = dto.AuthorUserName,
-                VideoCategory = new List<VideoCategory>()
-            };
+            var model = Map.Video(dto);
 
             foreach (var id in categorieIDs)
             {

@@ -1,6 +1,7 @@
 ﻿using BubaTube.Data;
 using BubaTube.Data.DTO;
 using BubaTube.Data.Models;
+using BubaTube.Helpers.Map;
 using BubaTube.Services.Contracts.Get;
 using System;
 using System.Collections.Generic;
@@ -20,19 +21,13 @@ namespace BubaTube.Services.GetServices
 
         public IEnumerable<VideoDTO> MostResentVideos()
         {
-            var resentVideos = this.context.Videos.
-                Where(x => x.IsАpproved == true).
-                Take(DefaultCountForResentVideos).
-                Select(x => 
-                    new VideoDTO()
-                    {
-                        Title = x.Title,
-                        Path = x.Path,
-                        Likes = x.Likes,
-                        AuthorUserName = x.AuthorId
-                    });
+            var resentVideos = this.context.Videos
+                .Where(x => x.IsАpproved == true)
+                .TakeLast(DefaultCountForResentVideos)
+                .Select(Map.Video())
+                .ToList();
 
-            return resentVideos.ToList();
+            return resentVideos;
         }
 
         public IEnumerable<VideoDTO> PopularVideos()
