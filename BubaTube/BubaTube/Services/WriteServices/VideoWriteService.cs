@@ -2,6 +2,7 @@
 using BubaTube.Data.DTO;
 using BubaTube.Data.Models;
 using BubaTube.Factory.Contracts;
+using BubaTube.Helpers.Constants;
 using BubaTube.Helpers.Map;
 using BubaTube.Services.Contracts.Get;
 using BubaTube.Services.Contracts.Write;
@@ -14,16 +15,16 @@ namespace BubaTube.Services.WriteServices
     public class VideoWriteService : IVideoWriteService
     {
         private BubaTubeDbContext context;
-        private IFileStreamFactory fileStreamFactory;
+        private IFileStreamHelper fileStreamHelper;
         private ICategoryGetService categoryGetService;
 
         public VideoWriteService(
-            BubaTubeDbContext context, 
-            IFileStreamFactory fileStreamFactory,
+            BubaTubeDbContext context,
+            IFileStreamHelper fileStreamHelper,
             ICategoryGetService categoryGetService)
         {
             this.context = context;
-            this.fileStreamFactory = fileStreamFactory;
+            this.fileStreamHelper = fileStreamHelper;
             this.categoryGetService = categoryGetService;
         }
 
@@ -61,11 +62,7 @@ namespace BubaTube.Services.WriteServices
         /// <returns></returns>
         public async Task Save(IFormFile video, string path)
         {
-            using (var fileStream = this.fileStreamFactory.CreateFileStreamInstance(
-                path, FileMode.Create))
-            {
-                await video.CopyToAsync(fileStream);
-            }
+            await this.fileStreamHelper.SaveFile(video, path);
         }
     }
 }
