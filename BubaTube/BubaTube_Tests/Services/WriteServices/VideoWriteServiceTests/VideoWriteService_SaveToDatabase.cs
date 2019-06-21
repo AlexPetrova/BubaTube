@@ -29,7 +29,7 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
 
                 var model = this.GetVideoDto();
 
-                var video = uploadService.SaveToDatabase(model);
+                var video = uploadService.Save(model);
                 var savedModelInDb = context.Videos.First();
 
                 Assert.Equal(1, context.Videos.Count());
@@ -63,7 +63,7 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
                     fileStreamFactory.Object,
                     categoryGetService.Object);
 
-                var savedVideo = uploadVideoService.SaveToDatabase(model);
+                var savedVideo = uploadVideoService.Save(model);
 
                 Assert.Equal(1, savedVideo.VideoCategory.Count);
                 Assert.Equal(2, savedVideo.VideoCategory.First().CategoryId);
@@ -97,7 +97,7 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
                     fileStreamFactory.Object,
                     categoryGetService.Object);
 
-                var savedVideo = uploadVideoService.SaveToDatabase(model);
+                var savedVideo = uploadVideoService.Save(model);
                 
                 Assert.Equal(categoryFromDb.CategoryName, savedVideo.VideoCategory.First().Category.CategoryName);
                 Assert.Same(savedVideo, savedVideo.VideoCategory.First().Video);
