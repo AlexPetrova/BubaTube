@@ -27,6 +27,11 @@ namespace BubaTube.Services.WriteServices
             this.categoryGetService = categoryGetService;
         }
 
+        /// <summary>
+        /// Save Video to Database
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         public Video Save(VideoDTO dto)
         {
             var categorieIDs = this.categoryGetService.TakeCategoryIds(dto.Categories);
@@ -47,8 +52,14 @@ namespace BubaTube.Services.WriteServices
 
             return model;
         }
-        
-        public async Task SaveToRootFolder(IFormFile video, string path)
+
+        /// <summary>
+        /// Saves <see cref="IFormFile"/> to path on disk
+        /// </summary>
+        /// <param name="video"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public async Task Save(IFormFile video, string path)
         {
             using (var fileStream = this.fileStreamFactory.CreateFileStreamInstance(
                 path, FileMode.Create))

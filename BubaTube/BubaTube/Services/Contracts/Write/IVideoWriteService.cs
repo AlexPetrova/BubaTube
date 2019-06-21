@@ -9,6 +9,6 @@ namespace BubaTube.Services.Contracts.Write
     {
         Video Save(VideoDTO video);
 
-        Task SaveToRootFolder(IFormFile video, string path);
+        Task Save(IFormFile video, string path);
     }
 }

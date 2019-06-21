@@ -57,7 +57,7 @@ namespace BubaTube.Controllers
 
                 try
                 {
-                    await this.videoWriteService.SaveToRootFolder(model.Video, path);
+                    await this.videoWriteService.Save(model.Video, path);
                 }
                 catch
                 {
