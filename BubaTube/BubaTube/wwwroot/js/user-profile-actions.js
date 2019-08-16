@@ -2,22 +2,22 @@
 
     //navigation
     $('#upload-video').on('click', function (event) {
-        $('container').empty();
+        $('user-action-container').empty();
 
         $.get(
             '/upload/uploadVideo',
             function (data) {
-                $('#container').html(data);
+                $('#user-action-container').html(data);
             }
         );
     });
 
-    $('#container').on('click', '#upload', function (event) {
+    $('#user-action-container').on('click', '#upload', function (event) {
         event.preventDefault();
         $('#file').trigger('click');
     });
 
-    $('#container').on('change', '#file', function () {
+    $('#user-action-container').on('change', '#file', function () {
         var filename = $('input[type=file]').val().split('\\').pop();
         $('#name-of-video').html(filename);
     });
@@ -39,7 +39,7 @@
         return collection;
     }
 
-    $('#container').on('keydown', '#tag-field', function (event) {
+    $('#user-action-container').on('keydown', '#tag-field', function (event) {
         if (event.keyCode === 13) {
             event.preventDefault();
             var tag = $('#tag-field');
@@ -55,7 +55,7 @@
         }
     });
 
-    $('#container').on('click', '.close-tag', function (event) {
+    $('#user-action-container').on('click', '.close-tag', function (event) {
         var liToRemove = $(this).closest('li');
         liToRemove.fadeOut(300, function () { $(this).remove(); });
     });
@@ -99,7 +99,7 @@
         return valid;
     }
 
-    $('#container').on('submit', '#upload-files', function (event) {
+    $('#user-action-container').on('submit', '#upload-files', function (event) {
         event.preventDefault();
 
         if (!validateForm()) {

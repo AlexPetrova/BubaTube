@@ -6,16 +6,15 @@
 @*partial view for the owner of profile*@
 <br />
 
-<div class="nav-user-home">
-    <ul>
-        <li><a tabindex="0" id="">Users</a></li>
-        <li><a tabindex="0">Favourite Videos</a></li>
-        <li><a tabindex="0" id="upload-video">Upload Video</a></li>
-    </ul>
-</div>
+<div class="user-home-container">
+    <div class="nav-user-home">
+        <div><a tabindex="0" id="">Users</a></div>
+        <div><a tabindex="0">Favourite Videos</a></div>
+        <div><a tabindex="0" id="upload-video">Upload Video</a></div>
+    </div>
 
-<div id="container"></div>
-<div id="modal"></div>
+    <div id="user-action-container" class="user-action-container"></div>
+</div>
 
 @section Scripts {
     <script src="~/js/user-profile-actions.js"></script>

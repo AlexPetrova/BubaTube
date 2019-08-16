@@ -250,27 +250,37 @@ body {
     color: black !important;
 }
 
-/*home page of user*/
-.nav-user-home > ul > li {
-    display: inline-block;
-    margin-right: -4px;
-}
+/*---------------------------*/
+/*profile page - user actions*/
+/*---------------------------*/
 
-.nav-user-home > ul > li > a {
+.nav-user-home a {
     color: black;
-    padding: 10px 15px 10px 15px;
     text-decoration: none;
     cursor: pointer;
 }
 
-.nav-user-home > ul > li > a:hover {
+.nav-user-home a:visited {
+    outline: none;
+}
+
+.nav-user-home div {
+    padding: 10px 15px 10px 15px;
+}
+
+.nav-user-home div:hover {
     background-color: #f0f5fb;
 }
 
-.nav-user-home > ul > li > a:focus {
-    border-bottom: 1px solid blue;
+.user-home-container {
+    display: flex;
+    flex-direction: row;
 }
 
+.user-action-container,
+.nav-user-home {
+}
+/*----------------------------*/
 .user-avatar {
     width: 34px;
     height: 34px;
