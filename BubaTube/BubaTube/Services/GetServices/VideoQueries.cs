@@ -9,17 +9,17 @@ using System.Linq;
 
 namespace BubaTube.Services.GetServices
 {
-    public class VideoGetService : IVideoGetService
+    public class VideoQueries : IVideoQueries
     {
         private BubaTubeDbContext context;
         private const int DefaultCountForResentVideos = 20;
 
-        public VideoGetService(BubaTubeDbContext context)
+        public VideoQueries(BubaTubeDbContext context)
         {
             this.context = context;
         }
 
-        public IEnumerable<VideoDTO> MostResentVideos()
+        public IReadOnlyCollection<VideoDTO> MostResentVideos()
         {
             var resentVideos = this.context.Videos
                 .Where(x => x.IsАpproved == true)
@@ -30,12 +30,12 @@ namespace BubaTube.Services.GetServices
             return resentVideos;
         }
 
-        public IEnumerable<VideoDTO> PopularVideos()
+        public IReadOnlyCollection<VideoDTO> PopularVideos()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<VideoDTO> UserMayLikeVideos(User user)
+        public IReadOnlyCollection<VideoDTO> UserMayLikeVideos(User user)
         {
             throw new NotImplementedException();
         }

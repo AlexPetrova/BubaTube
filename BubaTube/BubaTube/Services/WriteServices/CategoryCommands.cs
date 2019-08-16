@@ -6,11 +6,11 @@ using System.Linq;
 
 namespace BubaTube.Services.WriteServices
 {
-    public class CategoryWriteService : ICategoryWriteService
+    public class CategoryCommands : ICategoryCommands
     {
         private BubaTubeDbContext context;
 
-        public CategoryWriteService(BubaTubeDbContext context)
+        public CategoryCommands(BubaTubeDbContext context)
         {
             this.context = context;
         }

@@ -2,7 +2,7 @@
 
 namespace BubaTube.Services.Contracts.Write
 {
-    public interface IUserManagementWriteService
+    public interface IUserCommands
     {
         Task<int> SaveLoginDate(string userID);
     }

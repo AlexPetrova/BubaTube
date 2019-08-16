@@ -21,12 +21,12 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
         {
             var options = DbContextMock.GetOptions("SaveToDatabaseTest");
             var fileStreamFactory = new Mock<IFileStreamHelper>();
-            var categoryGetService = new Mock<ICategoryGetService>();
+            var categoryGetService = new Mock<ICategoryQueries>();
             var mockFile = new Mock<IFormFile>();
 
             using (var context = new BubaTubeDbContext(options))
             {
-                var uploadService = new VideoWriteService(
+                var uploadService = new VideoCommands(
                     context,
                     fileStreamFactory.Object,
                     categoryGetService.Object);
@@ -49,7 +49,7 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
         {
             var options = DbContextMock.GetOptions("SaveToDatabaseTest");
             var fileStreamFactory = new Mock<IFileStreamHelper>();
-            var categoryGetService = new Mock<ICategoryGetService>();
+            var categoryGetService = new Mock<ICategoryQueries>();
             var mockFile = new Mock<IFormFile>();
             var categories = new List<string>() { "Test1" };
 
@@ -62,7 +62,7 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
                 var model = this.GetVideoDto();
                 model.Categories = categories;
 
-                var uploadVideoService = new VideoWriteService(
+                var uploadVideoService = new VideoCommands(
                     context,
                     fileStreamFactory.Object,
                     categoryGetService.Object);
@@ -79,7 +79,7 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
         {
             var options = DbContextMock.GetOptions("SaveToDatabaseTest");
             var fileStreamFactory = new Mock<IFileStreamHelper>();
-            var categoryGetService = new Mock<ICategoryGetService>();
+            var categoryGetService = new Mock<ICategoryQueries>();
             var mockFile = new Mock<IFormFile>();
             var categories = new List<string>();
 
@@ -97,7 +97,7 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
                 var model = this.GetVideoDto();
                 model.Categories = categories;
 
-                var uploadVideoService = new VideoWriteService(
+                var uploadVideoService = new VideoCommands(
                     context,
                     fileStreamFactory.Object,
                     categoryGetService.Object);

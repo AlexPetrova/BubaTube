@@ -22,13 +22,13 @@ namespace BubaTube.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly ILogger _logger;
-        private readonly IUserManagementWriteService userManagementService;
+        private readonly IUserCommands userManagementService;
 
         public AccountController(
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             ILogger<AccountController> logger,
-            IUserManagementWriteService userManagementService)
+            IUserCommands userManagementService)
         {
             _userManager = userManager;
             _signInManager = signInManager;

@@ -7,21 +7,22 @@ using System.Linq;
 
 namespace BubaTube.Services.GetServices
 {
-    public class FavouriteVideosGetService : IFavouriteVideosGetService
+    public class FavouriteVideosQueries : IFavouriteVideosQueries
     {
         private BubaTubeDbContext context;
 
-        public FavouriteVideosGetService(BubaTubeDbContext context)
+        public FavouriteVideosQueries(BubaTubeDbContext context)
         {
             this.context = context;
         }
 
-        public IEnumerable<VideoDTO> GetFavouriteVideos(UserSearchDTO user)
+        public IReadOnlyCollection<VideoDTO> GetFavouriteVideos(UserSearchDTO user)
         {
             var videos = this.context.UserVideo
                 .Where(x => x.UserId == user.Id)
                 .Select(x => x.Video)
-                .Select(Map.Video());
+                .Select(Map.Video())
+                .ToList();
 
             return videos;
         }

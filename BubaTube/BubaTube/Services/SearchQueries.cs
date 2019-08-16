@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BubaTube.Services
 {
-    public class SearchService : ISearchService
+    public class SearchQueries : ISearchQueries
     {
         private readonly char[] splitChars = new char[] { ' ', '.', ',', '!', '?', '(', ')' };
         private const int MaxCountOfSearchedWords = 5;
@@ -18,7 +18,7 @@ namespace BubaTube.Services
         private BubaTubeDbContext context;
         private IConfiguration configuration;
 
-        public SearchService(
+        public SearchQueries(
             BubaTubeDbContext context,
             IConfiguration configuration)
         {

@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace BubaTube.Services.WriteServices
 {
-    public class VideoWriteService : IVideoWriteService
+    public class VideoCommands : IVideoCommands
     {
         private BubaTubeDbContext context;
         private IFileStreamHelper fileStreamHelper;
-        private ICategoryGetService categoryGetService;
+        private ICategoryQueries categoryGetService;
 
-        public VideoWriteService(
+        public VideoCommands(
             BubaTubeDbContext context,
             IFileStreamHelper fileStreamHelper,
-            ICategoryGetService categoryGetService)
+            ICategoryQueries categoryGetService)
         {
             this.context = context;
             this.fileStreamHelper = fileStreamHelper;

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace BubaTube.Services.Contracts
 {
-    public interface ISearchService
+    public interface ISearchQueries
     {
         (IEnumerable<VideoDTO>, IEnumerable<CommentDTO>, IEnumerable<UserDTO>) GetQuickSearchResults(string input);
 

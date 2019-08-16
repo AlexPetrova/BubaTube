@@ -37,7 +37,7 @@ namespace BubaTube_Tests.Services.GetServices.FavouriteVideosGetServiceTest
                 });
                 context.SaveChanges();
 
-                var favoutiteVideoService = new FavouriteVideosGetService(context);
+                var favoutiteVideoService = new FavouriteVideosQueries(context);
                 var userDto = new UserSearchDTO()
                 {
                     Id = user.Id
@@ -65,7 +65,7 @@ namespace BubaTube_Tests.Services.GetServices.FavouriteVideosGetServiceTest
 
                 var user = context.Users.First();
 
-                var favoutiteVideoService = new FavouriteVideosGetService(context);
+                var favoutiteVideoService = new FavouriteVideosQueries(context);
                 var userDto = new UserSearchDTO()
                 {
                     Id = user.Id

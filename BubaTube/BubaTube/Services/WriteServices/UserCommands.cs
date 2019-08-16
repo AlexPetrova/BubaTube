@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace BubaTube.Services.WriteServices
 {
-    public class UserManagementWriteService : IUserManagementWriteService
+    public class UserCommands : IUserCommands
     {
         private BubaTubeDbContext context;
 
-        public UserManagementWriteService(BubaTubeDbContext context)
+        public UserCommands(BubaTubeDbContext context)
         {
             this.context = context;
         }

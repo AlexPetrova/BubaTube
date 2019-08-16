@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BubaTube.Services.Contracts
 {
-    public interface ICategoryWriteService
+    public interface ICategoryCommands
     {
         void SaveToDatabase(IEnumerable<string> categories);
 

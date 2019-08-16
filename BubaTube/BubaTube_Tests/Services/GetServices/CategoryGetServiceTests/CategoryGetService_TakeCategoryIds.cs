@@ -20,7 +20,7 @@ namespace BubaTube_Tests.Services.GetServices.CategoryGetServiceTests
                 context.Category.AddRange(CategoryMockData.GetListOfCategoryModels());
                 context.SaveChanges();
 
-                var categoryGetService = new CategoryGetService(context);
+                var categoryGetService = new CategoryQueries(context);
                 var result = categoryGetService.TakeCategoryIds(searchedCategories);
 
                 var test1FromDb = context.Category
@@ -47,7 +47,7 @@ namespace BubaTube_Tests.Services.GetServices.CategoryGetServiceTests
                 context.Category.AddRange(CategoryMockData.GetListOfCategoryModels());
                 context.SaveChanges();
 
-                var categoryGetService = new CategoryGetService(context);
+                var categoryGetService = new CategoryQueries(context);
                 var result = categoryGetService.TakeCategoryIds(searchedCategories);
                 
                 Assert.Empty(result);
@@ -65,7 +65,7 @@ namespace BubaTube_Tests.Services.GetServices.CategoryGetServiceTests
                 context.Category.AddRange(CategoryMockData.GetListOfCategoryModels());
                 context.SaveChanges();
 
-                var categoryGetService = new CategoryGetService(context);
+                var categoryGetService = new CategoryQueries(context);
                 var result = categoryGetService.TakeCategoryIds(searchedCategories);
 
                 Assert.Empty(result);

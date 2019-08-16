@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BubaTube.Services.Contracts.Write
 {
-    public interface IVideoWriteService
+    public interface IVideoCommands
     {
         Task<int> Save(VideoDTO dto, IFormFile video, string path);
     }

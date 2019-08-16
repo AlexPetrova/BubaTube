@@ -50,16 +50,15 @@ namespace BubaTube
                 options => options.LowercaseUrls = true);
             services.AddMemoryCache();
             
-            services.AddTransient<IVideoWriteService, VideoWriteService>();
-            services.AddTransient<ICategoryWriteService, CategoryWriteService>();
-            services.AddTransient<ICategoryGetService, CategoryGetService>();
+            services.AddTransient<IVideoCommands, VideoCommands>();
+            services.AddTransient<ICategoryCommands, CategoryCommands>();
+            services.AddTransient<ICategoryQueries, CategoryQueries>();
             services.AddTransient<IFileStreamFactory, FileStreamFactory>();
-            services.AddTransient<ISearchService, SearchService>();
+            services.AddTransient<ISearchQueries, SearchQueries>();
             services.AddTransient<IUploadVideoHelper, UploadVideoHelper>();
-            services.AddTransient<IUserManagementWriteService, UserManagementWriteService>();
-            services.AddTransient<IControlUsersService, ControlUsersSevice>();
+            services.AddTransient<IUserCommands, UserCommands>();
             services.AddTransient<IFileStreamHelper, FileStreamHelper>();
-            services.AddTransient<IManageUsersService, ManageUsersSevice>();
+            services.AddTransient<IManageUsersService, ManageUsersService>();
             services.AddSingleton<IConfiguration>(Configuration);
         }
         private void RegisterAuthentication(IServiceCollection serviceCollection)

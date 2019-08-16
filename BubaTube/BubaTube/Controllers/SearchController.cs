@@ -6,9 +6,9 @@ namespace BubaTube.Controllers
 {
     public class SearchController : Controller
     {
-        private ISearchService searchService;
+        private ISearchQueries searchService;
 
-        public SearchController(ISearchService searchService)
+        public SearchController(ISearchQueries searchService)
         {
             this.searchService = searchService;
         }
