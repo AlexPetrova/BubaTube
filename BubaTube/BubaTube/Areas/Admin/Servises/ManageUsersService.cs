@@ -7,24 +7,24 @@ using System.Threading.Tasks;
 
 namespace BubaTube.Areas.Admin.Servises
 {
-    public class ManageUsersSevice : IManageUsersService
+    public class ManageUsersService : IManageUsersService
     {
-        private BubaTubeDbContext cotext;
+        private BubaTubeDbContext context;
         private UserManager<User> userManager;
 
-        public ManageUsersSevice(
+        public ManageUsersService(
             BubaTubeDbContext context,
             UserManager<User> userManager)
         {
-            this.cotext = context;
+            this.context = context;
             this.userManager = userManager;
         }
 
         public async Task<int> CloseAccount(string userEmail)
         {
             var user =await this.userManager.FindByEmailAsync(userEmail);
-            this.cotext.Entry(user).State = EntityState.Deleted;
-            return await this.cotext.SaveChangesAsync();
+            this.context.Entry(user).State = EntityState.Deleted;
+            return await this.context.SaveChangesAsync();
         }
     }
 }
