@@ -29,21 +29,14 @@ namespace BubaTube.Services.WriteServices
         /// </summary>
         public IEnumerable<Category> FilterCategories(IEnumerable<string> categories)
         {
-            var categoryNamesSavedInDB = this.context.Category
-                .Select(x => x.CategoryName)
+            return categories
+                .Where(x => !this.context.Category.Any(y => y.CategoryName != x))
+                .Select(x => new Category()
+                 {
+                     CategoryName = x,
+                     VideoCategory = new List<VideoCategory>()
+                 })
                 .ToList();
-
-            var different = categories.Except(categoryNamesSavedInDB);
-
-            var filtered = different.
-                Select(x => new Category()
-                {
-                    CategoryName = x,
-                    VideoCategory = new List<VideoCategory>()
-                })
-                .ToList();
-
-            return filtered;
         }
     }
 }

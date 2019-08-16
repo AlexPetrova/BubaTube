@@ -1,12 +1,12 @@
 ﻿using BubaTube.Data;
 using BubaTube.Data.DTO;
 using BubaTube.Data.Models;
-using BubaTube.Factory.Contracts;
+using BubaTube.Helpers.Constants;
+using BubaTube.Helpers.Map;
 using BubaTube.Services.Contracts.Get;
 using BubaTube.Services.Contracts.Write;
 using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BubaTube.Services.WriteServices
@@ -14,54 +14,41 @@ namespace BubaTube.Services.WriteServices
     public class VideoWriteService : IVideoWriteService
     {
         private BubaTubeDbContext context;
-        private IFileStreamFactory fileStreamFactory;
+        private IFileStreamHelper fileStreamHelper;
         private ICategoryGetService categoryGetService;
 
         public VideoWriteService(
-            BubaTubeDbContext context, 
-            IFileStreamFactory fileStreamFactory,
+            BubaTubeDbContext context,
+            IFileStreamHelper fileStreamHelper,
             ICategoryGetService categoryGetService)
         {
             this.context = context;
-            this.fileStreamFactory = fileStreamFactory;
+            this.fileStreamHelper = fileStreamHelper;
             this.categoryGetService = categoryGetService;
         }
 
-        public Video SaveToDatabase(VideoDTO dto)
+        /// <summary>
+        /// Save Video to Database and to disk
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        public async Task<int> Save(VideoDTO dto, IFormFile video, string path)
         {
             var categorieIDs = this.categoryGetService.TakeCategoryIds(dto.Categories);
 
-            var model = new Video()
-            {
-                Title = dto.Title,
-                Description = dto.Description,
-                Path = dto.Path,
-                AuthorId = dto.AuthorUserName,
-                VideoCategory = new List<VideoCategory>()
-            };
+            var model = Map.Video(dto);
 
-            foreach (var id in categorieIDs)
-            {
-                model.VideoCategory.Add(new VideoCategory()
-                {
-                    CategoryId = id
-                });
-            }
+            model.VideoCategory = categorieIDs
+                .Select(x => new VideoCategory() { CategoryId = x })
+                .ToList();
 
             this.context.Videos.Add(model);
 
-            this.context.SaveChanges();
+            var result = await this.context.SaveChangesAsync();
 
-            return model;
-        }
-        
-        public async Task SaveToRootFolder(IFormFile video, string path)
-        {
-            using (var fileStream = this.fileStreamFactory.CreateFileStreamInstance(
-                path, FileMode.Create))
-            {
-                await video.CopyToAsync(fileStream);
-            }
+            await this.fileStreamHelper.SaveFile(video, path);
+
+            return result;
         }
     }
 }

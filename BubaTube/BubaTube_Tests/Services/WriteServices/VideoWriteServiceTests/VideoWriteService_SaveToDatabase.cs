@@ -1,12 +1,15 @@
 ﻿using BubaTube.Data;
 using BubaTube.Data.DTO;
 using BubaTube.Factory.Contracts;
+using BubaTube.Helpers.Constants;
 using BubaTube.Services.Contracts.Get;
 using BubaTube.Services.WriteServices;
 using BubaTube_Tests.MockData;
+using Microsoft.AspNetCore.Http;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
@@ -14,11 +17,12 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
     public class VideoWriteService_SaveToDatabase
     {
         [Fact]
-        public void SavesPassedData()
+        public async Task SavesPassedData()
         {
             var options = DbContextMock.GetOptions("SaveToDatabaseTest");
-            var fileStreamFactory = new Mock<IFileStreamFactory>();
+            var fileStreamFactory = new Mock<IFileStreamHelper>();
             var categoryGetService = new Mock<ICategoryGetService>();
+            var mockFile = new Mock<IFormFile>();
 
             using (var context = new BubaTubeDbContext(options))
             {
@@ -29,11 +33,10 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
 
                 var model = this.GetVideoDto();
 
-                var video = uploadService.SaveToDatabase(model);
+                await uploadService.Save(model, mockFile.Object, "C:/Videos");
                 var savedModelInDb = context.Videos.First();
 
                 Assert.Equal(1, context.Videos.Count());
-                Assert.True(context.Videos.Any(x => x.Id == video.Id));
                 Assert.Equal(model.Title, savedModelInDb.Title);
                 Assert.Equal(model.AuthorUserName, savedModelInDb.AuthorId);
                 Assert.Equal(model.Description, savedModelInDb.Description);
@@ -42,11 +45,12 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
         }
 
         [Fact]
-        public void AddsCorrectlyListOfCategoriesPerModel()
+        public async Task AddsCorrectlyListOfCategoriesPerModel()
         {
             var options = DbContextMock.GetOptions("SaveToDatabaseTest");
-            var fileStreamFactory = new Mock<IFileStreamFactory>();
+            var fileStreamFactory = new Mock<IFileStreamHelper>();
             var categoryGetService = new Mock<ICategoryGetService>();
+            var mockFile = new Mock<IFormFile>();
             var categories = new List<string>() { "Test1" };
 
             categoryGetService
@@ -63,19 +67,20 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
                     fileStreamFactory.Object,
                     categoryGetService.Object);
 
-                var savedVideo = uploadVideoService.SaveToDatabase(model);
+                await uploadVideoService.Save(model, mockFile.Object, "C:/Videos" );
 
-                Assert.Equal(1, savedVideo.VideoCategory.Count);
-                Assert.Equal(2, savedVideo.VideoCategory.First().CategoryId);
+                Assert.Equal(2, context.VideoCategory.First().CategoryId);
+                Assert.Equal(1, context.VideoCategory.Count());
             }
         }
 
         [Fact]
-        public void CreatesNavigationPropertyBetweenVideoAndCategory()
+        public async Task CreatesNavigationPropertyBetweenVideoAndCategory()
         {
             var options = DbContextMock.GetOptions("SaveToDatabaseTest");
-            var fileStreamFactory = new Mock<IFileStreamFactory>();
+            var fileStreamFactory = new Mock<IFileStreamHelper>();
             var categoryGetService = new Mock<ICategoryGetService>();
+            var mockFile = new Mock<IFormFile>();
             var categories = new List<string>();
 
             using (var context = new BubaTubeDbContext(options))
@@ -97,10 +102,9 @@ namespace BubaTube_Tests.Services.WriteServices.VideoWriteServiceTest
                     fileStreamFactory.Object,
                     categoryGetService.Object);
 
-                var savedVideo = uploadVideoService.SaveToDatabase(model);
+                await uploadVideoService.Save(model, mockFile.Object, "C:/Videos");
                 
-                Assert.Equal(categoryFromDb.CategoryName, savedVideo.VideoCategory.First().Category.CategoryName);
-                Assert.Same(savedVideo, savedVideo.VideoCategory.First().Video);
+                Assert.Equal(categoryFromDb.CategoryName, context.VideoCategory.First().Category.CategoryName);
             }
         }
 

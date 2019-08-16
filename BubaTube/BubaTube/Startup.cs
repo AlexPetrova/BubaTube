@@ -5,6 +5,7 @@ using BubaTube.Data.Models;
 using BubaTube.Factory;
 using BubaTube.Factory.Contracts;
 using BubaTube.Helpers;
+using BubaTube.Helpers.Constants;
 using BubaTube.Helpers.Contracts;
 using BubaTube.Services;
 using BubaTube.Services.Contracts;
@@ -56,6 +57,8 @@ namespace BubaTube
             services.AddTransient<ISearchService, SearchService>();
             services.AddTransient<IUploadVideoHelper, UploadVideoHelper>();
             services.AddTransient<IUserManagementWriteService, UserManagementWriteService>();
+            services.AddTransient<IControlUsersService, ControlUsersSevice>();
+            services.AddTransient<IFileStreamHelper, FileStreamHelper>();
             services.AddTransient<IManageUsersService, ManageUsersSevice>();
             services.AddSingleton<IConfiguration>(Configuration);
         }

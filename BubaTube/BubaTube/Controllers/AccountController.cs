@@ -464,8 +464,6 @@ namespace BubaTube.Controllers
                 new EntityTagHeaderValue($@"""{user.Id}"""));
         }
 
-        #region Helpers
-
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
@@ -489,13 +487,11 @@ namespace BubaTube.Controllers
         private async Task SaveLoginTime(string email)
         {
             var user = await this._userManager.FindByEmailAsync(email);
-            var saveDateOfLoginSuccess = await this.userManagementService.SaveLoginDate(user.Id);
-            if (!saveDateOfLoginSuccess)
+            var saveDateOfLoginResult = await this.userManagementService.SaveLoginDate(user.Id);
+            if (saveDateOfLoginResult != 1)
             {
                 _logger.LogInformation("Save of date of login failed");
             }
         }
-
-        #endregion
     }
 }
