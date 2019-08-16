@@ -61,7 +61,7 @@ namespace BubaTube.Controllers
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
-                
+
                 if (result.Succeeded)
                 {
                     await this.SaveLoginTime(model.Email);
@@ -231,7 +231,7 @@ namespace BubaTube.Controllers
                     LastLogin = DateTime.Now
                 };
 
-                if(model.Avatar != null)
+                if (model.Avatar != null)
                 {
                     using (var memoryStream = new MemoryStream())
                     {
@@ -239,7 +239,7 @@ namespace BubaTube.Controllers
                         user.AvatarImage = memoryStream.ToArray();
                     }
                 }
-                
+
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -453,15 +453,25 @@ namespace BubaTube.Controllers
         public async Task<IActionResult> Avatar(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-
             if (user == null)
             {
                 return NotFound();
             }
 
-            //TODO 
-            return File(user.AvatarImage, "image/jpeg", DateTime.Now.AddDays(-2), 
-                new EntityTagHeaderValue($@"""{user.Id}"""));
+            if (user.AvatarImage != null)
+            {
+                return File(user.AvatarImage, 
+                    "image/jpeg", 
+                    DateTime.Now.AddDays(-2),
+                    new EntityTagHeaderValue($@"""{user.Id}"""));
+            }
+            else
+            {
+                return File("~/images/defaultprofileimage.PNG",
+                    "image/png",
+                    DateTime.Now.AddDays(-2),
+                    new EntityTagHeaderValue($@"""{user.Id}"""));
+            }
         }
 
         private void AddErrors(IdentityResult result)
