@@ -15,8 +15,8 @@ namespace BubaTube.Services
         private readonly char[] splitChars = new char[] { ' ', '.', ',', '!', '?', '(', ')' };
         private const int MaxCountOfSearchedWords = 5;
 
-        private BubaTubeDbContext context;
-        private IConfiguration configuration;
+        private readonly BubaTubeDbContext context;
+        private readonly IConfiguration configuration;
 
         public SearchQueries(
             BubaTubeDbContext context,

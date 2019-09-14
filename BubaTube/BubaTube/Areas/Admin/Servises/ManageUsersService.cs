@@ -9,8 +9,8 @@ namespace BubaTube.Areas.Admin.Servises
 {
     public class ManageUsersService : IManageUsersService
     {
-        private BubaTubeDbContext context;
-        private UserManager<User> userManager;
+        private readonly BubaTubeDbContext context;
+        private readonly UserManager<User> userManager;
 
         public ManageUsersService(
             BubaTubeDbContext context,

@@ -13,9 +13,9 @@ namespace BubaTube.Services.WriteServices
 {
     public class VideoCommands : IVideoCommands
     {
-        private BubaTubeDbContext context;
-        private IFileStreamHelper fileStreamHelper;
-        private ICategoryQueries categoryGetService;
+        private readonly BubaTubeDbContext context;
+        private readonly IFileStreamHelper fileStreamHelper;
+        private readonly ICategoryQueries categoryGetService;
 
         public VideoCommands(
             BubaTubeDbContext context,

@@ -8,7 +8,7 @@ namespace BubaTube.Areas.Admin.Controllers
 {
     public class ControlUsersController : Controller
     {
-        private IManageUsersService controlUsersService;
+        private readonly IManageUsersService controlUsersService;
 
         public ControlUsersController(
             IManageUsersService controlUsersService)
@@ -20,6 +20,14 @@ namespace BubaTube.Areas.Admin.Controllers
         [Authorize(Roles = "Admin")]
         [Route("[controller]/[action]")]
         public IActionResult ManageUsers()
+        {
+            return View();
+        }
+
+        [Area("Admin")]
+        [Authorize(Roles = "Admin")]
+        [Route("[controller]/[action]")]
+        public IActionResult GetUsersByLastActivity(int months)
         {
             return View();
         }

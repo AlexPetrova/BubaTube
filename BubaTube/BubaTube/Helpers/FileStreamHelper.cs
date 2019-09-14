@@ -8,7 +8,7 @@ namespace BubaTube.Helpers
 {
     public class FileStreamHelper : IFileStreamHelper
     {
-        private IFileStreamFactory fileStreamFactory;
+        private readonly IFileStreamFactory fileStreamFactory;
 
         public FileStreamHelper(IFileStreamFactory fileStreamFactory)
         {

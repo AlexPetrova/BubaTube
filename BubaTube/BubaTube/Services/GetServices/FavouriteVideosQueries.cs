@@ -9,7 +9,7 @@ namespace BubaTube.Services.GetServices
 {
     public class FavouriteVideosQueries : IFavouriteVideosQueries
     {
-        private BubaTubeDbContext context;
+        private readonly BubaTubeDbContext context;
 
         public FavouriteVideosQueries(BubaTubeDbContext context)
         {

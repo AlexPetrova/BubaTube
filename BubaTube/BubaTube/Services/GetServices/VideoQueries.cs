@@ -11,7 +11,7 @@ namespace BubaTube.Services.GetServices
 {
     public class VideoQueries : IVideoQueries
     {
-        private BubaTubeDbContext context;
+        private readonly BubaTubeDbContext context;
         private const int DefaultCountForResentVideos = 20;
 
         public VideoQueries(BubaTubeDbContext context)

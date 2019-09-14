@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BubaTube", "BubaTube\BubaTube.csproj", "{E665ECDF-6EB0-4D0E-8C57-262B23CB3B1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BubaTube_Tests", "BubaTube_Tests\BubaTube_Tests.csproj", "{E3E4A2FA-93DF-454C-8DFD-5458CAA16C64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BubaTube_Tests", "BubaTube_Tests\BubaTube_Tests.csproj", "{E3E4A2FA-93DF-454C-8DFD-5458CAA16C64}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

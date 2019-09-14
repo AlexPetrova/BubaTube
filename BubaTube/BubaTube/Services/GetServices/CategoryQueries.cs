@@ -8,7 +8,7 @@ namespace BubaTube.Services.GetServices
 {
     public class CategoryQueries : ICategoryQueries
     {
-        private BubaTubeDbContext context;
+        private readonly BubaTubeDbContext context;
 
         public CategoryQueries(BubaTubeDbContext context)
         {

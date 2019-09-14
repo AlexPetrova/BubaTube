@@ -8,7 +8,7 @@ namespace BubaTube.Controllers
 {
     public class ProfileController : Controller
     {
-        private UserManager<User> userManager;
+        private readonly UserManager<User> userManager;
 
         public ProfileController(UserManager<User> um)
         {

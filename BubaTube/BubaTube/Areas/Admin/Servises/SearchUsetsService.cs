@@ -13,8 +13,8 @@ namespace BubaTube.Areas.Admin.Servises
 {
     public class SearchUsetsService : ISearchUsersService
     {
-        private UserManager<User> userManager;
-        private BubaTubeDbContext context;
+        private readonly UserManager<User> userManager;
+        private readonly BubaTubeDbContext context;
 
         public SearchUsetsService(
             UserManager<User> userManager,

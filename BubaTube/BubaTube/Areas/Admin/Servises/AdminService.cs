@@ -8,7 +8,7 @@ namespace BubaTube.Areas.Admin.Servises
 {
     public class AdminService : IAdminService
     {
-        private BubaTubeDbContext context;
+        private readonly BubaTubeDbContext context;
 
         public AdminService(BubaTubeDbContext context)
         {

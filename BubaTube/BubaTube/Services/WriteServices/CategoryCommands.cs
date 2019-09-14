@@ -8,7 +8,7 @@ namespace BubaTube.Services.WriteServices
 {
     public class CategoryCommands : ICategoryCommands
     {
-        private BubaTubeDbContext context;
+        private readonly BubaTubeDbContext context;
 
         public CategoryCommands(BubaTubeDbContext context)
         {

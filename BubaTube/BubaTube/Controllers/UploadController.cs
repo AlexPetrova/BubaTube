@@ -17,11 +17,11 @@ namespace BubaTube.Controllers
 {
     public class UploadController : Controller
     {
-        private IVideoCommands videoWriteService;
-        private ICategoryCommands categorySaverService;
-        private IUploadVideoHelper uploadVideoHelper;
-        private IHostingEnvironment environment;
-        private UserManager<User> userManager;
+        private readonly IVideoCommands videoWriteService;
+        private readonly ICategoryCommands categorySaverService;
+        private readonly IUploadVideoHelper uploadVideoHelper;
+        private readonly IHostingEnvironment environment;
+        private readonly UserManager<User> userManager;
 
         public UploadController
             (IVideoCommands videoWriteService,
