@@ -4,7 +4,7 @@ using Services.Contracts.Write;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BubaTube.Services.WriteServices
+namespace Services.Write
 {
     public class CategoryCommands : ICategoryCommands
     {

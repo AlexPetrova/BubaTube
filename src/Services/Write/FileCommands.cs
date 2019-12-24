@@ -4,12 +4,11 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace BubaTube.Helpers
+namespace Services.Write
 {
     public class FileCommands : IFileCommands
     {
-        // TODO register this Func - no need for factory
-        private readonly Func<string, FileMode, FileStream> fileStreamInstanceCreator = (name, mode) => { return new FileStream(name, mode); };
+        private readonly Func<string, FileMode, FileStream> fileStreamInstanceCreator;
 
         public FileCommands(Func<string, FileMode, FileStream> fileStreamInstanceCreator)
         {

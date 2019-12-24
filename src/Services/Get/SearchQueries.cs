@@ -2,13 +2,13 @@
 using DataAccess;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using Services.Contracts;
+using Services.Contracts.Get;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Services
+namespace Services.Get
 {
     public class SearchQueries : ISearchQueries
     {

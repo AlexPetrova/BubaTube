@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BubaTube.Services.WriteServices
+namespace Services.Write
 {
     public class VideoCommands : IVideoCommands
     {
@@ -16,9 +16,7 @@ namespace BubaTube.Services.WriteServices
         private readonly IFileCommands fileCommands;
         private readonly ICategoryQueries categoryGetService;
         private readonly Func<VideoDTO, Video> videoMapper;
-
-        // TODO register the mapping funcs from mapping extensions
-        // TODO register the FileCommands 
+        
         public VideoCommands(
             BubaTubeDbContext context,
             IFileCommands fileCommands,

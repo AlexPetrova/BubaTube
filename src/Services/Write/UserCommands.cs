@@ -4,7 +4,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BubaTube.Services.WriteServices
+namespace Services.Write
 {
     public class UserCommands : IUserCommands
     {

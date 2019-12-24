@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BubaTube.Services.GetServices
+namespace Services.Get
 {
     public class VideoQueries : IVideoQueries
     {

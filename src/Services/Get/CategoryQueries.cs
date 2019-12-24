@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Services.GetServices
+namespace Services.Get
 {
     public class CategoryQueries : ICategoryQueries
     {
