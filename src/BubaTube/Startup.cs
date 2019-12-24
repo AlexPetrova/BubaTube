@@ -40,7 +40,7 @@ namespace BubaTube
             services.AddRouting(
                 options => options.LowercaseUrls = true);
             services.AddMemoryCache();
-            
+
             services.AddTransient<IVideoCommands, VideoCommands>();
             services.AddTransient<ICategoryCommands, CategoryCommands>();
             services.AddTransient<ICategoryQueries, CategoryQueries>();
@@ -51,6 +51,15 @@ namespace BubaTube
             services.AddTransient<IFileStreamHelper, FileStreamHelper>();
             services.AddTransient<IManageUsersService, ManageUsersService>();
             services.AddSingleton<IConfiguration>(Configuration);
+            //TODO move this registration in services (where FileCommands is registered) add summary for the function
+            services.AddSingleton(serviceProvider => new Func<string, string, string>((rootFolder, fileExtension) =>
+            {
+                var folder = Path.Combine(rootFolder, "video");
+                var nameOfVideo = Guid.NewGuid();
+                var path = Path.Combine(folder, nameOfVideo.ToString() + ".mp4");
+
+                return path;
+            }));
         }
         private void RegisterAuthentication(IServiceCollection serviceCollection)
         {
@@ -58,7 +67,7 @@ namespace BubaTube
                 .AddEntityFrameworkStores<BubaTubeDbContext>()
                 .AddDefaultTokenProviders();
         }
-        
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
