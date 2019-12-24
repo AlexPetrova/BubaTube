@@ -1,8 +1,4 @@
-﻿using BubaTube.Data.DTO;
-using BubaTube.Data.Models;
-using BubaTube.Helpers.Contracts;
-using BubaTube.Services.Contracts;
-using BubaTube.Services.Contracts.Write;
+﻿using BubaTube.Helpers.Contracts;
 using BubaTube.ViewModels.UploadVideoViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;

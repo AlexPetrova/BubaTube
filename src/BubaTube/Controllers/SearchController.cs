@@ -1,5 +1,4 @@
-﻿using BubaTube.Services.Contracts;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace BubaTube.Controllers

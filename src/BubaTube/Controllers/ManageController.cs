@@ -1,5 +1,4 @@
-﻿using BubaTube.Data.Models;
-using BubaTube.Models.ManageViewModels;
+﻿using BubaTube.Models.ManageViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

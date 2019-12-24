@@ -1,7 +1,4 @@
-﻿using BubaTube.Data.Models;
-using BubaTube.Models.AccountViewModels;
-using BubaTube.Services.Contracts.Write;
-using BubaTube.Services.WriteServices;
+﻿using BubaTube.Models.AccountViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

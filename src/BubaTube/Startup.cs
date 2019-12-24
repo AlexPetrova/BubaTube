@@ -1,24 +1,15 @@
 ﻿using BubaTube.Areas.Admin.Servises;
 using BubaTube.Areas.Admin.Servises.Contracts;
-using BubaTube.Data;
-using BubaTube.Data.Models;
-using BubaTube.Factory;
-using BubaTube.Factory.Contracts;
 using BubaTube.Helpers;
-using BubaTube.Helpers.Constants;
 using BubaTube.Helpers.Contracts;
-using BubaTube.Services;
-using BubaTube.Services.Contracts;
-using BubaTube.Services.Contracts.Get;
-using BubaTube.Services.Contracts.Write;
-using BubaTube.Services.GetServices;
-using BubaTube.Services.WriteServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace BubaTube
