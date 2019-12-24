@@ -1,7 +1,5 @@
 ﻿using BubaTube.Areas.Admin.Servises;
 using BubaTube.Areas.Admin.Servises.Contracts;
-using BubaTube.Helpers;
-using BubaTube.Helpers.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -29,43 +27,15 @@ namespace BubaTube
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<BubaTubeDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<BubaTubeDbContext>()
-                .AddDefaultTokenProviders();
-
             services.AddMvc();
             services.AddRouting(
                 options => options.LowercaseUrls = true);
             services.AddMemoryCache();
 
-            services.AddTransient<IVideoCommands, VideoCommands>();
-            services.AddTransient<ICategoryCommands, CategoryCommands>();
-            services.AddTransient<ICategoryQueries, CategoryQueries>();
-            services.AddTransient<IFileStreamFactory, FileStreamFactory>();
-            services.AddTransient<ISearchQueries, SearchQueries>();
-            services.AddTransient<IUploadVideoHelper, UploadVideoHelper>();
-            services.AddTransient<IUserCommands, UserCommands>();
-            services.AddTransient<IFileStreamHelper, FileStreamHelper>();
+            // TODO services.AddServices()
+
             services.AddTransient<IManageUsersService, ManageUsersService>();
             services.AddSingleton<IConfiguration>(Configuration);
-            //TODO move this registration in services (where FileCommands is registered) add summary for the function
-            services.AddSingleton(serviceProvider => new Func<string, string, string>((rootFolder, fileExtension) =>
-            {
-                var folder = Path.Combine(rootFolder, "video");
-                var nameOfVideo = Guid.NewGuid();
-                var path = Path.Combine(folder, nameOfVideo.ToString() + ".mp4");
-
-                return path;
-            }));
-        }
-        private void RegisterAuthentication(IServiceCollection serviceCollection)
-        {
-            serviceCollection.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<BubaTubeDbContext>()
-                .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
