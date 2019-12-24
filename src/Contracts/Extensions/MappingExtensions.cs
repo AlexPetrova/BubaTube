@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Contracts.Data.Mapper
+namespace Contracts.Extensions
 {
     public static class MappingExtensions
     {
