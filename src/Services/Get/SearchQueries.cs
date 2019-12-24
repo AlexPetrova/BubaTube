@@ -26,7 +26,7 @@ namespace Services.Get
             this.configuration = configuration;
         }
 
-        public async Task<string> GetSearchResultsJSON(string input)
+        public async Task<string> GetJSON(string input)
         {
             var searchedValues = this.FormatSerachedInput(input);
             var result = await this.BuildJSON(searchedValues);
@@ -38,14 +38,14 @@ namespace Services.Get
         {
             var serachedValues = this.FormatSerachedInput(input);
 
-            var videos = this.SearchResultForVideos(serachedValues);
-            var comments = this.SerachResultForComments(serachedValues);
-            var users = this.SerachResultForUsers(serachedValues);
+            var videos = this.Videos(serachedValues);
+            var comments = this.Comments(serachedValues);
+            var users = this.Users(serachedValues);
 
             return (videos, comments, users);
         }
 
-        public IEnumerable<VideoDTO> SearchResultForVideos(IDictionary<string,string> input)
+        public IEnumerable<VideoDTO> Videos(IDictionary<string,string> input)
         {
             var result = this.context.Videos
                 .Where(x => input.ContainsKey(x.Title.ToLower()))
@@ -60,7 +60,7 @@ namespace Services.Get
             return result;
         }
         
-        public IEnumerable<CommentDTO> SerachResultForComments(IDictionary<string, string> input)
+        public IEnumerable<CommentDTO> Comments(IDictionary<string, string> input)
         {
             var result = this.context.Comments
                 .Where(x => input.ContainsKey(x.User.FirstName.ToLower())
@@ -77,7 +77,7 @@ namespace Services.Get
             return result;
         }
 
-        public IEnumerable<UserDTO> SerachResultForUsers(IDictionary<string, string> input)
+        public IEnumerable<UserDTO> Users(IDictionary<string, string> input)
         {
             var result = this.context.Users
                 .Where(x =>

@@ -8,12 +8,12 @@ namespace Services.Contracts.Get
     {
         (IEnumerable<VideoDTO>, IEnumerable<CommentDTO>, IEnumerable<UserDTO>) GetQuickSearchResults(string input);
 
-        IEnumerable<VideoDTO> SearchResultForVideos(IDictionary<string, string> input);
+        IEnumerable<VideoDTO> Videos(IDictionary<string, string> input);
 
-        IEnumerable<UserDTO> SerachResultForUsers(IDictionary<string, string> input);
+        IEnumerable<UserDTO> Users(IDictionary<string, string> input);
 
-        IEnumerable<CommentDTO> SerachResultForComments(IDictionary<string, string> input);
+        IEnumerable<CommentDTO> Comments(IDictionary<string, string> input);
 
-        Task<string> GetSearchResultsJSON(string input);
+        Task<string> GetJSON(string input);
     }
 }
