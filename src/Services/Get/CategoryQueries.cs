@@ -1,4 +1,5 @@
-﻿using DataAccess;
+﻿using Contracts.Data.DTO;
+using DataAccess;
 using Services.Contracts.Get;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,20 @@ namespace Services.Get
                 .ToList();
 
             return result;
+        }
+
+        public IEnumerable<CategoryDTO> GetAllCategoriesForApproval()
+        {
+            var categoriesForApproval = this.context.Category
+                .Where(x => x.IsАpproved == false)
+                .Select(x => new CategoryDTO()
+                {
+                    Id = x.Id,
+                    CategoryName = x.CategoryName
+                })
+                .ToList();
+
+            return categoriesForApproval;
         }
     }
 }
