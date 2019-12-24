@@ -12,9 +12,8 @@ namespace Contracts.Extensions
         public static IServiceCollection AddModelToDTOMappers(this IServiceCollection services)
         {
             services.AddSingleton(serviceProvider =>
-                new Func<User, UserDTO>((model) =>
-                {
-                    return new UserDTO
+               new Func<User, UserDTO>((model) =>
+                   new UserDTO
                     {
                         FirstName = model.FirstName,
                         LastName = model.LastName,
@@ -22,14 +21,13 @@ namespace Contracts.Extensions
                         LastLogin = model.LastLogin,
                         RegisteredOn = model.RegisteredOn,
                         AvatarImage = model.AvatarImage
-                    };
-                }
-            ));
+                    }
+                )
+            );
 
             services.AddSingleton(serviceProvider =>
                 new Func<Video, VideoDTO>((model) =>
-                {
-                    return new VideoDTO
+                    new VideoDTO
                     {
                         Id = model.Id,
                         Title = model.Title,
@@ -39,9 +37,19 @@ namespace Contracts.Extensions
                         AuthorUserName = model.AuthorId,
                         Categories = model.VideoCategory
                                           .Select(c => c.Category.CategoryName)
-                    };
-                }
-            ));
+                    }
+                )
+            );
+
+            services.AddSingleton(serviceProvider =>
+                new Func<Category, CategoryDTO>((model) =>
+                    new CategoryDTO()
+                    {
+                        Id = model.Id,
+                        CategoryName = model.CategoryName
+                    }
+                )
+            );
 
             return services;
         }
@@ -49,18 +57,17 @@ namespace Contracts.Extensions
         public static IServiceCollection AddDTOToModelMappers(this IServiceCollection services)
         {
             services.AddSingleton(serviceProvider =>
-                new Func<VideoDTO, Video>((dto) =>
-                {
-                    return new Video
+                new Func<VideoDTO, Video>((dto) => 
+                    new Video
                     {
                         Title = dto.Title,
                         Description = dto.Description,
                         Path = dto.Path,
                         AuthorId = dto.AuthorUserName,
                         VideoCategory = new List<VideoCategory>()
-                    };
-                }
-            ));
+                    }
+                )
+            );
 
             return services;
         }
