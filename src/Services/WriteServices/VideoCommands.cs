@@ -4,6 +4,7 @@ using DataAccess;
 using Microsoft.AspNetCore.Http;
 using Services.Contracts.Get;
 using Services.Contracts.Write;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,17 +13,22 @@ namespace BubaTube.Services.WriteServices
     public class VideoCommands : IVideoCommands
     {
         private readonly BubaTubeDbContext context;
-        private readonly IFileStreamHelper fileStreamHelper;
+        private readonly IFileCommands fileCommands;
         private readonly ICategoryQueries categoryGetService;
+        private readonly Func<VideoDTO, Video> videoMapper;
 
+        // TODO register the mapping funcs from mapping extensions
+        // TODO register the FileCommands 
         public VideoCommands(
             BubaTubeDbContext context,
-            IFileStreamHelper fileStreamHelper,
-            ICategoryQueries categoryGetService)
+            IFileCommands fileCommands,
+            ICategoryQueries categoryGetService,
+            Func<VideoDTO, Video> videoMapper)
         {
             this.context = context;
-            this.fileStreamHelper = fileStreamHelper;
+            this.fileCommands = fileCommands;
             this.categoryGetService = categoryGetService;
+            this.videoMapper = videoMapper;
         }
 
         /// <summary>
@@ -34,7 +40,7 @@ namespace BubaTube.Services.WriteServices
         {
             var categorieIDs = this.categoryGetService.TakeCategoryIds(dto.Categories);
 
-            var model = Map.Video(dto);
+            var model = this.videoMapper(dto);
 
             model.VideoCategory = categorieIDs
                 .Select(x => new VideoCategory() { CategoryId = x })
@@ -44,7 +50,7 @@ namespace BubaTube.Services.WriteServices
 
             var result = await this.context.SaveChangesAsync();
 
-            await this.fileStreamHelper.SaveFile(video, path);
+            await this.fileCommands.Save(video, path);
 
             return result;
         }

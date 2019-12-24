@@ -1,6 +1,6 @@
 ﻿using Contracts.Data.Models;
 using DataAccess;
-using Services.Contracts;
+using Services.Contracts.Write;
 using System.Collections.Generic;
 using System.Linq;
 

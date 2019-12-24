@@ -11,11 +11,15 @@ namespace BubaTube.Services.GetServices
     public class VideoQueries : IVideoQueries
     {
         private readonly BubaTubeDbContext context;
+        private readonly Func<Video, VideoDTO> videoMapper;
         private const int DefaultCountForResentVideos = 20;
 
-        public VideoQueries(BubaTubeDbContext context)
+        public VideoQueries(
+            BubaTubeDbContext context,
+            Func<Video, VideoDTO> videoMapper)
         {
             this.context = context;
+            this.videoMapper = videoMapper;
         }
 
         public IReadOnlyCollection<VideoDTO> MostResentVideos()
@@ -23,7 +27,7 @@ namespace BubaTube.Services.GetServices
             var resentVideos = this.context.Videos
                 .Where(x => x.IsАpproved == true)
                 .TakeLast(DefaultCountForResentVideos)
-                .Select(Map.Video())
+                .Select(videoMapper)
                 .ToList();
 
             return resentVideos;
