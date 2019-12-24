@@ -11,5 +11,7 @@ namespace Services.Contracts.Get
         IReadOnlyCollection<VideoDTO> PopularVideos();
 
         IReadOnlyCollection<VideoDTO> UserMayLikeVideos(User user);
+
+        IReadOnlyCollection<VideoDTO> GetAllForApproval();
     }
 }

@@ -24,13 +24,11 @@ namespace Services.Get
 
         public IReadOnlyCollection<VideoDTO> MostResentVideos()
         {
-            var resentVideos = this.context.Videos
+            return this.context.Videos
                 .Where(x => x.IsАpproved == true)
                 .TakeLast(DefaultCountForResentVideos)
                 .Select(videoMapper)
                 .ToList();
-
-            return resentVideos;
         }
 
         public IReadOnlyCollection<VideoDTO> PopularVideos()
@@ -41,6 +39,14 @@ namespace Services.Get
         public IReadOnlyCollection<VideoDTO> UserMayLikeVideos(User user)
         {
             throw new NotImplementedException();
+        }
+
+        public IReadOnlyCollection<VideoDTO> GetAllForApproval()
+        {
+            return this.context.Videos
+                .Where(x => x.IsАpproved == false)
+                .Select(videoMapper)
+                .ToList();
         }
     }
 }

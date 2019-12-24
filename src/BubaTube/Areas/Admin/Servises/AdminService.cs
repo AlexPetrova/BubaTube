@@ -26,23 +26,5 @@ namespace BubaTube.Areas.Admin.Servises
 
             return categoriesForApproval;
         }
-
-        public IEnumerable<VideoDTO> GetAllVideosForApproval()
-        {
-            var videosForApproval = this.context.Videos
-                .Where(x => x.IsАpproved == false)
-                .Select(x => new VideoDTO()
-                {
-                    Id = x.Id,
-                    Title = x.Title,
-                    Description = x.Description,
-                    Likes = x.Likes,
-                    AuthorUserName = x.Author.UserName,
-                    Path = x.Path
-                })
-                .ToList();
-
-            return videosForApproval;
-        }
     }
 }
