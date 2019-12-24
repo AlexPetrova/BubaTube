@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BubaTube.Areas.Admin.Servises.Contracts;
-using BubaTube.Data;
-using BubaTube.Data.DTO;
 
 namespace BubaTube.Areas.Admin.Servises
 {

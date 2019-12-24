@@ -1,7 +1,4 @@
 ﻿using BubaTube.Areas.Admin.Servises.Contracts;
-using BubaTube.Data;
-using BubaTube.Data.DTO;
-using BubaTube.Data.Models;
 using BubaTube.Helpers.Map;
 using Microsoft.AspNetCore.Identity;
 using System;

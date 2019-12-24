@@ -1,5 +1,4 @@
-﻿using BubaTube.Data.DTO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace BubaTube.Areas.Admin.Servises.Contracts
 {

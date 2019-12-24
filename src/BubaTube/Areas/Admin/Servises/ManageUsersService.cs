@@ -1,6 +1,4 @@
 ﻿using BubaTube.Areas.Admin.Servises.Contracts;
-using BubaTube.Data;
-using BubaTube.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
