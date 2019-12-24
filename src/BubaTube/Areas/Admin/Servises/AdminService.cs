@@ -12,27 +12,7 @@ namespace BubaTube.Areas.Admin.Servises
         {
             this.context = context;
         }
-
-        public void ApproveCategory(int id)
-        {
-            var category = this.context.Category
-                .First(x => x.Id == id);
-
-            category.IsАpproved = true;
-
-            this.context.SaveChanges();
-        }
-
-        public void ApproveVideo(int id)
-        {
-            var video = this.context.Videos
-                .First(x => x.Id == id);
-
-            video.IsАpproved = true;
-
-            this.context.SaveChanges();
-        }
-
+        
         public IEnumerable<CategoryDTO> GetAllCategoriesForApproval()
         {
             var categoriesForApproval = this.context.Category
