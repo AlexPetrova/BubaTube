@@ -1,5 +1,6 @@
 ﻿using Contracts.Data.DTO;
 using DataAccess;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Services.Contracts.Get;
@@ -28,7 +29,7 @@ namespace Services.Get
 
         public async Task<string> GetJSON(string input)
         {
-            var searchedValues = this.FormatSerachedInput(input);
+            var searchedValues = this.FormatSearchedInput(input);
             var result = await this.BuildJSON(searchedValues);
 
             return result;
@@ -36,7 +37,7 @@ namespace Services.Get
 
         public (IEnumerable<VideoDTO>, IEnumerable<CommentDTO>, IEnumerable<UserDTO>) GetQuickSearchResults(string input)
         {
-            var serachedValues = this.FormatSerachedInput(input);
+            var serachedValues = this.FormatSearchedInput(input);
 
             var videos = this.Videos(serachedValues);
             var comments = this.Comments(serachedValues);
@@ -45,7 +46,7 @@ namespace Services.Get
             return (videos, comments, users);
         }
 
-        public IEnumerable<VideoDTO> Videos(IDictionary<string,string> input)
+        public IEnumerable<VideoDTO> Videos(IDictionary<string, string> input)
         {
             var result = this.context.Videos
                 .Where(x => input.ContainsKey(x.Title.ToLower()))
@@ -59,7 +60,7 @@ namespace Services.Get
 
             return result;
         }
-        
+
         public IEnumerable<CommentDTO> Comments(IDictionary<string, string> input)
         {
             var result = this.context.Comments
@@ -99,34 +100,32 @@ namespace Services.Get
             return result;
         }
 
-        private Task<string> BuildJSON(IDictionary<string, string> input)
+        private async Task<string> BuildJSON(IDictionary<string, string> input)
         {
-            var videos = this.context.Videos.
-                Where(x => input.ContainsKey(x.Title.ToLower()));
+            var videos = await this.context.Videos
+                // TODO fix client-side evaluation
+                //.Where(x => input.ContainsKey(x.Title.ToLower()))
+                .ToListAsync();
 
-            var users = this.context.Users.
-                Where(x =>
-                    input.ContainsKey(x.FirstName.ToLower())
-                    || input.ContainsKey(x.LastName.ToLower())
-                    || input.ContainsKey(x.Email.ToLower()));
+            var users = await this.context.Users
+                // TODO fix client-side evaluation
+                //.Where(x =>
+                //    input.ContainsKey(x.FirstName.ToLower())
+                //    || input.ContainsKey(x.LastName.ToLower())
+                //    || input.ContainsKey(x.Email.ToLower()));
+                .ToListAsync();
 
-            var videosToJson = JsonConvert.SerializeObject(videos.ToList());
-            var usersToJson = JsonConvert.SerializeObject(users.ToList());
-
-            var result = videosToJson + usersToJson;
-            return Task.FromResult(result);
+            return JsonConvert.SerializeObject(new { videos, users });
         }
-        
-        private Dictionary<string, string> FormatSerachedInput(string input)
-        {
-            var formated = input.
-                Split(this.splitChars, StringSplitOptions.RemoveEmptyEntries).
-                Select(x => x.ToLower()).
-                Distinct().
-                Take(MaxCountOfSearchedWords).
-                ToDictionary(k => k, v => v);
 
-            return formated;
+        private Dictionary<string, string> FormatSearchedInput(string input)
+        {
+            return input
+                  .Split(this.splitChars, StringSplitOptions.RemoveEmptyEntries)
+                  .Select(x => x.ToLower())
+                  .Distinct()
+                  .Take(MaxCountOfSearchedWords)
+                  .ToDictionary(k => k, v => v);
         }
     }
 }

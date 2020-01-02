@@ -1,4 +1,4 @@
-﻿using BubaTube.Data;
+﻿using DataAccess;
 using Microsoft.EntityFrameworkCore;
 
 namespace BubaTube_Tests.MockData

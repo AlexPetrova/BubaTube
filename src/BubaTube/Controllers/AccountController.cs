@@ -1,10 +1,12 @@
 ﻿using BubaTube.Models.AccountViewModels;
+using Contracts.Data.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
+using Services.Contracts.Write;
 using System;
 using System.IO;
 using System.Security.Claims;

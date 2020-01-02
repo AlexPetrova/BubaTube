@@ -1,8 +1,9 @@
-﻿using BubaTube.Data;
-using BubaTube.Data.DTO;
-using BubaTube.Data.Models;
-using BubaTube.Services.GetServices;
-using BubaTube_Tests.MockData;
+﻿using BubaTube_Tests.MockData;
+using Contracts.Data.DTO;
+using Contracts.Data.Models;
+using DataAccess;
+using Services.Get;
+using System;
 using System.Linq;
 using Xunit;
 
@@ -10,6 +11,10 @@ namespace BubaTube_Tests.Services.GetServices.FavouriteVideosGetServiceTest
 {
     public class FavouriteVideosService_GetFavoriteVideos
     {
+        static readonly Func<Video, VideoDTO> fakeMapper =
+            v => new VideoDTO() { Title = v.Title };
+
+
         [Fact]
         public void ReturnsListOfFavouriteVideosOfUser()
         {
@@ -37,7 +42,7 @@ namespace BubaTube_Tests.Services.GetServices.FavouriteVideosGetServiceTest
                 });
                 context.SaveChanges();
 
-                var favoutiteVideoService = new FavouriteVideosQueries(context);
+                var favoutiteVideoService = new FavouriteVideosQueries(context, fakeMapper);
                 var userDto = new UserSearchDTO()
                 {
                     Id = user.Id
@@ -65,7 +70,7 @@ namespace BubaTube_Tests.Services.GetServices.FavouriteVideosGetServiceTest
 
                 var user = context.Users.First();
 
-                var favoutiteVideoService = new FavouriteVideosQueries(context);
+                var favoutiteVideoService = new FavouriteVideosQueries(context, fakeMapper);
                 var userDto = new UserSearchDTO()
                 {
                     Id = user.Id

@@ -1,6 +1,9 @@
-﻿using BubaTube.Data;
-using BubaTube.Services.GetServices;
-using BubaTube_Tests.MockData;
+﻿using BubaTube_Tests.MockData;
+using Contracts.Data.DTO;
+using Contracts.Data.Models;
+using DataAccess;
+using Services.Get;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -9,6 +12,8 @@ namespace BubaTube_Tests.Services.GetServices.CategoryGetServiceTests
 {
     public class CategoryGetService_TakeCategoryIds
     {
+        static readonly Func<Category, CategoryDTO> fakeMapper = _ => new CategoryDTO();
+
         [Fact]
         public void ReturnsListOfIdsWhenPassedCategoriesArePresentInDB()
         {
@@ -20,7 +25,7 @@ namespace BubaTube_Tests.Services.GetServices.CategoryGetServiceTests
                 context.Category.AddRange(CategoryMockData.GetListOfCategoryModels());
                 context.SaveChanges();
 
-                var categoryGetService = new CategoryQueries(context);
+                var categoryGetService = new CategoryQueries(context, fakeMapper);
                 var result = categoryGetService.TakeCategoryIds(searchedCategories);
 
                 var test1FromDb = context.Category
@@ -47,7 +52,7 @@ namespace BubaTube_Tests.Services.GetServices.CategoryGetServiceTests
                 context.Category.AddRange(CategoryMockData.GetListOfCategoryModels());
                 context.SaveChanges();
 
-                var categoryGetService = new CategoryQueries(context);
+                var categoryGetService = new CategoryQueries(context, fakeMapper);
                 var result = categoryGetService.TakeCategoryIds(searchedCategories);
                 
                 Assert.Empty(result);
@@ -65,7 +70,7 @@ namespace BubaTube_Tests.Services.GetServices.CategoryGetServiceTests
                 context.Category.AddRange(CategoryMockData.GetListOfCategoryModels());
                 context.SaveChanges();
 
-                var categoryGetService = new CategoryQueries(context);
+                var categoryGetService = new CategoryQueries(context, fakeMapper);
                 var result = categoryGetService.TakeCategoryIds(searchedCategories);
 
                 Assert.Empty(result);

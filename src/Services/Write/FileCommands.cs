@@ -8,17 +8,17 @@ namespace Services.Write
 {
     public class FileCommands : IFileCommands
     {
-        private readonly Func<string, FileMode, FileStream> fileStreamInstanceCreator;
+        private readonly Func<string, FileMode, FileStream> createFileStream;
 
-        public FileCommands(Func<string, FileMode, FileStream> fileStreamInstanceCreator)
+        public FileCommands(Func<string, FileMode, FileStream> createFileStream)
         {
-            this.fileStreamInstanceCreator = fileStreamInstanceCreator;
+            this.createFileStream = createFileStream;
         }
 
         public async Task Save(IFormFile video, string path)
         {
             //TODO handle exception and log it
-            using (var fileStream = this.fileStreamInstanceCreator(path, FileMode.Create))
+            using (var fileStream = this.createFileStream(path, FileMode.Create))
             {
                 await video.CopyToAsync(fileStream);
             }

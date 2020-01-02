@@ -1,5 +1,4 @@
-﻿using BubaTube.Areas.Admin.Servises;
-using BubaTube.Areas.Admin.Servises.Contracts;
+﻿using Contracts.Data.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -32,9 +31,12 @@ namespace BubaTube
                 options => options.LowercaseUrls = true);
             services.AddMemoryCache();
 
-            // TODO services.AddServices()
+            // TODO 
 
-            services.AddTransient<IManageUsersService, ManageUsersService>();
+            //services.AddServices();
+            //services.AddDataAccess()
+
+
             services.AddSingleton<IConfiguration>(Configuration);
         }
 

@@ -1,4 +1,4 @@
-﻿using BubaTube.Data.Models;
+﻿using Contracts.Data.Models;
 using System.Collections.Generic;
 
 namespace BubaTube_Tests.MockData

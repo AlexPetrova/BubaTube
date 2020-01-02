@@ -36,7 +36,7 @@ namespace Services.Extensions
             {
                 var folder = Path.Combine(rootFolder, "video");
                 var nameOfVideo = Guid.NewGuid();
-                var path = Path.Combine(folder, nameOfVideo.ToString() + ".mp4");
+                var path = Path.Combine(folder, nameOfVideo.ToString() + fileExtension);
 
                 return path;
             }));

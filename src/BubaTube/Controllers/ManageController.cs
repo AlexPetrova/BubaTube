@@ -1,4 +1,5 @@
 ﻿using BubaTube.Models.ManageViewModels;
+using Contracts.Data.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

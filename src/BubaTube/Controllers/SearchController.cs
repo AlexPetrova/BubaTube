@@ -1,21 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Services.Contracts.Get;
 using System.Threading.Tasks;
 
 namespace BubaTube.Controllers
 {
     public class SearchController : Controller
     {
-        private readonly ISearchQueries searchService;
+        private readonly ISearchQueries searchQueries;
 
         public SearchController(ISearchQueries searchService)
         {
-            this.searchService = searchService;
+            this.searchQueries = searchService;
         }
 
         [HttpPost]
         public async Task<string> Search(string data)
         {
-            var result = await this.searchService.GetSearchResultsJSON(data);
+            var result = await this.searchQueries.GetJSON(data);
             return result;
         }
 
