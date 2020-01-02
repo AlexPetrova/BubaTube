@@ -8,8 +8,8 @@ jobs:
      - run:
          name: Restore packages
          command:
-           dotnet restore
+           dotnet restore src/BubaTube.sln
      - run:
          name: Build App
          command:
-           dotnet build
+           dotnet build src/BubaTube.sln
