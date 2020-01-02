@@ -39,8 +39,6 @@ namespace Services.Tests
                 Assert.Equal(2, result.Count());
                 Assert.Contains(result, x => x == test1FromDb.Id);
                 Assert.Contains(result, x => x == test2FromDb.Id);
-                
-                Assert.Equal(true, false);
             }
         }
 
