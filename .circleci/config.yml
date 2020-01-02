@@ -13,3 +13,7 @@ jobs:
          name: Build App
          command:
            dotnet build src/BubaTube.sln
+      - run:
+         name: Run Unit Tests
+         command:
+           dotnet test src/BubaTube.sln
