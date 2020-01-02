@@ -1,7 +1,7 @@
 ﻿using DataAccess;
 using Microsoft.EntityFrameworkCore;
 
-namespace BubaTube_Tests.MockData
+namespace Services.Tests.MockData
 {
     public static class DbContextMock
     {

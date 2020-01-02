@@ -12,7 +12,8 @@ namespace DataAccess.Extensions
         {
             services.AddDbContext<BubaTubeDbContext>(optionsAction);
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentityCore<User>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<BubaTubeDbContext>()
                 .AddDefaultTokenProviders();
 

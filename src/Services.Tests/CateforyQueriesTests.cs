@@ -1,16 +1,17 @@
-﻿using BubaTube_Tests.MockData;
+using BubaTube_Tests.MockData;
 using Contracts.Data.DTO;
 using Contracts.Data.Models;
 using DataAccess;
 using Services.Get;
+using Services.Tests.MockData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace BubaTube_Tests.Services.GetServices.CategoryGetServiceTests
+namespace Services.Tests
 {
-    public class CategoryGetService_TakeCategoryIds
+    public class CateforyQueriesTests
     {
         static readonly Func<Category, CategoryDTO> fakeMapper = _ => new CategoryDTO();
 
@@ -33,7 +34,7 @@ namespace BubaTube_Tests.Services.GetServices.CategoryGetServiceTests
 
                 var test2FromDb = context.Category
                     .FirstOrDefault(x => x.CategoryName == "Test2");
-                
+
                 Assert.NotEmpty(result);
                 Assert.Equal(2, result.Count());
                 Assert.Contains(result, x => x == test1FromDb.Id);
@@ -54,7 +55,7 @@ namespace BubaTube_Tests.Services.GetServices.CategoryGetServiceTests
 
                 var categoryGetService = new CategoryQueries(context, fakeMapper);
                 var result = categoryGetService.TakeCategoryIds(searchedCategories);
-                
+
                 Assert.Empty(result);
             }
         }

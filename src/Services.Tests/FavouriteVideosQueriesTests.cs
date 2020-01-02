@@ -1,19 +1,20 @@
-﻿using BubaTube_Tests.MockData;
-using Contracts.Data.DTO;
+﻿using Contracts.Data.DTO;
 using Contracts.Data.Models;
 using DataAccess;
 using Services.Get;
+using Services.Tests.MockData;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Xunit;
 
-namespace BubaTube_Tests.Services.GetServices.FavouriteVideosGetServiceTest
+namespace Services.Tests
 {
-    public class FavouriteVideosService_GetFavoriteVideos
+    public class FavouriteVideosQueriesTests
     {
         static readonly Func<Video, VideoDTO> fakeMapper =
-            v => new VideoDTO() { Title = v.Title };
-
+               v => new VideoDTO() { Title = v.Title };
 
         [Fact]
         public void ReturnsListOfFavouriteVideosOfUser()
