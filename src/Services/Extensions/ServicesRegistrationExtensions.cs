@@ -21,6 +21,7 @@ namespace Services.Extensions
             services.AddTransient<IFileCommands, FileCommands>();
             services.AddTransient<IUserCommands, UserCommands>();
             services.AddTransient<IVideoCommands, VideoCommands>();
+            services.AddTransient<ICategoryCommands, CategoryCommands>();
 
             services.AddDTOToModelMappers();
             services.AddModelToDTOMappers();
