@@ -39,12 +39,10 @@ namespace Services.Get
 
         public IReadOnlyCollection<CategoryDTO> GetAllForApproval()
         {
-            var categoriesForApproval = this.context.Category
+            return this.context.Category
                 .Where(x => x.IsАpproved == false)
                 .Select(this.categoryMapper)
                 .ToList();
-
-            return categoriesForApproval;
         }
     }
 }
