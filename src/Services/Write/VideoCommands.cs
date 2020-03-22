@@ -36,11 +36,12 @@ namespace Services.Write
         /// <returns></returns>
         public async Task<int> Save(VideoDTO dto, IFormFile video)
         {
-            var categorieIDs = this.categoryGetService.TakeCategoryIds(dto.Categories);
+            var categoryIDs = this.categoryGetService
+                .TakeAllCategoryIds(dto.Categories);
 
             var model = this.videoMapper(dto);
 
-            model.VideoCategory = categorieIDs
+            model.VideoCategory = categoryIDs
                 .Select(x => new VideoCategory() { CategoryId = x })
                 .ToList();
 
