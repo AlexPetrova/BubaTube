@@ -29,16 +29,20 @@ namespace BubaTube
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
             services.AddRouting(
                 options => options.LowercaseUrls = true);
+
             services.AddMemoryCache();
 
             services.AddIdentity<User, IdentityRole>();
+
             services.AddAuthentication();
+
             services.AddAuthorization();
 
-            // TODO 
             services.AddServices();
+
             services.AddDataAccess(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
