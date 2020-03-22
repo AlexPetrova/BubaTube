@@ -24,9 +24,9 @@ namespace Services.Tests
         public async Task SavesPassedData()
         {
             var options = DbContextMock.GetOptions("SavesPassedData");
-            var mockFile = new Mock<IFormFile>().Object;
-            var mockFileCommands = new Mock<IFileCommands>().Object;
-            var mockCategoryQueries = new Mock<ICategoryQueries>().Object;
+            var mockFile = new Mock<IFormFile>();
+            var mockFileCommands = new Mock<IFileCommands>();
+            var mockCategoryQueries = new Mock<ICategoryQueries>();
             Func<VideoDTO, Video> fakeMapper = _ =>
                 new Video
                 {
@@ -36,13 +36,18 @@ namespace Services.Tests
                     Path = @"\Folder\Name.mp4"
                 };
             var model = this.GetVideoDto();
+            var categories = new List<string>();
+
+            mockCategoryQueries
+                .Setup(mock => mock.TakeAllCategoryIds(categories))
+                .Returns(new List<int>() { 2 });
 
             using (var context = new BubaTubeDbContext(options))
             {
                 var uploadService = new VideoCommands(
-                    context, mockFileCommands, mockCategoryQueries, fakeMapper);
+                    context, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
 
-                await uploadService.Save(model, mockFile);
+                await uploadService.Save(model, mockFile.Object);
             }
 
             using (var assertContext = new BubaTubeDbContext(options))
@@ -66,7 +71,7 @@ namespace Services.Tests
             var categories = new List<string>() { "Test1" };
 
             mockCategoryQueries
-                .Setup(mock => mock.TakeCategoryIds(categories))
+                .Setup(mock => mock.TakeAllCategoryIds(categories))
                 .Returns(new List<int>() { 2 });
 
             using (var context = new BubaTubeDbContext(options))
@@ -104,7 +109,7 @@ namespace Services.Tests
                 var categoryFromDb = context.Category
                      .First(x => x.IsАpproved == true);
                 mockCategoryQueries
-                   .Setup(mock => mock.TakeCategoryIds(categories))
+                   .Setup(mock => mock.TakeAllCategoryIds(categories))
                    .Returns(new List<int>() { categoryFromDb.Id });
 
                 var model = this.GetVideoDto();
@@ -128,7 +133,8 @@ namespace Services.Tests
                 AuthorUserName = "1234",
                 Description = "test",
                 Likes = 1,
-                Path = @"\Folder\Name.mp4"
+                Path = @"\Folder\Name.mp4",
+                Categories = new List<string>()
             };
         }
     }

@@ -18,7 +18,7 @@ namespace Services.Tests
         [Fact]
         public void ReturnsListOfIds_WhenCategories_Present()
         {
-            var options = DbContextMock.GetOptions("TakeCategoryIdsTest");
+            var options = DbContextMock.GetOptions("ReturnsListOfIds_WhenCategories_Present");
             var searchedCategories = new List<string>() { "Test1", "Test2", "TestTest" };
 
             using (var context = new BubaTubeDbContext(options))
@@ -27,7 +27,7 @@ namespace Services.Tests
                 context.SaveChanges();
 
                 var categoryGetService = new CategoryQueries(context, fakeMapper);
-                var result = categoryGetService.TakeCategoryIds(searchedCategories);
+                var result = categoryGetService.TakeApprovedCategoryIds(searchedCategories);
 
                 var test1FromDb = context.Category
                     .FirstOrDefault(x => x.CategoryName == "Test1");
@@ -45,7 +45,7 @@ namespace Services.Tests
         [Fact]
         public void ReturnsEmptyList_WhenCategories_NotPresent()
         {
-            var options = DbContextMock.GetOptions("TakeCategoryIdsTest");
+            var options = DbContextMock.GetOptions("ReturnsEmptyList_WhenCategories_NotPresent");
             var searchedCategories = new List<string>() { "TestTest1", "TestTest2", "TestTest" };
 
             using (var context = new BubaTubeDbContext(options))
@@ -54,7 +54,7 @@ namespace Services.Tests
                 context.SaveChanges();
 
                 var categoryGetService = new CategoryQueries(context, fakeMapper);
-                var result = categoryGetService.TakeCategoryIds(searchedCategories);
+                var result = categoryGetService.TakeApprovedCategoryIds(searchedCategories);
 
                 Assert.Empty(result);
             }
@@ -63,7 +63,7 @@ namespace Services.Tests
         [Fact]
         public void ReturnsEmptyList_WhenCategory_NotApproved()
         {
-            var options = DbContextMock.GetOptions("TakeCategoryIdsTest");
+            var options = DbContextMock.GetOptions("ReturnsEmptyList_WhenCategory_NotApproved");
             var searchedCategories = new List<string>() { "Test0" };
 
             using (var context = new BubaTubeDbContext(options))
@@ -72,9 +72,28 @@ namespace Services.Tests
                 context.SaveChanges();
 
                 var categoryGetService = new CategoryQueries(context, fakeMapper);
-                var result = categoryGetService.TakeCategoryIds(searchedCategories);
+                var result = categoryGetService.TakeApprovedCategoryIds(searchedCategories);
 
                 Assert.Empty(result);
+            }
+        }
+
+        [Fact]
+        public void ReturnsAllCategories()
+        {
+            var options = DbContextMock.GetOptions("ReturnsAllCategories");
+            var searchedCategories = new List<string>() { "Test0" };
+            IList<int> result;
+
+            using (var context = new BubaTubeDbContext(options))
+            {
+                context.Category.AddRange(CategoryMockData.GetListOfCategoryModels());
+                context.SaveChanges();
+
+                var categoryGetService = new CategoryQueries(context, fakeMapper);
+                result = categoryGetService.TakeAllCategoryIds(searchedCategories);
+
+                Assert.Equal(1, result.Count);
             }
         }
     }
