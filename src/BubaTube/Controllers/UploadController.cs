@@ -44,6 +44,7 @@ namespace BubaTube.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [DisableRequestSizeLimit]
         public async Task<IActionResult> Post(UploadVideoViewModel model)
         {
             int result = 0;
