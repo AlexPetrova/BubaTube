@@ -4,14 +4,12 @@ using DataAccess;
 using Services.Get;
 using Services.Tests.MockData;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Xunit;
 
 namespace Services.Tests
 {
-    public class FavouriteVideosQueriesTests
+    public class FavouriteVideosQueries_Should
     {
         static readonly Func<Video, VideoDTO> fakeMapper =
                v => new VideoDTO() { Title = v.Title };

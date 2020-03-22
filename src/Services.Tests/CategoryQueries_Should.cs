@@ -11,12 +11,12 @@ using Xunit;
 
 namespace Services.Tests
 {
-    public class CateforyQueriesTests
+    public class CategoryQueries_Should
     {
         static readonly Func<Category, CategoryDTO> fakeMapper = _ => new CategoryDTO();
 
         [Fact]
-        public void ReturnsListOfIdsWhenPassedCategoriesArePresentInDB()
+        public void ReturnsListOfIds_WhenCategories_Present()
         {
             var options = DbContextMock.GetOptions("TakeCategoryIdsTest");
             var searchedCategories = new List<string>() { "Test1", "Test2", "TestTest" };
@@ -43,7 +43,7 @@ namespace Services.Tests
         }
 
         [Fact]
-        public void ReturnsEmptyListWhenPassedSCategoriesAreNotPresentInDB()
+        public void ReturnsEmptyList_WhenCategories_NotPresent()
         {
             var options = DbContextMock.GetOptions("TakeCategoryIdsTest");
             var searchedCategories = new List<string>() { "TestTest1", "TestTest2", "TestTest" };
@@ -61,7 +61,7 @@ namespace Services.Tests
         }
 
         [Fact]
-        public void ReturnsEmptyListWhenPassedCategoryIsNotApproved()
+        public void ReturnsEmptyList_WhenCategory_NotApproved()
         {
             var options = DbContextMock.GetOptions("TakeCategoryIdsTest");
             var searchedCategories = new List<string>() { "Test0" };
