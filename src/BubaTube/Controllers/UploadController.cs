@@ -18,14 +18,14 @@ namespace BubaTube.Controllers
         private readonly IVideoCommands videoWriteService;
         private readonly ICategoryCommands categorySaverService;
         private readonly Func<string, string, string> getUploadPath;
-        private readonly IHostingEnvironment environment;
+        private readonly IWebHostEnvironment environment;
         private readonly UserManager<User> userManager;
 
-        public UploadController
-            (IVideoCommands videoWriteService,
+        public UploadController(
+            IVideoCommands videoWriteService,
             ICategoryCommands categorySaverService,
             Func<string, string, string> getUploadPath,
-            IHostingEnvironment environment, 
+            IWebHostEnvironment environment, 
             UserManager<User> userManager)
         {
             this.videoWriteService = videoWriteService;
@@ -67,8 +67,7 @@ namespace BubaTube.Controllers
                 };
 
                 this.categorySaverService.SaveToDatabase(dto.Categories);
-                result = await this.videoWriteService.Save(dto, model.Video, path);
-                
+                result = await this.videoWriteService.Save(dto, model.Video);
             }
 
             return result == 0 
