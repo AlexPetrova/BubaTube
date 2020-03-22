@@ -8,7 +8,8 @@ namespace DataAccess.Extensions
 {
     public static class ServicesRegistrationExtensions
     {
-        public static IServiceCollection AddDataAccess(this IServiceCollection services, Action<DbContextOptionsBuilder> optionsAction = null)
+        public static IServiceCollection AddDataAccess(this IServiceCollection services, 
+            Action<DbContextOptionsBuilder> optionsAction = null)
         {
             services.AddDbContext<BubaTubeDbContext>(optionsAction);
 
