@@ -42,7 +42,7 @@ namespace Services.Tests
                 var uploadService = new VideoCommands(
                     context, mockFileCommands, mockCategoryQueries, fakeMapper);
 
-                await uploadService.Save(model, mockFile, "C:/Videos");
+                await uploadService.Save(model, mockFile);
             }
 
             using (var assertContext = new BubaTubeDbContext(options))
@@ -77,7 +77,7 @@ namespace Services.Tests
                 var uploadVideoService = new VideoCommands(
                     context, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
 
-                await uploadVideoService.Save(model, mockFile.Object, "C:/Videos");
+                await uploadVideoService.Save(model, mockFile.Object);
             }
 
             using (var assertContext = new BubaTubeDbContext(options))
@@ -113,7 +113,7 @@ namespace Services.Tests
                 var uploadVideoService = new VideoCommands(
                     context, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
 
-                await uploadVideoService.Save(model, mockFile.Object, "C:/Videos");
+                await uploadVideoService.Save(model, mockFile.Object);
 
                 Assert.Equal(categoryFromDb.CategoryName,
                     context.VideoCategory.First().Category.CategoryName);
