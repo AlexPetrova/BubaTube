@@ -6,6 +6,6 @@ namespace Services.Contracts.Write
 {
     public interface IVideoCommands
     {
-        Task<int> Save(VideoDTO dto, IFormFile video, string path);
+        Task<int> Save(VideoDTO dto, IFormFile video);
     }
 }

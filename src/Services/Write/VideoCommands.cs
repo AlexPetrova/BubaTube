@@ -34,7 +34,7 @@ namespace Services.Write
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public async Task<int> Save(VideoDTO dto, IFormFile video, string path)
+        public async Task<int> Save(VideoDTO dto, IFormFile video)
         {
             var categorieIDs = this.categoryGetService.TakeCategoryIds(dto.Categories);
 
@@ -48,7 +48,7 @@ namespace Services.Write
 
             var result = await this.context.SaveChangesAsync();
 
-            await this.fileCommands.Save(video, path);
+            await this.fileCommands.Save(video, dto.Path);
 
             return result;
         }
