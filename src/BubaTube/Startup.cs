@@ -1,10 +1,12 @@
 ﻿using Contracts.Data.Models;
+using DataAccess.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Services.Extensions;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -13,7 +15,7 @@ namespace BubaTube
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment env)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
             Environment = env;
@@ -21,7 +23,7 @@ namespace BubaTube
 
         public IConfiguration Configuration { get; }
 
-        public IHostingEnvironment Environment { get; set; }
+        public IWebHostEnvironment Environment { get; set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -31,19 +33,23 @@ namespace BubaTube
                 options => options.LowercaseUrls = true);
             services.AddMemoryCache();
 
+            services.AddIdentity<User, IdentityRole>();
+            services.AddAuthentication();
+            services.AddAuthorization();
+
             // TODO 
-
-            //services.AddServices();
-            //services.AddDataAccess()
-
+            services.AddServices();
+            services.AddDataAccess(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddSingleton<IConfiguration>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.EnvironmentName == "Development")
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
@@ -57,6 +63,8 @@ namespace BubaTube
 
             app.UseStaticFiles();
 
+            app.UseAuthentication();
+     
             app.UseRouting();
 
             app.UseAuthorization();
