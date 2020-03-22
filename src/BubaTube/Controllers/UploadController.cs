@@ -66,11 +66,10 @@ namespace BubaTube.Controllers
                     Categories = model.Categories
                 };
 
-                this.categorySaverService.SaveToDatabase(dto.Categories);
                 result = await this.videoWriteService.Save(dto, model.Video);
             }
 
-            return result == 0 
+            return result > 0 
                 ? this.Ok() 
                 : this.StatusCode(500);
         }
