@@ -29,9 +29,6 @@ namespace Services.Extensions
                 new Func<string, FileMode, FileStream>(
                     (name, mode) => new FileStream(name, mode)));
 
-            //TODO here should pass the db opions and it should be configurable somehow, this is not the best place for this registration - options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
-            services.AddDataAccess();
-
             services.AddSingleton(serviceProvider => new Func<string, string, string>((rootFolder, fileExtension) =>
             {
                 var folder = Path.Combine(rootFolder, "video");
