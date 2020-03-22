@@ -5,7 +5,9 @@ namespace Services.Contracts.Get
 {
     public interface ICategoryQueries
     {
-        IEnumerable<int> TakeCategoryIds(IEnumerable<string> categories);
+        IList<int> TakeApprovedCategoryIds(IEnumerable<string> categories);
+
+        IList<int> TakeAllCategoryIds(IEnumerable<string> categories);
 
         IReadOnlyCollection<CategoryDTO> GetAllForApproval();
     }

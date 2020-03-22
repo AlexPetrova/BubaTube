@@ -21,10 +21,18 @@ namespace Services.Get
             this.categoryMapper = categoryMapper;
         }
 
-        public IEnumerable<int> TakeCategoryIds(IEnumerable<string> categories)
+        public IList<int> TakeApprovedCategoryIds(IEnumerable<string> categories)
         {
             return this.context.Category
                 .Where(x => categories.Contains(x.CategoryName) && x.IsАpproved == true)
+                .Select(x => x.Id)
+                .ToList();
+        }
+
+        public IList<int> TakeAllCategoryIds(IEnumerable<string> categories)
+        {
+            return this.context.Category
+                .Where(x => categories.Contains(x.CategoryName))
                 .Select(x => x.Id)
                 .ToList();
         }
