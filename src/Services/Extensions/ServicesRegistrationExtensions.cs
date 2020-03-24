@@ -1,5 +1,4 @@
 ﻿using Contracts.Extensions;
-using DataAccess.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Services.Contracts.Get;
 using Services.Contracts.Write;
@@ -17,6 +16,7 @@ namespace Services.Extensions
             services.AddTransient<ICategoryQueries, CategoryQueries>();
             services.AddTransient<IFavouriteVideosQueries, FavouriteVideosQueries>();
             services.AddTransient<IVideoQueries, VideoQueries>();
+            services.AddTransient<IUserQueries, UserQueries>();
 
             services.AddTransient<IFileCommands, FileCommands>();
             services.AddTransient<IUserCommands, UserCommands>();
