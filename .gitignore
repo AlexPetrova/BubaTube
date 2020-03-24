@@ -332,3 +332,4 @@ ASALocalRun/
 *BubaTube/BubaTube/wwwroot/video/
 *BubaTube/BubaTube/appsettings.json
 *BubaTube/BubaTube/BubaTube/ScaffoldingReadMe.txt
+/src/BubaTube/wwwroot/video/*
