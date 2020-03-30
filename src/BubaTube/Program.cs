@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿using BubaTube.Extensions;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace BubaTube
@@ -7,7 +8,9 @@ namespace BubaTube
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            BuildWebHost(args)
+                .SeedRoles()
+                .Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>
