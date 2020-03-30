@@ -1,16 +1,36 @@
-﻿<div class="dropdown">
-    <div>No activity for more than...</div>
-    <div>
-        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-            Period
-            <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-            <li><a href="#">1 month</a></li>
-            <li class="disabled"><a href="#">2 months</a></li>
-            <li class="active"><a href="#">3 months</a></li>
-            <li><a href="#">4 months</a></li>
-        </ul>
+﻿<div class="user-activity-filter">
+    <div class="user-activity-filter-text">
+        <p> No activity for more than... </p>
+    </div>
+
+    <div class="dropdown user-activity-filter-dropdown">
+        <div>
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                <span id="user-activity-filter-period-text">Period</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li class="drop-down-element" data-months="1">
+                    <a href="#">1 month</a>
+                </li>
+                <li class="drop-down-element" data-months="2">
+                    <a href="#">2 months</a>
+                </li>
+                <li class="drop-down-element" data-months="3">
+                    <a href="#">3 months</a>
+                </li>
+                <li class="drop-down-element" data-months="4">
+                    <a href="#">4 months</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="user-activity-filter-button">
+        <button id="user-activity-filter-button" class="btn btn-light">Filter</button>
     </div>
 </div>
-<button>Search</button>
+
+@section Scripts {
+    <script src="~/js/admin-area.js"></script>
+}

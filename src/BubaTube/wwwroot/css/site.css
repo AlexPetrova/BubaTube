@@ -451,3 +451,40 @@ div#container {
         display: inline-block;
     }
 }
+
+/*Admin Area - TODO move in separate css file */
+.user-activity-filter {
+    display: flex;
+    max-width: 50%;
+}
+
+.user-activity-filter-text {
+    flex-grow: 1;
+    margin-right: 5px;
+}
+
+.user-activity-filter-text p {
+    width: 100%;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+}
+
+.user-activity-filter-dropdown {
+    flex-grow: 3;
+    margin-right: 5px;
+}
+
+.user-activity-filter-dropdown .btn.btn-default.dropdown-toggle {
+    width: 100%;
+}
+
+.user-activity-filter-button {
+    flex-grow: 3;
+    margin-right: 5px;
+}
+
+.user-activity-filter-button .btn.btn-light {
+    width: 100%;
+}
+
