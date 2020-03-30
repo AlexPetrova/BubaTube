@@ -5,7 +5,7 @@ namespace BubaTube_Tests.MockData
 {
     internal static class CategoryMockData
     {
-        internal static IEnumerable<Category> GetListOfCategoryModels()
+        internal static IReadOnlyCollection<Category> GetListOfCategoryModels()
         {
             return new List<Category>()
             {
