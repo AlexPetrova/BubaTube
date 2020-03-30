@@ -5,19 +5,20 @@ using Services.Get;
 using Services.Tests.MockData;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using Xunit;
 
 namespace Services.Tests.Get
 {
     public class FavouriteVideosQueries_Should
     {
-        static readonly Func<Video, VideoDTO> fakeMapper =
+        static readonly Expression<Func<Video, VideoDTO>> fakeMapper =
                v => new VideoDTO() { Title = v.Title };
 
         [Fact]
         public void ReturnsListOfFavouriteVideosOfUser()
         {
-            var options = DbContextMock.GetOptions("GetFavouriteVideosTest");
+            var options = DbContextMock.GetOptions("ReturnsListOfFavouriteVideosOfUser");
             using (var context = new BubaTubeDbContext(options))
             {
                 context.Users.Add(new User()
@@ -58,7 +59,7 @@ namespace Services.Tests.Get
         [Fact]
         public void ReturnsEmptyListIfNoFavouriteVideosSaved()
         {
-            var options = DbContextMock.GetOptions("GetFavouriteVideosTest");
+            var options = DbContextMock.GetOptions("ReturnsEmptyListIfNoFavouriteVideosSaved");
             using (var context = new BubaTubeDbContext(options))
             {
                 context.Users.Add(new User()
