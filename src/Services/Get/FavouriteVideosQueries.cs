@@ -5,17 +5,18 @@ using Services.Contracts.Get;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Services.Get
 {
     public class FavouriteVideosQueries : IFavouriteVideosQueries
     {
         private readonly BubaTubeDbContext context;
-        private readonly Func<Video, VideoDTO> videoMapper;
+        private readonly Expression<Func<Video, VideoDTO>> videoMapper;
 
         public FavouriteVideosQueries(
             BubaTubeDbContext context,
-            Func<Video, VideoDTO> videoMapper)
+            Expression<Func<Video, VideoDTO>> videoMapper)
         {
             this.context = context;
             this.videoMapper = videoMapper;
@@ -26,7 +27,7 @@ namespace Services.Get
             var videos = this.context.UserVideo
                 .Where(x => x.UserId == user.Id)
                 .Select(x => x.Video)
-                .Select(videoMapper)
+                .Select(this.videoMapper)
                 .ToList();
 
             return videos;

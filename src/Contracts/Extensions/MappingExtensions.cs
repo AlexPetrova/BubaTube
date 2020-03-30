@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Contracts.Extensions
 {
@@ -11,22 +12,20 @@ namespace Contracts.Extensions
     {
         public static IServiceCollection AddModelToDTOMappers(this IServiceCollection services)
         {
-            services.AddSingleton(serviceProvider =>
-               new Func<User, UserDTO>((model) =>
+            services.AddSingleton<Expression<Func<User, UserDTO>>>(
+                _ => model =>
                    new UserDTO
-                    {
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        Email = model.Email,
-                        LastLogin = model.LastLogin,
-                        RegisteredOn = model.RegisteredOn,
-                        AvatarImage = model.AvatarImage
-                    }
-                )
-            );
+                   {
+                       FirstName = model.FirstName,
+                       LastName = model.LastName,
+                       Email = model.Email,
+                       LastLogin = model.LastLogin,
+                       RegisteredOn = model.RegisteredOn,
+                       AvatarImage = model.AvatarImage
+                   });
 
-            services.AddSingleton(serviceProvider =>
-                new Func<Video, VideoDTO>((model) =>
+            services.AddSingleton<Expression<Func<Video, VideoDTO>>>(
+                _ => model =>
                     new VideoDTO
                     {
                         Id = model.Id,
@@ -38,7 +37,6 @@ namespace Contracts.Extensions
                         Categories = model.VideoCategory
                                           .Select(c => c.Category.CategoryName)
                     }
-                )
             );
 
             services.AddSingleton(serviceProvider =>
@@ -57,7 +55,7 @@ namespace Contracts.Extensions
         public static IServiceCollection AddDTOToModelMappers(this IServiceCollection services)
         {
             services.AddSingleton(serviceProvider =>
-                new Func<VideoDTO, Video>((dto) => 
+                new Func<VideoDTO, Video>((dto) =>
                     new Video
                     {
                         Title = dto.Title,
