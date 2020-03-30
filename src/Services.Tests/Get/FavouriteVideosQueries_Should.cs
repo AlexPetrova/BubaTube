@@ -7,7 +7,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Services.Tests
+namespace Services.Tests.Get
 {
     public class FavouriteVideosQueries_Should
     {

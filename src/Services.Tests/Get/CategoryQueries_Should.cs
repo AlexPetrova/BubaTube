@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Services.Tests
+namespace Services.Tests.Get
 {
     public class CategoryQueries_Should
     {

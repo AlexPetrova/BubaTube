@@ -14,7 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Services.Tests
+namespace Services.Tests.Write
 {
     public class VideoCommands_Should
     {

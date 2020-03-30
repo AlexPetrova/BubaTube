@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Services.Tests
+namespace Services.Tests.Get
 {
     public class UserQueries_Should
     {
