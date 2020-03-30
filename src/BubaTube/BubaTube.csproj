@@ -11,7 +11,6 @@
 
   <ItemGroup>
     <Content Remove="Areas\Admin\Views\_ViewImports.cshtml" />
-    <Content Remove="Areas\Admin\Views\_ViewStart.cshtml" />
   </ItemGroup>
 
 
@@ -35,16 +34,10 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Areas\Admin\Views\_ViewImports.cshtml" />
-    <_ContentIncludedByDefault Remove="Areas\Admin\Views\_ViewStart.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Areas\Admin\Views\_ViewStart.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Areas\Admin\Views\_ViewImports.cshtml" />
-    <None Include="Areas\Admin\Views\_ViewStart.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
