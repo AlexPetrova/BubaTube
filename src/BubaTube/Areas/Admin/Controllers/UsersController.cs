@@ -4,7 +4,6 @@ using Services.Contracts.Get;
 
 namespace BubaTube.Areas.Admin.Controllers
 {
-    [Route("[controller]/[action]/{id?}")]
     [Area("Admin")]
     public class UsersController : Controller
     {
@@ -19,7 +18,7 @@ namespace BubaTube.Areas.Admin.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult ManageUsers()
         {
-            return View("ManageUsers");
+            return base.View();
         }
     }
 }
