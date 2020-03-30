@@ -1,11 +1,17 @@
 ﻿$(function () {
     $('#user-activity-filter-button').on('click', function (event) {
-        var url = 'filter/' + $('.drop-down-element.active').first().data("months");
-        
+        var months = $('.drop-down-element.active').first().data("months");
+        if (months === undefined) {
+            $('#user-activity-filter-dropdown').effect('bounce');
+            return;
+        }
+
+        var url = 'filterByLastActivity/' + $('.drop-down-element.active').first().data("months");
+
         $.get(
             url,
             function (data) {
-                console.log(data);
+                $('#user-activity-filter-result').html(data);
             }
         );
     });
