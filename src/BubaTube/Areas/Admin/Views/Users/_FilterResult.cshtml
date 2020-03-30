@@ -1,0 +1,44 @@
+﻿@using Contracts.Data.DTO;
+
+@{
+    ViewData["Title"] = "Filter By Last Activity";
+}
+
+@model List<UserDTO>
+
+<table class="table table-striped table-dark">
+    <thead>
+        <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Avatar Image</th>
+            <th scope="col">Registered On</th>
+            <th scope="col">Last Login</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.Email</td>
+                <td>
+                    @if (user.AvatarImage == null)
+                    {
+                        <img class="img-circle user-avatar" src="/images/defaultprofileimage.png" />
+                    }
+                    else
+                    {
+                        <img class="img-circle user-avatar" src="data:image/png;base64 @user.AvatarImage" />
+                    }
+                </td>
+                <td>@user.RegisteredOn</td>
+                <td>@user.LastLogin</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
