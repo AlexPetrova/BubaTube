@@ -473,9 +473,16 @@ div#container {
 .user-activity-filter-dropdown {
     flex-grow: 3;
     margin-right: 5px;
+    position: relative;
 }
 
-.user-activity-filter-dropdown .btn.btn-default.dropdown-toggle {
+.dropdown {
+    position: absolute;
+    width: 100%;
+}
+
+.user-activity-filter-dropdown .btn.btn-default.dropdown-toggle,
+.dropdown-menu {
     width: 100%;
 }
 
