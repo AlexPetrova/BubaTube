@@ -26,14 +26,20 @@
     });
 
     $('#manage-users-tab-last-activity').click(function (e) {
-        console.log("bau");
+        $.get(
+            'filterByLastActivity',
+            function (data) {
+                $('#manage-users-filter-container').html(data);
+            }
+        );
     });
 
     $('#manage-users-tab-period').click(function (e) {
-        console.log("bau");
-    });
-
-    $('#manage-users-tab-for-more-than').click(function (e) {
-        console.log("bau");
+        $.get(
+            'filterByPeriod',
+            function (data) {
+                $('#manage-users-filter-container').html(data);
+            }
+        );
     });
 });
