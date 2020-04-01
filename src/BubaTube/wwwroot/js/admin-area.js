@@ -7,7 +7,6 @@
         }
 
         var url = 'filterByLastActivity/' + $('.drop-down-element.active').first().data("months");
-
         $.get(
             url,
             function (data) {
@@ -24,5 +23,17 @@
         this.classList.add('active');
 
         $('#user-activity-filter-period-text').first().text(this.textContent.trim())
+    });
+
+    $('#manage-users-tab-last-activity').click(function (e) {
+        console.log("bau");
+    });
+
+    $('#manage-users-tab-period').click(function (e) {
+        console.log("bau");
+    });
+
+    $('#manage-users-tab-for-more-than').click(function (e) {
+        console.log("bau");
     });
 });
