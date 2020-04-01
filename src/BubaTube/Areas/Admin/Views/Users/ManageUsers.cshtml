@@ -1,40 +1,20 @@
-﻿
-<div class="user-activity-filter">
-    <div class="user-activity-filter-text">
-        <p> No activity for more than... </p>
-    </div>
-
-    <div class="user-activity-filter-dropdown">
-        <div id="user-activity-filter-dropdown" class="dropdown ">
-            <div>
-                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                    <span id="user-activity-filter-period-text">Period</span>
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li class="drop-down-element" data-months="1">
-                        <a href="#">1 month</a>
-                    </li>
-                    <li class="drop-down-element" data-months="2">
-                        <a href="#">2 months</a>
-                    </li>
-                    <li class="drop-down-element" data-months="3">
-                        <a href="#">3 months</a>
-                    </li>
-                    <li class="drop-down-element" data-months="4">
-                        <a href="#">4 months</a>
-                    </li>
-                </ul>
-            </div>
+﻿<div class="manage-users">
+    <div class="tab-switcher">
+        <div id="manage-users-tab-last-activity" class="tab-switcher-child">
+            Last Activity
         </div>
-    </div>
 
-    <div class="user-activity-filter-button">
-        <button id="user-activity-filter-button" class="btn btn-light">Filter</button>
+        <div id="manage-users-tab-period" class="tab-switcher-child">
+            For Period
+        </div>
+
+        <div id="manage-users-tab-for-more-than" class="tab-switcher-child">
+            For More Than
+        </div>
     </div>
 </div>
 
-<div id="user-activity-filter-result"></div>
+@await Html.PartialAsync("_FilterByLastActivity.cshtml")
 
 @section Scripts {
     <script src="~/js/admin-area.js"></script>
