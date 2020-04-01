@@ -7,14 +7,12 @@
         <div id="manage-users-tab-period" class="tab-switcher-child">
             For Period
         </div>
-
-        <div id="manage-users-tab-for-more-than" class="tab-switcher-child">
-            For More Than
-        </div>
     </div>
 </div>
 
-@await Html.PartialAsync("_FilterByLastActivity.cshtml")
+<div id="manage-users-filter-container">
+    @await Html.PartialAsync("_FilterByLastActivity.cshtml")
+</div>
 
 @section Scripts {
     <script src="~/js/admin-area.js"></script>
