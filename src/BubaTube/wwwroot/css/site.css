@@ -467,7 +467,6 @@ div#container {
     width: 100%;
     margin: auto;
     padding: 10px;
-    text-align: center;
 }
 
 .user-activity-filter-dropdown {
@@ -495,3 +494,26 @@ div#container {
     width: 100%;
 }
 
+/*Tab switcher*/
+.tab-switcher {
+    display: flex;
+}
+
+.tab-switcher-child {
+    flex-grow: 1;
+    padding: 1%;
+    border: 1px solid #fbd40f;
+    border-radius: 25px;
+    margin: 1%;
+    text-align: center;
+    cursor: pointer;
+}
+
+.tab-switcher-child:hover {
+    background-color: #fce4691a;
+}
+
+.manage-users .tab-switcher {
+    width: 70%;
+    margin-bottom: 4%;
+} 
