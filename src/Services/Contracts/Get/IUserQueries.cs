@@ -8,8 +8,6 @@ namespace Services.Contracts.Get
     {
         IReadOnlyCollection<UserDTO> RegisterdInPeriod(DateTime fromDate, DateTime toDate);
 
-        IReadOnlyCollection<UserDTO> RegisteredAfter(DateTime date);
-
         IReadOnlyCollection<UserDTO> ByLastActivity(int months);
     }
 }

@@ -40,32 +40,6 @@ namespace Services.Tests.Get
         }
 
         [Fact]
-        public void ReturnsUsers_RegisterAfter()
-        {
-            var options = DbContextMock.GetOptions("ReturnsUsers_RegisterAfter");
-            IReadOnlyCollection<UserDTO> oneMonth;
-            IReadOnlyCollection<UserDTO> threeMonth;
-            IReadOnlyCollection<UserDTO> fourMonth;
-
-            using (var context = new BubaTubeDbContext(options))
-            {
-                context.AddRange(UserMockData.GetListOfUserModels());
-                context.SaveChanges();
-
-                var userQueries = new UserQueries(context, fakeMapper);
-
-                oneMonth = userQueries.RegisteredAfter(DateTime.Now.AddDays(-1));
-                threeMonth = userQueries.RegisteredAfter(DateTime.Now.AddMonths(-3));
-                fourMonth = userQueries.RegisteredAfter(DateTime.Now.AddMonths(-6));
-            }
-
-            Assert.Equal(0, oneMonth.Count);
-            Assert.Equal(3, threeMonth.Count);
-            Assert.Equal(6, fourMonth.Count);
-        }
-
-
-        [Fact]
         public void ReturnsUsers_RegisteredInPeriod()
         {
             var options = DbContextMock.GetOptions("ReturnsUsers_RegisteredInPeriod ");

@@ -30,15 +30,6 @@ namespace Services.Get
                 .ToList();
         }
 
-        public IReadOnlyCollection<UserDTO> RegisteredAfter(DateTime date)
-        {
-            return this.context.Users
-                   .Where(x => x.RegisteredOn > date)
-                   .Select(this.userMapper)
-                   .ToList();
-        }
-
-
         public IReadOnlyCollection<UserDTO> ByLastActivity(int months)
         {
             var startingTime = DateTime.Now.AddMonths(months * -1);
