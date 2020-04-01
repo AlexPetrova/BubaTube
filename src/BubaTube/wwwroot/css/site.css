@@ -272,6 +272,10 @@ body {
     background-color: #f0f5fb;
 }
 
+.tab-swith-container {
+    min-width: 20%;
+}
+
 .user-home-container {
     display: flex;
     flex-direction: row;
@@ -455,7 +459,18 @@ div#container {
 /*Admin Area - TODO move in separate css file */
 .user-activity-filter {
     display: flex;
+}
+
+.user-activity-filter.activity-filter {
     max-width: 50%;
+}
+
+.user-activity-filter.period-filter {
+    max-width: 80%;
+}
+
+.user-activity-filter.period-filter > * {
+    min-width: 24%;
 }
 
 .user-activity-filter-text {
@@ -481,7 +496,8 @@ div#container {
 }
 
 .user-activity-filter-dropdown .btn.btn-default.dropdown-toggle,
-.dropdown-menu {
+.dropdown-menu,
+.btn.btn-light {
     width: 100%;
 }
 
@@ -497,6 +513,11 @@ div#container {
 /*Tab switcher*/
 .tab-switcher {
     display: flex;
+}
+
+.tab-switcher-vertical {
+    display: flex;
+    flex-direction: column;
 }
 
 .tab-switcher-child {
