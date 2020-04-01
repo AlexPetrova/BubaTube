@@ -1,0 +1,50 @@
+﻿
+<div class="user-activity-filter">
+    <div class="user-activity-filter-text">
+        <p> No activity for period... </p>
+    </div>
+
+    <div class="user-activity-filter-dropdown">
+        <div id="user-activity-filter-dropdown" class="dropdown ">
+            <div>
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                    <span id="user-activity-filter-period-text">From</span>
+                    <span class="caret"></span>
+                </button>
+               
+                <ul class="dropdown-menu">
+                    @*/* ¯\_(ツ)_/¯ */*@
+                    @for (int i = 0; i < 10; i++)
+                    {
+                        var date = DateTime.Now.AddMonths(i * -3);
+                        <li class="drop-down-element" data-months="1">
+                            <a href="#">@date.ToShortDateString()</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div>
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                    <span id="user-activity-filter-period-text">To</span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    @*/* ¯\_(ツ)_/¯ */*@
+                    @for (int i = 0; i < 10; i++)
+                    {
+                        var date = DateTime.Now.AddMonths(i * -1);
+                        <li class="drop-down-element" data-months="1">
+                            <a href="#">@date.ToShortDateString()</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="user-activity-filter-button">
+        <button id="user-activity-filter-button" class="btn btn-light">Filter</button>
+    </div>
+</div>
+
+<div id="user-activity-filter-result"></div>
