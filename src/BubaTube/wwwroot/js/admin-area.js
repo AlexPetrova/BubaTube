@@ -1,5 +1,37 @@
 ﻿$(function () {
-    $('#user-activity-filter-button').on('click', function (event) {
+    $('#manage-users-tab-last-activity').on('click', function (_) {
+        $.get(
+            'filterByLastActivity',
+            function (data) {
+                $('#manage-users-filter-container').html(data);
+            }
+        );
+    });
+
+    $('#manage-users-tab-period').on('click', function (_) {
+        $.get(
+            'filterByPeriod',
+            function (data) {
+                $('#manage-users-filter-container').html(data);
+            }
+        );
+    });
+
+    $('#manage-users-filter-container').on('click', '.drop-down-element', function (_) {
+        var $this = $(this);
+        var dropDownHolder = '#' + $this.closest('div').attr('id');
+
+        var activeItem = $(dropDownHolder + ' ul').find('.drop-down-element.active');
+        if (activeItem.length !== 0) {
+            activeItem.removeClass('active');
+        }
+
+        $this.addClass('active');
+
+        $(dropDownHolder).find('.filter-text').text($this.text().trim());
+    });
+
+    $('#manage-users-filter-container').on('click', '#user-activity-filter-button', function (_) {
         var months = $('.drop-down-element.active').first().data("months");
         if (months === undefined) {
             $('#user-activity-filter-dropdown').effect('bounce');
@@ -15,31 +47,7 @@
         );
     });
 
-    $('.drop-down-element').click(function (e) {
-        $('.drop-down-element.active')
-            .toArray()
-            .forEach(element => element.classList.remove('active'));
+    $('#manage-users-filter-container').on('click', '#period-filter-button', function (_) {
 
-        this.classList.add('active');
-
-        $('#user-activity-filter-period-text').first().text(this.textContent.trim())
-    });
-
-    $('#manage-users-tab-last-activity').click(function (e) {
-        $.get(
-            'filterByLastActivity',
-            function (data) {
-                $('#manage-users-filter-container').html(data);
-            }
-        );
-    });
-
-    $('#manage-users-tab-period').click(function (e) {
-        $.get(
-            'filterByPeriod',
-            function (data) {
-                $('#manage-users-filter-container').html(data);
-            }
-        );
     });
 });
