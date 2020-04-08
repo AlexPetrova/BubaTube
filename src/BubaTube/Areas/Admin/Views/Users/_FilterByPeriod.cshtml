@@ -5,18 +5,18 @@
     </div>
 
     <div class="user-activity-filter-dropdown">
-        <div id="from-period-filter-dropdown" class="dropdown ">
+        <div id="from-dropdown-container" class="dropdown ">
             <button id="period-filter-from-btn" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                 <span class="filter-text">From</span>
                 <span class="caret"></span>
             </button>
 
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" id="period-filter-from-dropdown">
                 @*/* ¯\_(ツ)_/¯ */*@
                 @for (int i = 0; i < 10; i++)
                 {
-                    var date = DateTime.Now.AddMonths(i * -3);
-                    <li class="drop-down-element" data-months="1">
+                    var date = DateTime.Now.AddMonths(i * -1);
+                    <li class="drop-down-element" data-date=@date.ToString("dd-MM-yyyy")>
                         <a href="#">@date.ToShortDateString()</a>
                     </li>
                 }
@@ -25,17 +25,17 @@
     </div>
 
     <div class="user-activity-filter-dropdown">
-        <div id="to-period-filter-dropdown" class="dropdown">
+        <div id="to-dropdown-container" class="dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                 <span class="filter-text">To</span>
                 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" id="period-filter-to-dropdown">
                 @*/* ¯\_(ツ)_/¯ */*@
                 @for (int i = 0; i < 10; i++)
                 {
                     var date = DateTime.Now.AddMonths(i * -1);
-                    <li class="drop-down-element" data-months="1">
+                    <li class="drop-down-element" data-date=@date.ToString("dd-MM-yyyy")>
                         <a href="#">@date.ToShortDateString()</a>
                     </li>
                 }
@@ -44,7 +44,7 @@
     </div>
 
     <div class="period-filter-button">
-        <button id="user-activity-filter-button" class="btn btn-light">Filter</button>
+        <button id="user-activity-from-to-filter-button" class="btn btn-light">Filter</button>
     </div>
 </div>
 

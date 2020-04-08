@@ -38,7 +38,34 @@
             return;
         }
 
-        var url = 'filterByLastActivity/' + $('.drop-down-element.active').first().data("months");
+        var url = 'filterByLastActivity/' + months;
+        $.get(
+            url,
+            function (data) {
+                $('#user-activity-filter-result').html(data);
+            }
+        );
+    });
+
+    $('#manage-users-filter-container').on('click', '#user-activity-from-to-filter-button', function (_) {
+        var from = $('#period-filter-from-dropdown').find('.drop-down-element.active');
+        var to = $('#period-filter-to-dropdown').find('.drop-down-element.active');
+
+        if (from.length === 0 && to.length === 0) {
+            $('#from-dropdown-container').effect('bounce');
+            $('#to-dropdown-container').effect('bounce');
+            return;
+        }
+        if (from.length === 0) {
+            $('#from-dropdown-container').effect('bounce');
+            return;
+        }
+        if (to.length === 0) {
+            $('#to-dropdown-container').effect('bounce');
+            return;
+        }
+
+        var url = `filterPerPeriod/${from.data('date')}/${to.data('date')}`;
         $.get(
             url,
             function (data) {
