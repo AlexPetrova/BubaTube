@@ -1,9 +1,11 @@
-﻿using Contracts.Data.DTO;
+﻿using BubaTube.Areas.Admin.Models;
+using Contracts.Data.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Contracts.Get;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BubaTube.Areas.Admin.Controllers
 {
@@ -40,7 +42,10 @@ namespace BubaTube.Areas.Admin.Controllers
         [HttpGet("{months}")]
         public IActionResult FilterByLastActivity(int months)
         {
-            IReadOnlyCollection<UserDTO> users = this.userQueries.ByLastActivity(months);
+            IReadOnlyCollection<User> users =
+                this.userQueries.ByLastActivity(months)
+                    .Select(this.Map)
+                    .ToList();
 
             return base.PartialView("_FilterResult", users);
         }
@@ -48,9 +53,22 @@ namespace BubaTube.Areas.Admin.Controllers
         [HttpGet("{from}/{to}")]
         public IActionResult FilterPerPeriod(DateTime from, DateTime to)
         {
-            IReadOnlyCollection<UserDTO> users = this.userQueries.RegisterdInPeriod(from, to);
+            IReadOnlyCollection<User> users =
+                this.userQueries.RegisterdInPeriod(from, to)
+                    .Select(this.Map)
+                    .ToList();
 
             return base.PartialView("_FilterResult", users);
         }
+
+        private User Map(UserDTO user) => new User
+        {
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email,
+            AvatarImage = user.AvatarImage,
+            RegisteredOn = user.RegisteredOn,
+            LastLogin = user.LastLogin
+        };
     }
 }
