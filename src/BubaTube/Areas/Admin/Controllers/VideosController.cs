@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BubaTube.Areas.Admin.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Contracts.Get;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BubaTube.Areas.Admin.Controllers
 {
@@ -19,7 +22,18 @@ namespace BubaTube.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult ManageVideos()
         {
-            return View();
+            IReadOnlyCollection<Video> models = 
+                this.videoQueries.GetAllForApproval()
+                    .Select(video => new Video
+                    {
+                        Title = video.Title,
+                        Description = video.Description,
+                        Likes = video.Likes,
+                        Url = $"video/{video.Title}"
+                    })
+                    .ToList();
+
+            return View(models);
         }
     }
 }
