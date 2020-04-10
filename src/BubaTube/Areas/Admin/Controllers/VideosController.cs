@@ -26,6 +26,7 @@ namespace BubaTube.Areas.Admin.Controllers
                 this.videoQueries.GetAllForApproval()
                     .Select(video => new Video
                     {
+                        Id = video.Id,
                         Title = video.Title,
                         Description = video.Description,
                         Likes = video.Likes,
