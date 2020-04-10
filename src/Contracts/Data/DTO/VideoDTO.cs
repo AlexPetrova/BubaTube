@@ -19,7 +19,7 @@ namespace Contracts.Data.DTO
         public double Likes { get; set; }
 
         [Required]
-        public string AuthorUserName { get; set; }
+        public string AuthorUserId { get; set; }
 
         [Required]
         public IEnumerable<string> Categories { get; set; }

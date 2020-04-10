@@ -33,7 +33,7 @@ namespace Contracts.Extensions
                         Description = model.Description,
                         Path = model.Path,
                         Likes = model.Likes,
-                        AuthorUserName = model.AuthorId,
+                        AuthorUserId = model.AuthorId,
                         Categories = model.VideoCategory
                                           .Select(c => c.Category.CategoryName)
                     }
@@ -61,7 +61,7 @@ namespace Contracts.Extensions
                         Title = dto.Title,
                         Description = dto.Description,
                         Path = dto.Path,
-                        AuthorId = dto.AuthorUserName,
+                        AuthorId = dto.AuthorUserId,
                         VideoCategory = new List<VideoCategory>()
                     }
                 )
