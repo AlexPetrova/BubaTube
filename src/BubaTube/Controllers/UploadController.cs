@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Services.Contracts;
 using Services.Contracts.Write;
 using System;
 using System.Linq;
@@ -16,20 +17,17 @@ namespace BubaTube.Controllers
     public class UploadController : Controller
     {
         private readonly IVideoCommands videoWriteService;
-        private readonly ICategoryCommands categorySaverService;
-        private readonly Func<string, string, string> getUploadPath;
+        private readonly Func<string, string, PathInfo> getUploadPath;
         private readonly IWebHostEnvironment environment;
         private readonly UserManager<User> userManager;
 
         public UploadController(
             IVideoCommands videoWriteService,
-            ICategoryCommands categorySaverService,
-            Func<string, string, string> getUploadPath,
+            Func<string, string, PathInfo> getUploadPath,
             IWebHostEnvironment environment, 
             UserManager<User> userManager)
         {
             this.videoWriteService = videoWriteService;
-            this.categorySaverService = categorySaverService;
             this.getUploadPath = getUploadPath;
             this.environment = environment;
             this.userManager = userManager;
@@ -54,7 +52,7 @@ namespace BubaTube.Controllers
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .ToArray();
 
-                var path = this.getUploadPath(
+                var pathInfo = this.getUploadPath(
                     this.environment.WebRootPath, 
                     this.ExtractFileExtension(model.Video.FileName));
 
@@ -62,8 +60,8 @@ namespace BubaTube.Controllers
                 {
                     Title = model.Title,
                     Description = model.Description,
-                    Path = path,
-                    AuthorUserName = this.userManager.GetUserId(HttpContext.User),
+                    Path = pathInfo.Path,
+                    Url = pathInfo.FileName,
                     Categories = model.Categories
                 };
 

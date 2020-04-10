@@ -1,5 +1,6 @@
 ﻿using Contracts.Extensions;
 using Microsoft.Extensions.DependencyInjection;
+using Services.Contracts;
 using Services.Contracts.Get;
 using Services.Contracts.Write;
 using Services.Get;
@@ -26,18 +27,25 @@ namespace Services.Extensions
             services.AddDTOToModelMappers();
             services.AddModelToDTOMappers();
 
-            services.AddSingleton(serviceProvider => 
+            services.AddSingleton(serviceProvider =>
                 new Func<string, FileMode, FileStream>(
                     (name, mode) => new FileStream(name, mode)));
 
-            services.AddSingleton(serviceProvider => new Func<string, string, string>((rootFolder, fileExtension) =>
-            {
-                var folder = Path.Combine(rootFolder, "video");
-                var nameOfVideo = Guid.NewGuid();
-                var path = Path.Combine(folder, nameOfVideo.ToString() + fileExtension);
+            services.AddSingleton(serviceProvider
+                => new Func<string, string, PathInfo>((rootFolder, fileExtension) =>
+                    {
+                        var rootFolderName = "video";
+                        var folder = Path.Combine(rootFolder, rootFolderName);
+                        var nameOfVideo = Guid.NewGuid();
+                        var path = Path.Combine(folder, nameOfVideo.ToString() + fileExtension);
 
-                return path;
-            }));
+                        return new PathInfo
+                        {
+                            Path = path,
+                            FileName = $"{rootFolderName}/{nameOfVideo}{fileExtension}"
+                        };
+                    })
+                );
 
             return services;
         }
