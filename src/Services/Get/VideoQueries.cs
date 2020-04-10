@@ -5,18 +5,19 @@ using Services.Contracts.Get;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Services.Get
 {
     public class VideoQueries : IVideoQueries
     {
         private readonly BubaTubeDbContext context;
-        private readonly Func<Video, VideoDTO> videoMapper;
+        private readonly Expression<Func<Video, VideoDTO>> videoMapper;
         private const int DefaultCountForResentVideos = 20;
 
         public VideoQueries(
             BubaTubeDbContext context,
-            Func<Video, VideoDTO> videoMapper)
+            Expression<Func<Video, VideoDTO>> videoMapper)
         {
             this.context = context;
             this.videoMapper = videoMapper;
