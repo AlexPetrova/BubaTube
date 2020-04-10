@@ -329,7 +329,5 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 
-*BubaTube/BubaTube/wwwroot/video/
 *BubaTube/BubaTube/appsettings.json
 *BubaTube/BubaTube/BubaTube/ScaffoldingReadMe.txt
-/src/BubaTube/wwwroot/video/*
