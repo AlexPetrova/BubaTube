@@ -130,10 +130,11 @@ namespace Services.Tests.Write
             return new VideoDTO
             {
                 Title = "testVideo",
-                AuthorUserName = "1234",
+                AuthorUserId = "1234",
                 Description = "test",
                 Likes = 1,
                 Path = @"\Folder\Name.mp4",
+                Url = "Name.mp4",
                 Categories = new List<string>()
             };
         }
