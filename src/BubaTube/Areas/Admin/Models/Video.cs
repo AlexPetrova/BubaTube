@@ -6,7 +6,7 @@
 
         public string Description { get; set; }
 
-        public string Path { get; set; }
+        public string Url { get; set; }
 
         public double Likes { get; set; }
     }
