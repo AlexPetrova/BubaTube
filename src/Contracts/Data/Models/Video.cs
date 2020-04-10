@@ -16,8 +16,11 @@ namespace Contracts.Data.Models
         public string Description { get; set; }
 
         [Required]
-        public string Path { get; set; } 
-        
+        public string Path { get; set; }
+
+        [Required]
+        public string Url { get; set; }
+
         public double Likes { get; set; }
 
         //TODO add views property and add migration
