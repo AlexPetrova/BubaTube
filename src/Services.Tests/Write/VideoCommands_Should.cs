@@ -74,13 +74,13 @@ namespace Services.Tests.Write
                 .Setup(mock => mock.TakeAllCategoryIds(categories))
                 .Returns(new List<int>() { 2 });
 
-            using (var context = new BubaTubeDbContext(options))
+            using (var actContext = new BubaTubeDbContext(options))
             {
                 var model = this.GetVideoDto();
                 model.Categories = categories;
 
                 var uploadVideoService = new VideoCommands(
-                    context, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
+                    actContext, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
 
                 await uploadVideoService.Save(model, mockFile.Object);
             }
@@ -166,7 +166,7 @@ namespace Services.Tests.Write
         [Fact]
         public async Task DeleteVideo_FileDoesNotExist_OnFileSystem()
         {
-            var options = DbContextMock.GetOptions("DeleteVideo");
+            var options = DbContextMock.GetOptions("DeleteVideo_FileDoesNotExist_OnFileSystem");
             var mockFile = new Mock<IFormFile>();
             var mockFileCommands = new Mock<IFileCommands>();
             var mockCategoryQueries = new Mock<ICategoryQueries>();
@@ -197,7 +197,7 @@ namespace Services.Tests.Write
         [Fact]
         public async Task DeleteVideo_FileDoesNotExist_InDatabase()
         {
-            var options = DbContextMock.GetOptions("DeleteVideo");
+            var options = DbContextMock.GetOptions("DeleteVideo_FileDoesNotExist_InDatabase");
             var mockFile = new Mock<IFormFile>();
             var mockFileCommands = new Mock<IFileCommands>();
             var mockCategoryQueries = new Mock<ICategoryQueries>();
