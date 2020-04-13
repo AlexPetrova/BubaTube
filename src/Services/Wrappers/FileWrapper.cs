@@ -1,8 +1,9 @@
-﻿using System.IO;
+﻿using Services.Contracts.Wrappers;
+using System.IO;
 
 namespace Services.Wrappers
 {
-    public class FileWrapper
+    public class FileWrapper : IFile
     {
         public bool Exists(string path)
         {

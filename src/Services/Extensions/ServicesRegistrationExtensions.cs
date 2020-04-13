@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Services.Contracts;
 using Services.Contracts.Get;
+using Services.Contracts.Wrappers;
 using Services.Contracts.Write;
 using Services.Get;
 using Services.Wrappers;
@@ -25,13 +26,13 @@ namespace Services.Extensions
             services.AddTransient<IVideoCommands, VideoCommands>();
             services.AddTransient<ICategoryCommands, CategoryCommands>();
 
-            services.AddSingleton<FileWrapper>();
+            services.AddSingleton<IFile, FileWrapper>();
 
             services.AddDTOToModelMappers();
             services.AddModelToDTOMappers();
 
             services.AddSingleton(serviceProvider =>
-                new Func<string, FileMode, FileStream>(
+                new Func<string, FileMode, Stream>(
                     (name, mode) => new FileStream(name, mode)));
 
             services.AddSingleton(serviceProvider
