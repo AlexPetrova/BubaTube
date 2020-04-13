@@ -4,6 +4,7 @@ using Services.Contracts;
 using Services.Contracts.Get;
 using Services.Contracts.Write;
 using Services.Get;
+using Services.Wrappers;
 using Services.Write;
 using System;
 using System.IO;
@@ -23,6 +24,8 @@ namespace Services.Extensions
             services.AddTransient<IUserCommands, UserCommands>();
             services.AddTransient<IVideoCommands, VideoCommands>();
             services.AddTransient<ICategoryCommands, CategoryCommands>();
+
+            services.AddSingleton<FileWrapper>();
 
             services.AddDTOToModelMappers();
             services.AddModelToDTOMappers();
