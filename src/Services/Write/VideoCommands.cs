@@ -53,5 +53,17 @@ namespace Services.Write
 
             return result;
         }
+
+        public async Task<bool> Delete(int id)
+        {
+            var video = this.context.Videos
+                .First(x => x.Id == id);
+            video.IsDeleted = true;
+
+            var isSuccess = this.fileCommands.Delete(video.Path);
+            var affectedRows = await this.context.SaveChangesAsync();
+
+            return isSuccess && affectedRows > 0; 
+        }
     }
 }
