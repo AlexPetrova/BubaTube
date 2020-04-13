@@ -23,5 +23,17 @@ namespace Services.Write
                 await video.CopyToAsync(fileStream);
             }
         }
+
+        public bool Delete(string path)
+        {
+            if(File.Exists(path))
+            {
+                File.Delete(path);
+
+                return true;
+            }
+
+            return false;
+        }
     }
 }
