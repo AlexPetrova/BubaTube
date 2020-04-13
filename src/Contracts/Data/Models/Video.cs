@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Contracts.Data.Models
 {
-    public class Video
+    public class Video : BaseModel
     {
         [Key]
         public int Id { get; set; }
@@ -37,6 +37,6 @@ namespace Contracts.Data.Models
 
         public ICollection<UserVideo> UserVideo { get; set; }
 
-        public ICollection<VideoCategory> VideoCategory { get; set; }
+        public ICollection<VideoCategory> VideoCategory { get; set; }   
     }
 }

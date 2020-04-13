@@ -2,7 +2,7 @@
 
 namespace Contracts.Data.Models
 {
-    public class BlackList
+    public class BlackList : BaseModel
     {
         public int Id { get; set; }
 

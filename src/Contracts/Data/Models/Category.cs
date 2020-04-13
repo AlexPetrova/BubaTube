@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Contracts.Data.Models
 {
-    public class Category
+    public class Category : BaseModel
     {
         [Key]
         public int Id { get; set; }

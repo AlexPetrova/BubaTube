@@ -2,7 +2,7 @@
 
 namespace Contracts.Data.Models
 {
-    public class Tag
+    public class Tag : BaseModel
     {
         [Key]
         public int Id { get; set; }

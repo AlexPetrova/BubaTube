@@ -1,6 +1,6 @@
 ﻿namespace Contracts.Data.Models
 {
-    public class UserVideo
+    public class UserVideo : BaseModel
     {
         public string UserId { get; set; }
 
