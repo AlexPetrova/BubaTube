@@ -74,7 +74,5 @@
         );
     });
 
-    $('#manage-users-filter-container').on('click', '#period-filter-button', function (_) {
-
-    });
+    
 });
