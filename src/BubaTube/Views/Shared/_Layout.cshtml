@@ -81,6 +81,10 @@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
     <script src="~/js/search.js"></script>
+    @if (this.User.IsInRole("Admin"))
+    {
+        <script src="~/js/admin-area.js"></script>
+    }
     @RenderSection("Scripts", required: false)
 </body>
 </html>
