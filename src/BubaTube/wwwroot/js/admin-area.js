@@ -83,4 +83,14 @@
             console.log(response);
         });
     });
+
+    $('.video-controls').on('click', '#approve-video', function (_) {
+        var id = $(this).data('id');
+        $.ajax({
+            method: 'put',
+            url: `approve/${id}`
+        }).done(function (response) {
+            console.log(response);
+        });
+    });
 });
