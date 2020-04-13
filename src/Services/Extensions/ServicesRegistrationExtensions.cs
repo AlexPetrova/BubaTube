@@ -36,7 +36,7 @@ namespace Services.Extensions
                     {
                         var rootFolderName = "video";
                         var folder = Path.Combine(rootFolder, rootFolderName);
-                        var nameOfVideo = Guid.NewGuid();
+                        var nameOfVideo = new Random().ShortString();
                         var path = Path.Combine(folder, nameOfVideo.ToString() + fileExtension);
 
                         return new PathInfo
