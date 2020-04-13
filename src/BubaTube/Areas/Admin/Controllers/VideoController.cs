@@ -50,5 +50,13 @@ namespace BubaTube.Areas.Admin.Controllers
 
             return base.Ok(result);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Approve(int id)
+        {
+            var result = await this.videoCommands.Approve(id);
+
+            return base.Ok(result);
+        }
     }
 }
