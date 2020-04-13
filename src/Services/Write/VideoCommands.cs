@@ -16,7 +16,7 @@ namespace Services.Write
         private readonly IFileCommands fileCommands;
         private readonly ICategoryQueries categoryGetService;
         private readonly Func<VideoDTO, Video> videoMapper;
-        
+
         public VideoCommands(
             BubaTubeDbContext context,
             IFileCommands fileCommands,
@@ -57,13 +57,19 @@ namespace Services.Write
         public async Task<bool> Delete(int id)
         {
             var video = this.context.Videos
-                .First(x => x.Id == id);
+                .FirstOrDefault(x => x.Id == id);
+
+            if (video == null)
+            {
+                return false;
+            }
+
             video.IsDeleted = true;
 
             var isSuccess = this.fileCommands.Delete(video.Path);
             var affectedRows = await this.context.SaveChangesAsync();
 
-            return isSuccess && affectedRows > 0; 
+            return isSuccess && affectedRows > 0;
         }
     }
 }
