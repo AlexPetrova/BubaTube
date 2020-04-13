@@ -4,17 +4,18 @@
     ViewData["Title"] = "Manage Videos";
 }
 
-@foreach (var video in Model)
-{
-    string videoUrl = "https://" + ViewContext.HttpContext.Request.Host.Value + "/" + video.Url;
-    <video width="320" height="240" controls>
-        <source src=@videoUrl type="video/mp4">
-    </video>
-    <div>
-        <button type="button" class="btn btn-danger">Delete</button>
-    </div>
-    <div>
-        <button type="button" class="btn btn-success">Approve</button>
-    </div>
-}
-
+<div class="videos-container">
+    @foreach (var video in Model)
+    {
+        string videoUrl = "https://" + ViewContext.HttpContext.Request.Host.Value + "/" + video.Url;
+        <div class="video">
+            <video width="320" height="240" controls>
+                <source src=@videoUrl type="video/mp4">
+            </video>
+            <div class="video-controlls">
+                <button id="delete-video" type="button" class="btn btn-danger" data-id="@video.Id">Delete</button>
+                <button id="approve-video" type="button" class="btn btn-success" data-id="@video.Id">Approve</button>
+            </div>
+        </div>
+    }
+</div>
