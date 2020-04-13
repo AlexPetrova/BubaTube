@@ -5,14 +5,8 @@ namespace Services.Wrappers
 {
     public class FileWrapper : IFile
     {
-        public bool Exists(string path)
-        {
-            return File.Exists(path);
-        }
+        public bool Exists(string path) => File.Exists(path);
 
-        public void Delete(string path)
-        {
-            File.Delete(path);
-        }
+        public void Delete(string path) => File.Delete(path);
     }
 }
