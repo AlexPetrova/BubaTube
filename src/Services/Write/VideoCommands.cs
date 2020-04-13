@@ -71,5 +71,22 @@ namespace Services.Write
 
             return isSuccess && affectedRows > 0;
         }
+
+        public async Task<bool> Approve(int id)
+        {
+            var video = this.context.Videos
+              .FirstOrDefault(x => x.Id == id);
+
+            if (video == null)
+            {
+                return false;
+            }
+
+            video.IsАpproved = true;
+
+            var affectedRows = await this.context.SaveChangesAsync();
+
+            return affectedRows > 0;
+        }
     }
 }

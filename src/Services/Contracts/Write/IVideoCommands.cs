@@ -9,5 +9,7 @@ namespace Services.Contracts.Write
         Task<int> Save(VideoDTO dto, IFormFile video);
         
         Task<bool> Delete(int id);
+
+        Task<bool> Approve(int id);
     }
 }
