@@ -125,6 +125,97 @@ namespace Services.Tests.Write
             }
         }
 
+        [Fact]
+        public async Task DeleteVideo()
+        {
+            var options = DbContextMock.GetOptions("DeleteVideo");
+            var mockFile = new Mock<IFormFile>();
+            var mockFileCommands = new Mock<IFileCommands>();
+            var mockCategoryQueries = new Mock<ICategoryQueries>();
+
+            mockFileCommands
+                .Setup(x => x.Delete("test"))
+                .Returns(true);
+            
+            using (var context = new BubaTubeDbContext(options))
+            {
+                context.Videos.Add(new Video
+                {
+                    Title = "test",
+                    Path = "test"
+                });
+                context.SaveChanges();
+
+                int videoId = context.Videos.First().Id;
+
+                var uploadService = new VideoCommands(
+                    context, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
+                bool isSuccess = await uploadService.Delete(videoId);
+                
+                Assert.True(isSuccess);
+            }
+
+            using (var context = new BubaTubeDbContext(options))
+            {
+                var isDeleted = context.Videos.First().IsDeleted;
+
+                Assert.True(isDeleted);
+            }
+        }
+
+        [Fact]
+        public async Task DeleteVideo_FileDoesNotExist_OnFileSystem()
+        {
+            var options = DbContextMock.GetOptions("DeleteVideo");
+            var mockFile = new Mock<IFormFile>();
+            var mockFileCommands = new Mock<IFileCommands>();
+            var mockCategoryQueries = new Mock<ICategoryQueries>();
+
+            mockFileCommands
+                .Setup(x => x.Delete("test"))
+                .Returns(false);
+
+            using (var context = new BubaTubeDbContext(options))
+            {
+                context.Videos.Add(new Video
+                {
+                    Title = "test",
+                    Path = "test"
+                });
+                context.SaveChanges();
+
+                int videoId = context.Videos.First().Id;
+
+                var uploadService = new VideoCommands(
+                    context, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
+                bool isSuccess = await uploadService.Delete(videoId);
+
+                Assert.False(isSuccess);
+            }
+        }
+
+        [Fact]
+        public async Task DeleteVideo_FileDoesNotExist_InDatabase()
+        {
+            var options = DbContextMock.GetOptions("DeleteVideo");
+            var mockFile = new Mock<IFormFile>();
+            var mockFileCommands = new Mock<IFileCommands>();
+            var mockCategoryQueries = new Mock<ICategoryQueries>();
+
+            mockFileCommands
+                .Setup(x => x.Delete("test"))
+                .Returns(true);
+
+            using (var context = new BubaTubeDbContext(options))
+            {
+                var uploadService = new VideoCommands(
+                    context, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
+                bool isSuccess = await uploadService.Delete(1);
+
+                Assert.False(isSuccess);
+            }
+        }
+
         private VideoDTO GetVideoDto()
         {
             return new VideoDTO
