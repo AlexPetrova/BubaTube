@@ -74,7 +74,7 @@
         );
     });
 
-    $('.video-controlls').on('click', '#delete-video', function (_) {
+    $('.video-controls').on('click', '#delete-video', function (_) {
         var id = $(this).data('id');
         $.ajax({
             method: 'delete',

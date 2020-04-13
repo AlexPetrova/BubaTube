@@ -9,10 +9,11 @@
     {
         string videoUrl = "https://" + ViewContext.HttpContext.Request.Host.Value + "/" + video.Url;
         <div class="video">
+            <h3>@video.Title</h3>
             <video width="320" height="240" controls>
                 <source src=@videoUrl type="video/mp4">
             </video>
-            <div class="video-controlls">
+            <div class="video-controls">
                 <button id="delete-video" type="button" class="btn btn-danger" data-id="@video.Id">Delete</button>
                 <button id="approve-video" type="button" class="btn btn-success" data-id="@video.Id">Approve</button>
             </div>
