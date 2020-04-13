@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Services.Contracts.Wrappers;
 using Services.Contracts.Write;
 using Services.Wrappers;
 using System;
@@ -9,15 +10,15 @@ namespace Services.Write
 {
     public class FileCommands : IFileCommands
     {
-        private readonly Func<string, FileMode, FileStream> createFileStream;
-        private readonly FileWrapper fileWrapper;
+        private readonly Func<string, FileMode, Stream> createFileStream;
+        private readonly IFile fileProvider;
 
         public FileCommands(
-            Func<string, FileMode, FileStream> createFileStream,
-            FileWrapper fileWrapper)
+            Func<string, FileMode, Stream> createFileStream,
+            IFile fileProvider)
         {
             this.createFileStream = createFileStream;
-            this.fileWrapper = fileWrapper;
+            this.fileProvider = fileProvider;
         }
 
         public async Task Save(IFormFile video, string path)
@@ -31,9 +32,9 @@ namespace Services.Write
 
         public bool Delete(string path)
         {
-            if(this.fileWrapper.Exists(path))
+            if(this.fileProvider.Exists(path))
             {
-                this.fileWrapper.Delete(path);
+                this.fileProvider.Delete(path);
 
                 return true;
             }
