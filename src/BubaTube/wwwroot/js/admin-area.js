@@ -74,5 +74,13 @@
         );
     });
 
-    
+    $('.video-controlls').on('click', '#delete-video', function (_) {
+        var id = $(this).data('id');
+        $.ajax({
+            method: 'delete',
+            url: `delete/${id}`
+        }).done(function (response) {
+            console.log(response);
+        });
+    });
 });
