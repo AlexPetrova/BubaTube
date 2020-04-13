@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Contracts.Get;
+using Services.Contracts.Write;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BubaTube.Areas.Admin.Controllers
 {
@@ -13,16 +15,20 @@ namespace BubaTube.Areas.Admin.Controllers
     public class VideosController : Controller
     {
         private IVideoQueries videoQueries;
+        private IVideoCommands videoCommands;
 
-        public VideosController(IVideoQueries videoQueries)
+        public VideosController(
+            IVideoQueries videoQueries,
+            IVideoCommands videoCommands)
         {
             this.videoQueries = videoQueries;
+            this.videoCommands = videoCommands;
         }
 
         [HttpGet]
         public IActionResult ManageVideos()
         {
-            IReadOnlyCollection<Video> models = 
+            IReadOnlyCollection<Video> models =
                 this.videoQueries.GetAllForApproval()
                     .Select(video => new Video
                     {
@@ -35,6 +41,14 @@ namespace BubaTube.Areas.Admin.Controllers
                     .ToList();
 
             return View(models);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await this.videoCommands.Delete(id);
+
+            return base.Ok(result);
         }
     }
 }
