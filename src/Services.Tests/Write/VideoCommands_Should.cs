@@ -216,6 +216,40 @@ namespace Services.Tests.Write
             }
         }
 
+        [Fact]
+        public async Task ApprovesVideo()
+        {
+            var options = DbContextMock.GetOptions("ApprovesVideo");
+            var mockFile = new Mock<IFormFile>();
+            var mockFileCommands = new Mock<IFileCommands>();
+            var mockCategoryQueries = new Mock<ICategoryQueries>();
+            using (var actContext = new BubaTubeDbContext(options))
+            {
+                actContext.Videos.Add(new Video
+                {
+                    Title = "test",
+                    Path = "test"
+                });
+                actContext.SaveChanges();
+
+                int videoId = actContext.Videos.First().Id;
+
+                var uploadService = new VideoCommands(
+                    actContext, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
+                bool isSuccess = await uploadService.Approve(videoId);
+
+                Assert.True(isSuccess);
+            }
+
+            using (var assertContext = new BubaTubeDbContext(options))
+            {
+                Video video = assertContext.Videos
+                    .First();
+
+                Assert.True(video.IsАpproved);
+            }
+        }
+
         private VideoDTO GetVideoDto()
         {
             return new VideoDTO
