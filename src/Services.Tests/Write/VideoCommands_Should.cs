@@ -42,10 +42,10 @@ namespace Services.Tests.Write
                 .Setup(mock => mock.TakeAllCategoryIds(categories))
                 .Returns(new List<int>() { 2 });
 
-            using (var context = new BubaTubeDbContext(options))
+            using (var actContext = new BubaTubeDbContext(options))
             {
                 var uploadService = new VideoCommands(
-                    context, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
+                    actContext, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
 
                 await uploadService.Save(model, mockFile.Object);
             }
@@ -136,7 +136,7 @@ namespace Services.Tests.Write
             mockFileCommands
                 .Setup(x => x.Delete("test"))
                 .Returns(true);
-            
+
             using (var context = new BubaTubeDbContext(options))
             {
                 context.Videos.Add(new Video
@@ -151,7 +151,7 @@ namespace Services.Tests.Write
                 var uploadService = new VideoCommands(
                     context, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
                 bool isSuccess = await uploadService.Delete(videoId);
-                
+
                 Assert.True(isSuccess);
             }
 
@@ -223,6 +223,7 @@ namespace Services.Tests.Write
             var mockFile = new Mock<IFormFile>();
             var mockFileCommands = new Mock<IFileCommands>();
             var mockCategoryQueries = new Mock<ICategoryQueries>();
+
             using (var actContext = new BubaTubeDbContext(options))
             {
                 actContext.Videos.Add(new Video
