@@ -8,8 +8,9 @@
     @foreach (var video in Model)
     {
         string videoUrl = "/" + video.Url;
+        string videoId = "video-" + video.Id;
 
-        <div class="video">
+        <div id=@videoId class="video">
             <h3>@video.Title</h3>
             <h5><i>@video.Description</i></h5>
             <video class="video-player" controls>
