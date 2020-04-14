@@ -10,6 +10,7 @@
         string videoUrl = "https://" + ViewContext.HttpContext.Request.Host.Value + "/" + video.Url;
         <div class="video">
             <h3>@video.Title</h3>
+            <h5><i>@video.Description</i></h5>>
             <video width="320" height="240" controls>
                 <source src=@videoUrl type="video/mp4">
             </video>
