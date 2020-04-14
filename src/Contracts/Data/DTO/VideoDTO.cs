@@ -14,6 +14,8 @@ namespace Contracts.Data.DTO
         [StringLength(500)]
         public string Description { get; set; }
 
+        public string FileName { get; set; }
+
         public string Path { get; set; }
 
         public string Url { get; set; }

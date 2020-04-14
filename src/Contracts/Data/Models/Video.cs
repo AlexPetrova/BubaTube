@@ -16,10 +16,7 @@ namespace Contracts.Data.Models
         public string Description { get; set; }
 
         [Required]
-        public string Path { get; set; }
-
-        [Required]
-        public string Url { get; set; }
+        public string FileName { get; set; }
 
         public double Likes { get; set; }
 
