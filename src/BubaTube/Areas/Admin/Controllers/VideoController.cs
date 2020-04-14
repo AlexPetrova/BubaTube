@@ -46,17 +46,23 @@ namespace BubaTube.Areas.Admin.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var result = await this.videoCommands.Delete(id);
+            var isSuccess = await this.videoCommands.Delete(id);
 
-            return base.Ok(result);
+            if (isSuccess)
+                return base.Ok();
+            else
+                return base.Problem("The resource was not found!", null, 500);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Approve(int id)
         {
-            var result = await this.videoCommands.Approve(id);
+            var isSuccess = await this.videoCommands.Approve(id);
 
-            return base.Ok(result);
+            if (isSuccess)
+                return base.Ok();
+            else
+                return base.Problem("The resource was not found!", null, 500);
         }
     }
 }
