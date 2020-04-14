@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace BubaTube.Areas.Admin.Models
+namespace BubaTube.Areas.Admin.ViewModels
 {
-    public class User
+    public class UserViewModel
     {
         public string FirstName { get; set; }
 

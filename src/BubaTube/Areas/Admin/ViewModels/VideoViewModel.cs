@@ -1,6 +1,6 @@
-﻿namespace BubaTube.Areas.Admin.Models
+﻿namespace BubaTube.Areas.Admin.ViewModels
 {
-    public class Video
+    public class VideoViewModel
     {
         public int Id { get; set; }
         

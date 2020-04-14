@@ -1,4 +1,4 @@
-﻿using BubaTube.Areas.Admin.Models;
+﻿using BubaTube.Areas.Admin.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Contracts.Get;
@@ -28,9 +28,9 @@ namespace BubaTube.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult ManageVideos()
         {
-            IReadOnlyCollection<Video> models =
+            IReadOnlyCollection<VideoViewModel> models =
                 this.videoQueries.GetAllForApproval()
-                    .Select(video => new Video
+                    .Select(video => new VideoViewModel
                     {
                         Id = video.Id,
                         Title = video.Title,
