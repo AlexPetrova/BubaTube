@@ -7,7 +7,8 @@
 <div class="videos-container">
     @foreach (var video in Model)
     {
-        string videoUrl = "https://" + ViewContext.HttpContext.Request.Host.Value + "/" + video.Url;
+        string videoUrl = "/" + video.Url;
+
         <div class="video">
             <h3>@video.Title</h3>
             <h5><i>@video.Description</i></h5>>
