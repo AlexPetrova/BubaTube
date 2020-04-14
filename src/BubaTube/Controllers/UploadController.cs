@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
+using Services.Contracts.Get;
 using Services.Contracts.Write;
 using System;
 using System.Linq;
@@ -17,19 +18,16 @@ namespace BubaTube.Controllers
     public class UploadController : Controller
     {
         private readonly IVideoCommands videoWriteService;
-        private readonly Func<string, string, PathInfo> getUploadPath;
-        private readonly IWebHostEnvironment environment;
+        private readonly IFileQueries fileQueries;
         private readonly UserManager<User> userManager;
 
         public UploadController(
             IVideoCommands videoWriteService,
-            Func<string, string, PathInfo> getUploadPath,
-            IWebHostEnvironment environment, 
+            IFileQueries fileQueries,
             UserManager<User> userManager)
         {
             this.videoWriteService = videoWriteService;
-            this.getUploadPath = getUploadPath;
-            this.environment = environment;
+            this.fileQueries = fileQueries;
             this.userManager = userManager;
         }
 
@@ -52,16 +50,15 @@ namespace BubaTube.Controllers
                     .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                     .ToArray();
 
-                var pathInfo = this.getUploadPath(
-                    this.environment.WebRootPath, 
-                    this.ExtractFileExtension(model.Video.FileName));
+                var pathInfo = this.fileQueries.GenerateVideoPath(
+                                    this.ExtractFileExtension(model.Video.FileName));
 
                 var dto = new VideoDTO()
                 {
                     Title = model.Title,
                     Description = model.Description,
                     Path = pathInfo.Path,
-                    Url = pathInfo.FileName,
+                    FileName = pathInfo.FileName,
                     AuthorUserId = this.userManager.GetUserId(HttpContext.User),
                     Categories = model.Categories
                 };
@@ -69,8 +66,8 @@ namespace BubaTube.Controllers
                 result = await this.videoWriteService.Save(dto, model.Video);
             }
 
-            return result > 0 
-                ? this.Ok() 
+            return result > 0
+                ? this.Ok()
                 : this.StatusCode(500);
         }
 
