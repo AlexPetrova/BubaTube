@@ -14,17 +14,20 @@ namespace Services.Write
     {
         private readonly BubaTubeDbContext context;
         private readonly IFileCommands fileCommands;
+        private readonly IFileQueries fileQueries;
         private readonly ICategoryQueries categoryGetService;
         private readonly Func<VideoDTO, Video> videoMapper;
 
         public VideoCommands(
             BubaTubeDbContext context,
             IFileCommands fileCommands,
+            IFileQueries fileQueries,
             ICategoryQueries categoryGetService,
             Func<VideoDTO, Video> videoMapper)
         {
             this.context = context;
             this.fileCommands = fileCommands;
+            this.fileQueries = fileQueries;
             this.categoryGetService = categoryGetService;
             this.videoMapper = videoMapper;
         }
@@ -66,7 +69,8 @@ namespace Services.Write
 
             video.IsDeleted = true;
 
-            var isSuccess = this.fileCommands.Delete(video.Path);
+            var path = this.fileQueries.GetVideoPath(video.FileName);
+            var isSuccess = this.fileCommands.Delete(path);
             var affectedRows = await this.context.SaveChangesAsync();
 
             return isSuccess && affectedRows > 0;
