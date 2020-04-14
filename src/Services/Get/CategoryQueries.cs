@@ -23,7 +23,7 @@ namespace Services.Get
 
         public IList<int> TakeApprovedCategoryIds(IEnumerable<string> categories)
         {
-            return this.context.Category
+            return this.context.Categories
                 .Where(x => categories.Contains(x.CategoryName) && x.IsАpproved == true)
                 .Select(x => x.Id)
                 .ToList();
@@ -31,7 +31,7 @@ namespace Services.Get
 
         public IList<int> TakeAllCategoryIds(IEnumerable<string> categories)
         {
-            return this.context.Category
+            return this.context.Categories
                 .Where(x => categories.Contains(x.CategoryName))
                 .Select(x => x.Id)
                 .ToList();
@@ -39,7 +39,7 @@ namespace Services.Get
 
         public IReadOnlyCollection<CategoryDTO> GetAllForApproval()
         {
-            return this.context.Category
+            return this.context.Categories
                 .Where(x => x.IsАpproved == false)
                 .Select(this.categoryMapper)
                 .ToList();

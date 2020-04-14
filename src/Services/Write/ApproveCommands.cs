@@ -16,7 +16,7 @@ namespace Services.Write
 
         public Category ApproveCategory(int id)
         {
-            var category = this.context.Category
+            var category = this.context.Categories
                 .First(x => x.Id == id);
 
             category.IsАpproved = true;

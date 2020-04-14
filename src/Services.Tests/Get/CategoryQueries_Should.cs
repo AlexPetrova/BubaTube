@@ -23,16 +23,16 @@ namespace Services.Tests.Get
 
             using (var context = new BubaTubeDbContext(options))
             {
-                context.Category.AddRange(CategoryMockData.GetListOfCategoryModels());
+                context.Categories.AddRange(CategoryMockData.GetListOfCategoryModels());
                 context.SaveChanges();
 
                 var categoryGetService = new CategoryQueries(context, fakeMapper);
                 var result = categoryGetService.TakeApprovedCategoryIds(searchedCategories);
 
-                var test1FromDb = context.Category
+                var test1FromDb = context.Categories
                     .FirstOrDefault(x => x.CategoryName == "Test1");
 
-                var test2FromDb = context.Category
+                var test2FromDb = context.Categories
                     .FirstOrDefault(x => x.CategoryName == "Test2");
 
                 Assert.NotEmpty(result);
@@ -50,7 +50,7 @@ namespace Services.Tests.Get
 
             using (var context = new BubaTubeDbContext(options))
             {
-                context.Category.AddRange(CategoryMockData.GetListOfCategoryModels());
+                context.Categories.AddRange(CategoryMockData.GetListOfCategoryModels());
                 context.SaveChanges();
 
                 var categoryGetService = new CategoryQueries(context, fakeMapper);
@@ -68,7 +68,7 @@ namespace Services.Tests.Get
 
             using (var context = new BubaTubeDbContext(options))
             {
-                context.Category.AddRange(CategoryMockData.GetListOfCategoryModels());
+                context.Categories.AddRange(CategoryMockData.GetListOfCategoryModels());
                 context.SaveChanges();
 
                 var categoryGetService = new CategoryQueries(context, fakeMapper);
@@ -87,7 +87,7 @@ namespace Services.Tests.Get
 
             using (var context = new BubaTubeDbContext(options))
             {
-                context.Category.AddRange(CategoryMockData.GetListOfCategoryModels());
+                context.Categories.AddRange(CategoryMockData.GetListOfCategoryModels());
                 context.SaveChanges();
 
                 var categoryGetService = new CategoryQueries(context, fakeMapper);

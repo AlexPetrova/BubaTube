@@ -17,7 +17,7 @@ namespace Services.Write
 
         public void SaveToDatabase(IEnumerable<string> categories)
         {
-            this.context.Category.AddRange(categories
+            this.context.Categories.AddRange(categories
                 .Select(x => new Category()
                 {
                     CategoryName = x,

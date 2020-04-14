@@ -103,10 +103,10 @@ namespace Services.Tests.Write
 
             using (var context = new BubaTubeDbContext(options))
             {
-                context.Category.AddRange(CategoryMockData.GetListOfCategoryModels());
+                context.Categories.AddRange(CategoryMockData.GetListOfCategoryModels());
                 context.SaveChanges();
 
-                var categoryFromDb = context.Category
+                var categoryFromDb = context.Categories
                      .First(x => x.IsАpproved == true);
                 mockCategoryQueries
                    .Setup(mock => mock.TakeAllCategoryIds(categories))
