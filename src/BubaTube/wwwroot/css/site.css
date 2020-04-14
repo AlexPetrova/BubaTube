@@ -545,4 +545,12 @@ div#container {
 
 .video {
     margin: 10px;
+    border: 2px solid white;
+    padding: 10px;
+    max-width: 350px;
+}
+
+.video-player{
+    width: 320px;
+    height: 240px;
 }
