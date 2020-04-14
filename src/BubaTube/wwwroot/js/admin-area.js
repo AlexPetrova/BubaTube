@@ -82,6 +82,8 @@
         }).done(function (response) {
             console.log(response);
         });
+
+        $(`#video-${id}`).css('border', '2px solid red');
     });
 
     $('.video-controls').on('click', '#approve-video', function (_) {
@@ -92,5 +94,7 @@
         }).done(function (response) {
             console.log(response);
         });
+
+        $(`#video-${id}`).css('border', '2px solid green');
     });
 });
