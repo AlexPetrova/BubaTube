@@ -20,6 +20,7 @@ namespace Services.Extensions
             services.AddTransient<IFavouriteVideosQueries, FavouriteVideosQueries>();
             services.AddTransient<IVideoQueries, VideoQueries>();
             services.AddTransient<IUserQueries, UserQueries>();
+            services.AddTransient<IFileQueries, FileQueries>();
 
             services.AddTransient<IFileCommands, FileCommands>();
             services.AddTransient<IUserCommands, UserCommands>();
@@ -34,22 +35,6 @@ namespace Services.Extensions
             services.AddSingleton(serviceProvider =>
                 new Func<string, FileMode, Stream>(
                     (name, mode) => new FileStream(name, mode)));
-
-            services.AddSingleton(serviceProvider
-                => new Func<string, string, PathInfo>((rootFolder, fileExtension) =>
-                    {
-                        var rootFolderName = "video";
-                        var folder = Path.Combine(rootFolder, rootFolderName);
-                        var nameOfVideo = new Random().ShortString();
-                        var path = Path.Combine(folder, nameOfVideo.ToString() + fileExtension);
-
-                        return new PathInfo
-                        {
-                            Path = path,
-                            FileName = $"{rootFolderName}/{nameOfVideo}{fileExtension}"
-                        };
-                    })
-                );
 
             return services;
         }
