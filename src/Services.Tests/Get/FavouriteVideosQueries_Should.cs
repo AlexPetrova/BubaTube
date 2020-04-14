@@ -28,7 +28,7 @@ namespace Services.Tests.Get
                 context.Videos.Add(new Video()
                 {
                     Title = "TestVideo",
-                    Path = "c://",
+                    FileName = "testVideo.mp4",
                     AuthorId = "123"
                 });
                 context.SaveChanges();

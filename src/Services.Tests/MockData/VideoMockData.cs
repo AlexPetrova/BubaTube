@@ -17,7 +17,7 @@ namespace BubaTube_Tests.MockData
                     Id = GetRandomNumber(),
                     Title = GetRandomString(5),
                     Description = GetRandomString(10),
-                    Path = GetRandomString(10),
+                    FileName = GetRandomString(10),
                     AuthorId = GetRandomString(10)
                 })
                 .ToList();

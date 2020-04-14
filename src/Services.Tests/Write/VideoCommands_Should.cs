@@ -26,6 +26,7 @@ namespace Services.Tests.Write
             var options = DbContextMock.GetOptions("SavesPassedData");
             var mockFile = new Mock<IFormFile>();
             var mockFileCommands = new Mock<IFileCommands>();
+            var mockFileQueries = new Mock<IFileQueries>();
             var mockCategoryQueries = new Mock<ICategoryQueries>();
             Func<VideoDTO, Video> fakeMapper = _ =>
                 new Video
@@ -33,7 +34,7 @@ namespace Services.Tests.Write
                     Title = "testVideo",
                     Description = "test",
                     Likes = 1,
-                    Path = @"\Folder\Name.mp4"
+                    FileName = @"Name.mp4"
                 };
             var model = this.GetVideoDto();
             var categories = new List<string>();
@@ -45,7 +46,11 @@ namespace Services.Tests.Write
             using (var actContext = new BubaTubeDbContext(options))
             {
                 var uploadService = new VideoCommands(
-                    actContext, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
+                    actContext, 
+                    mockFileCommands.Object,
+                    mockFileQueries.Object,
+                    mockCategoryQueries.Object, 
+                    fakeMapper);
 
                 await uploadService.Save(model, mockFile.Object);
             }
@@ -57,7 +62,7 @@ namespace Services.Tests.Write
                 Assert.Equal(1, assertContext.Videos.Count());
                 Assert.Equal(model.Title, savedModelInDb.Title);
                 Assert.Equal(model.Description, savedModelInDb.Description);
-                Assert.Equal(model.Path, savedModelInDb.Path);
+                Assert.Equal(model.FileName, savedModelInDb.FileName);
             }
         }
 
@@ -67,6 +72,7 @@ namespace Services.Tests.Write
             var options = DbContextMock.GetOptions("AddsListOfCategories");
             var mockFile = new Mock<IFormFile>();
             var mockFileCommands = new Mock<IFileCommands>();
+            var mockFileQueries = new Mock<IFileQueries>();
             var mockCategoryQueries = new Mock<ICategoryQueries>();
             var categories = new List<string>() { "Test1" };
 
@@ -80,7 +86,11 @@ namespace Services.Tests.Write
                 model.Categories = categories;
 
                 var uploadVideoService = new VideoCommands(
-                    actContext, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
+                    actContext, 
+                    mockFileCommands.Object, 
+                    mockFileQueries.Object,
+                    mockCategoryQueries.Object, 
+                    fakeMapper);
 
                 await uploadVideoService.Save(model, mockFile.Object);
             }
@@ -98,6 +108,7 @@ namespace Services.Tests.Write
             var options = DbContextMock.GetOptions("CreatesNavigationProperty_VideoCategory");
             var mockFile = new Mock<IFormFile>();
             var mockFileCommands = new Mock<IFileCommands>();
+            var mockFileQueries = new Mock<IFileQueries>();
             var mockCategoryQueries = new Mock<ICategoryQueries>();
             var categories = new List<string>();
 
@@ -116,7 +127,11 @@ namespace Services.Tests.Write
                 model.Categories = categories;
 
                 var uploadVideoService = new VideoCommands(
-                    context, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
+                    context, 
+                    mockFileCommands.Object,
+                    mockFileQueries.Object,
+                    mockCategoryQueries.Object, 
+                    fakeMapper);
 
                 await uploadVideoService.Save(model, mockFile.Object);
 
@@ -131,10 +146,14 @@ namespace Services.Tests.Write
             var options = DbContextMock.GetOptions("DeleteVideo");
             var mockFile = new Mock<IFormFile>();
             var mockFileCommands = new Mock<IFileCommands>();
+            var mockFileQueries = new Mock<IFileQueries>();
             var mockCategoryQueries = new Mock<ICategoryQueries>();
 
+            mockFileQueries
+                .Setup(x => x.GetVideoPath("test.mp4"))
+                .Returns("D:/video/test.mp4");
             mockFileCommands
-                .Setup(x => x.Delete("test"))
+                .Setup(x => x.Delete("D:/video/test.mp4"))
                 .Returns(true);
 
             using (var context = new BubaTubeDbContext(options))
@@ -142,14 +161,19 @@ namespace Services.Tests.Write
                 context.Videos.Add(new Video
                 {
                     Title = "test",
-                    Path = "test"
+                    FileName = "test.mp4"
                 });
                 context.SaveChanges();
 
                 int videoId = context.Videos.First().Id;
 
                 var uploadService = new VideoCommands(
-                    context, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
+                    context, 
+                    mockFileCommands.Object, 
+                    mockFileQueries.Object,
+                    mockCategoryQueries.Object, 
+                    fakeMapper);
+
                 bool isSuccess = await uploadService.Delete(videoId);
 
                 Assert.True(isSuccess);
@@ -169,6 +193,7 @@ namespace Services.Tests.Write
             var options = DbContextMock.GetOptions("DeleteVideo_FileDoesNotExist_OnFileSystem");
             var mockFile = new Mock<IFormFile>();
             var mockFileCommands = new Mock<IFileCommands>();
+            var mockFileQueries = new Mock<IFileQueries>();
             var mockCategoryQueries = new Mock<ICategoryQueries>();
 
             mockFileCommands
@@ -180,14 +205,19 @@ namespace Services.Tests.Write
                 context.Videos.Add(new Video
                 {
                     Title = "test",
-                    Path = "test"
+                    FileName = "test.mp4"
                 });
                 context.SaveChanges();
 
                 int videoId = context.Videos.First().Id;
 
                 var uploadService = new VideoCommands(
-                    context, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
+                    context,
+                    mockFileCommands.Object,
+                    mockFileQueries.Object,
+                    mockCategoryQueries.Object, 
+                    fakeMapper);
+
                 bool isSuccess = await uploadService.Delete(videoId);
 
                 Assert.False(isSuccess);
@@ -200,6 +230,7 @@ namespace Services.Tests.Write
             var options = DbContextMock.GetOptions("DeleteVideo_FileDoesNotExist_InDatabase");
             var mockFile = new Mock<IFormFile>();
             var mockFileCommands = new Mock<IFileCommands>();
+            var mockFileQueries = new Mock<IFileQueries>();
             var mockCategoryQueries = new Mock<ICategoryQueries>();
 
             mockFileCommands
@@ -209,7 +240,12 @@ namespace Services.Tests.Write
             using (var context = new BubaTubeDbContext(options))
             {
                 var uploadService = new VideoCommands(
-                    context, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
+                    context, 
+                    mockFileCommands.Object, 
+                    mockFileQueries.Object,
+                    mockCategoryQueries.Object, 
+                    fakeMapper);
+
                 bool isSuccess = await uploadService.Delete(1);
 
                 Assert.False(isSuccess);
@@ -222,6 +258,7 @@ namespace Services.Tests.Write
             var options = DbContextMock.GetOptions("ApprovesVideo");
             var mockFile = new Mock<IFormFile>();
             var mockFileCommands = new Mock<IFileCommands>();
+            var mockFileQueries = new Mock<IFileQueries>();
             var mockCategoryQueries = new Mock<ICategoryQueries>();
 
             using (var actContext = new BubaTubeDbContext(options))
@@ -229,14 +266,19 @@ namespace Services.Tests.Write
                 actContext.Videos.Add(new Video
                 {
                     Title = "test",
-                    Path = "test"
+                    FileName = "test"
                 });
                 actContext.SaveChanges();
 
                 int videoId = actContext.Videos.First().Id;
 
                 var uploadService = new VideoCommands(
-                    actContext, mockFileCommands.Object, mockCategoryQueries.Object, fakeMapper);
+                    actContext, 
+                    mockFileCommands.Object,
+                    mockFileQueries.Object,
+                    mockCategoryQueries.Object, 
+                    fakeMapper);
+
                 bool isSuccess = await uploadService.Approve(videoId);
 
                 Assert.True(isSuccess);
@@ -260,7 +302,8 @@ namespace Services.Tests.Write
                 Description = "test",
                 Likes = 1,
                 Path = @"\Folder\Name.mp4",
-                Url = "Name.mp4",
+                Url = @"video\Name.mp4",
+                FileName = "Name.mp4",
                 Categories = new List<string>()
             };
         }
