@@ -10,9 +10,9 @@ namespace BubaTube.Controllers
     {
         private readonly UserManager<User> userManager;
 
-        public ProfileController(UserManager<User> um)
+        public ProfileController(UserManager<User> userManager)
         {
-            this.userManager = um;
+            this.userManager = userManager;
         }
 
         [Authorize]
