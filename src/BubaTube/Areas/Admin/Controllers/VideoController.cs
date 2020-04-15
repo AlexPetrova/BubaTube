@@ -36,7 +36,7 @@ namespace BubaTube.Areas.Admin.Controllers
                         Title = video.Title,
                         Description = video.Description,
                         Likes = video.Likes,
-                        Url = video.Url
+                        Url = $"video/{video.FileName}"
                     })
                     .ToList();
 
