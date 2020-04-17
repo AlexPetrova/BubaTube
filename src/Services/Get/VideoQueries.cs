@@ -12,23 +12,26 @@ namespace Services.Get
     public class VideoQueries : IVideoQueries
     {
         private readonly BubaTubeDbContext context;
-        private readonly Expression<Func<Video, VideoDTO>> videoMapper;
+        private readonly Expression<Func<Video, VideoDTO>> dtoToModelMap;
+        private readonly Expression<Func<Video, VideoPreviewDTO>> modelToDTOMap;
         private const int DefaultCountForResentVideos = 20;
 
         public VideoQueries(
             BubaTubeDbContext context,
-            Expression<Func<Video, VideoDTO>> videoMapper)
+            Expression<Func<Video, VideoDTO>> DTOToModelMap,
+            Expression<Func<Video, VideoPreviewDTO>> ModelToDTOMap)
         {
             this.context = context;
-            this.videoMapper = videoMapper;
+            this.dtoToModelMap = DTOToModelMap;
+            this.modelToDTOMap = ModelToDTOMap;
         }
 
-        public IReadOnlyCollection<VideoDTO> MostResentVideos()
+        public IReadOnlyCollection<VideoPreviewDTO> MostResentVideos()
         {
             return this.context.Videos
-                .Select(videoMapper)
                 .Where(x => x.IsApproved == true && x.IsDeleted == false)
                 .Take(DefaultCountForResentVideos)
+                .Select(this.modelToDTOMap)
                 .ToList();
         }
 
@@ -45,8 +48,8 @@ namespace Services.Get
         public IReadOnlyCollection<VideoDTO> GetAllForApproval()
         {
             return this.context.Videos
-                .Select(videoMapper)
                 .Where(x => x.IsApproved == false && x.IsDeleted == false)
+                .Select(dtoToModelMap)
                 .ToList();
         }
     }

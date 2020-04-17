@@ -6,7 +6,7 @@ namespace Services.Contracts.Get
 {
     public interface IVideoQueries
     {
-        IReadOnlyCollection<VideoDTO> MostResentVideos();
+        IReadOnlyCollection<VideoPreviewDTO> MostResentVideos();
 
         IReadOnlyCollection<VideoDTO> PopularVideos();
 
