@@ -29,7 +29,7 @@ namespace Services.Write
             var video = this.context.Videos
                 .First(x => x.Id == id);
 
-            video.IsАpproved = true;
+            video.IsApproved = true;
 
             return this.context.SaveChanges() == 1 ? video : new Video();
         }

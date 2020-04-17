@@ -86,7 +86,7 @@ namespace Services.Write
                 return false;
             }
 
-            video.IsАpproved = true;
+            video.IsApproved = true;
 
             var affectedRows = await this.context.SaveChangesAsync();
 

@@ -289,7 +289,7 @@ namespace Services.Tests.Write
                 Video video = assertContext.Videos
                     .First();
 
-                Assert.True(video.IsАpproved);
+                Assert.True(video.IsApproved);
             }
         }
 

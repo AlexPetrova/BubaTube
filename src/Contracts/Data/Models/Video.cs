@@ -28,7 +28,7 @@ namespace Contracts.Data.Models
         
         public User Author { get; set; }
 
-        public bool IsАpproved { get; set; }
+        public bool IsApproved { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
 

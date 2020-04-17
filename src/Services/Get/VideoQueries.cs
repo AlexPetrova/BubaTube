@@ -26,9 +26,9 @@ namespace Services.Get
         public IReadOnlyCollection<VideoDTO> MostResentVideos()
         {
             return this.context.Videos
-                .Where(x => x.IsАpproved == true && x.IsDeleted == false)
                 .TakeLast(DefaultCountForResentVideos)
                 .Select(videoMapper)
+                .Where(x => x.IsApproved == true && x.IsDeleted == false)
                 .ToList();
         }
 
@@ -45,8 +45,8 @@ namespace Services.Get
         public IReadOnlyCollection<VideoDTO> GetAllForApproval()
         {
             return this.context.Videos
-                .Where(x => x.IsАpproved == false && x.IsDeleted == false)
                 .Select(videoMapper)
+                .Where(x => x.IsApproved == false && x.IsDeleted == false)
                 .ToList();
         }
     }
