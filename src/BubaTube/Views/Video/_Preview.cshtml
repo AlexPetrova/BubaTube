@@ -1,0 +1,14 @@
+﻿@model VideoPreviewViewModel;
+@{
+    ViewData["Title"] = "_Video";
+}
+
+<div id=@Model.Id class="video">
+    <h3>@Model.Title</h3>
+    <video class="video-player" controls>
+        <source src="/@Model.Url" type="video/mp4">
+    </video>
+    <div>
+        @Model.Author.FirstName, @Model.Author.LastName
+    </div>
+</div>
