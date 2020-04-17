@@ -40,13 +40,31 @@ namespace Contracts.Extensions
             );
 
             services.AddSingleton(serviceProvider =>
-                new Func<Category, CategoryDTO>((model) =>
-                    new CategoryDTO()
+                new Func<Category, CategoryDTO>(model =>
+                    new CategoryDTO
                     {
                         Id = model.Id,
                         CategoryName = model.CategoryName
                     }
                 )
+            );
+
+            services.AddSingleton<Expression<Func<Video, VideoPreviewDTO>>>(serviceProvider =>
+                model =>
+                    new VideoPreviewDTO
+                    {
+
+                        Id = model.Id,
+                        Title = model.Title,
+                        FileName = model.FileName,
+                        Author = new UserPreviewDTO
+                        {
+                            Id = model.AuthorId,
+                            FirstName = model.Author.FirstName,
+                            LastName = model.Author.LastName,
+                            ProfilePicture = model.Author.AvatarImage
+                        }
+                    }
             );
 
             return services;
