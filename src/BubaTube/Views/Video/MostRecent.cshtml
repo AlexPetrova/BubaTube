@@ -1,0 +1,10 @@
+﻿@model IReadOnlyCollection<VideoPreviewViewModel>
+
+@{
+    ViewData["Title"] = "MostRecentVideos";
+}
+
+@foreach (var video in Model)
+{
+    @await Html.PartialAsync("_Preview.cshtml", video);
+}
