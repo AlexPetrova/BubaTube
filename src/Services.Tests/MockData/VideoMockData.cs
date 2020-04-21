@@ -9,7 +9,7 @@ namespace BubaTube_Tests.MockData
     {
         private static readonly Random random = new Random();
 
-        public static IEnumerable<Video> GetVideos(int count)
+        public static List<Video> GetApprovedVideos(int count)
         {
             return Enumerable.Range(0, count)
                 .Select(_ => new Video()
@@ -18,9 +18,25 @@ namespace BubaTube_Tests.MockData
                     Title = GetRandomString(5),
                     Description = GetRandomString(10),
                     FileName = GetRandomString(10),
-                    AuthorId = GetRandomString(10)
+                    AuthorId = GetRandomString(10),
+                    IsApproved = true
                 })
                 .ToList();
+        }
+
+        public static List<Video> GetDeletedVideos(int count)
+        {
+            return Enumerable.Range(0, count)
+                   .Select(_ => new Video()
+                   {
+                       Id = GetRandomNumber(),
+                       Title = GetRandomString(5),
+                       Description = GetRandomString(10),
+                       FileName = GetRandomString(10),
+                       AuthorId = GetRandomString(10),
+                       IsDeleted = true
+                   })
+                   .ToList();
         }
 
         public static string GetRandomString(int length)
